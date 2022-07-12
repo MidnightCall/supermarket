@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="list.h" />
+    <ClInclude Include="linkList.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="typeCollection.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="list.c" />
+    <ClCompile Include="eastmonsterTest.c" />
+    <ClCompile Include="linkList.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="login.c" />
   </ItemGroup>

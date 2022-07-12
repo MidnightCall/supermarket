@@ -15,24 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="list.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="login.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="typeCollection.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="linkList.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="list.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="login.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="eastmonsterTest.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="linkList.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
