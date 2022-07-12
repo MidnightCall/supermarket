@@ -21,6 +21,9 @@
     <ClInclude Include="login.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="typeCollection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="list.c">

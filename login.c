@@ -56,7 +56,6 @@ void registration()
 		}
 	} while (1);
 	printf("注册成功!\n");
-	fwrite()
 }
 
 /* 局部函数定义 */
