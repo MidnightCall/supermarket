@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="list.h" />
     <ClInclude Include="login.h" />
+    <ClInclude Include="typeCollection.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="list.c" />
