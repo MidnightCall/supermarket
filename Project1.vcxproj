@@ -20,9 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="list.h" />
+    <ClInclude Include="login.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="list.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="login.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
