@@ -1,13 +1,12 @@
 #ifndef LOGIN_H_
-#define LOGIN_H
+#define LOGIN_H_
 
 #define FLUSH while(getchar() != '\n')
-#define ASIZE 9   /* 存储账号的数组大小 */
 #define PSIZE 12  /* 存储密码的数组大小 */
 
 struct userInfo
 {
-	char* account[ASIZE];
+	int id;
 	char* password[PSIZE];
 };
 
@@ -25,5 +24,13 @@ void runLogIn();
 */
 int getChoice();
 
+/*
+* 操作：注册账号
+*/
+void registration();
+
+/*
+* 操作：登录账号
+*/
 
 #endif // !REGGISTER_H_
