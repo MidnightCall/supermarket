@@ -88,25 +88,25 @@ void del(Node_t* head, int pos)
 
 void* printUserInfo(UserInfo_t* node)
 {
-	printf("%d, %s, %d\n", node->id, *node->password, node->permission);
+	printf("%d, %s, %d\n", node->id, node->password, node->permission);
 	return 0;
 }
 
 void* printProductInfo(Product_t* node)
 {
-	printf("%s, %s, %f\n", *node->name, *node->supplier, node->price);
+	printf("%s, %s, %f\n", node->name, node->supplier, node->price);
 	return 0;
 }
 
 void* printEmployeeInfo(Employee_t* node)
 {
-	printf("%u, %u, %d, %s, %s\n", node->id, node->age, node->sex, *node->name, *node->position);
+	printf("%u, %u, %d, %s, %s\n", node->id, node->age, node->sex, node->name, node->position);
 	return 0;
 }
 
 void* printSupplierInfo(Supplier_t* node)
 {
-	printf("%u, %s, %s\n", node->id, *node->name, node->tel);
+	printf("%u, %s, %s\n", node->id, node->name, node->tel);
 	return 0;
 }
 

@@ -24,6 +24,9 @@
     <ClInclude Include="linkList.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="files.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -36,6 +39,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="linkList.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="files.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

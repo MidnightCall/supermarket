@@ -10,7 +10,7 @@
 #define LEN_NAME 9 /* 职工名字最大长度 */
 #define LEN_POS 11 /* 职工职位最大长度 */
 
-#define END 18446744073709551615UL
+#define END 2147483647
 
 /* 用户权限枚举 */
 typedef enum tagPermissionEnum
@@ -35,15 +35,15 @@ typedef struct tagNode_t
 typedef struct tagUserInfo_t
 {
     int id;
-    char* password[LEN_PWD];
+    char password[LEN_PWD];
     PermissionEnum permission;
 } UserInfo_t;
 
 /* 商品信息节点 */
 typedef struct tagProduct_t
 {
-    char* name[48]; /* 商品名 */
-    char* supplier[24]; /* 商品供货商 */
+    char name[48]; /* 商品名 */
+    char supplier[24]; /* 商品供货商 */
     float price; /* 商品价格 */
 } Product_t;
 
@@ -53,16 +53,16 @@ typedef struct tagEmployee_t
     unsigned int id;
     unsigned int age;
     SexEnum sex;
-    char* name[LEN_NAME];
-    char* position[LEN_POS];
+    char name[LEN_NAME];
+    char position[LEN_POS];
 } Employee_t;
 
 /* 供应商信息节点 */
 typedef struct tagSupplier_t
 {
     unsigned int id;
-    char* name[21];
-    char* tel[12];
+    char name[21];
+    char tel[12];
 } Supplier_t;
 
 /* 库存信息节点 */
@@ -82,7 +82,7 @@ typedef struct tagOrderItem_t
 /* 订单信息节点 */
 typedef struct tagOrder_t
 {
-    char* customer[LEN_NAME];
+    char customer[LEN_NAME];
     OrderItem_t items[100];
 } Order_t;
 

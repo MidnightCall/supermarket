@@ -29,13 +29,6 @@ void insert(Node_t* head, int pos, void* data);
 */
 void del(Node_t* head, int pos);
 
-/**
-* @brief 链表删除操作
-*
-* @param head 要插入到的链表的头指针
-* @param pos 需要删除的内容位置 (以 1 为起始)
-* @param val 指向插入内容的指针
-*/
 void printList(Node_t* head, void (*type)(void*));
 
 /**
