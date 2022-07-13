@@ -17,7 +17,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 	FILE* fp = fopen(filename, "ab+"); /* 如果文件不存在则自动创建 */
 	if (NULL == fp)
 	{
-		perror("文件 %s 打开失败。\b\n", filename);
+		printf("文件 %s 打开失败。\b\n", filename);
 		exit(0);
 	}
 	Node_t* tHead = head;
@@ -32,7 +32,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 		User_t* node = (User_t*)malloc(sizeof(User_t));
 		if (NULL == node)
 		{
-			perror("链表节点初始化失败。\b\n");
+			printf("链表节点初始化失败。\b\n");
 			exit(0);
 		}
 		fread(node, size, 1, fp);
@@ -45,7 +45,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 
 void writeFile(const char* filename, Node_t* head, size_t size)
 {
-	FILE* fp = fopen(filename, "wb+");
+	FILE* fp = fopen(filename, "wb");
 	Node_t* tHead = head;
 	int count = *(int*)(head->data);
 
