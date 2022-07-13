@@ -19,14 +19,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="employee.h" />
+    <ClInclude Include="helpfulFunction.h" />
     <ClInclude Include="list.h" />
-    <ClInclude Include="login.h" />
+    <ClInclude Include="account.h" />
+    <ClInclude Include="product.h" />
+    <ClInclude Include="storage.h" />
+    <ClInclude Include="SupermarketManageSystem.h" />
+    <ClInclude Include="supplier.h" />
     <ClInclude Include="typeCollection.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="employee.c" />
+    <ClCompile Include="helpfulFunction.c" />
     <ClCompile Include="list.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="login.c" />
+    <ClCompile Include="account.c" />
+    <ClCompile Include="product.c" />
+    <ClCompile Include="storage.c" />
+    <ClCompile Include="SuperMarketManageSystem.c" />
+    <ClCompile Include="supplier.c" />
+    <ClCompile Include="UI.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

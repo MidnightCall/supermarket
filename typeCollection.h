@@ -1,9 +1,9 @@
 #ifndef __TYPECOLLECTION_H_
 #define __TYPECOLLECTION_H_
 
-const int LEN_PWD = 12;
-const int LEN_NAME = 9;
-const int LEN_POS = 11;
+#define LEN_PWD 12
+#define LEN_NAME 9
+#define LEN_POS 11
 
 /* 用户权限枚举 */
 typedef enum tagPermissionEnum
@@ -30,7 +30,7 @@ typedef struct tagUserInfo_t
     int id;
     char* password[LEN_PWD];
     PermissionEnum permission;
-};
+} User_t;
 
 /* 商品信息节点 */
 typedef struct tagProduct_t

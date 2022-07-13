@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "login.h"
+#include "account.h"
+
 
 /* 局部函数模型 */
-static void showMenu();
-static void showChar(char ch, int n);
 static char* stringGet(char *st,int n);
 
 /*
@@ -14,6 +10,16 @@ static char* stringGet(char *st,int n);
 void runLogIn()
 {
 	int choice = getChoice();
+
+	switch (choice)
+	{
+		default:
+			break;
+		case 1:
+			logIn();
+		case 2:
+			registration();
+	}
 }
 
 /*
@@ -26,7 +32,7 @@ int getChoice()
 
 	do
 	{
-		showMenu();
+		showLoginMessage();
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
 
@@ -38,44 +44,43 @@ int getChoice()
 */
 void registration()
 {
-	UI account;
+	User_t account;
 	static int currentAccount = 10000;
-	int firstPassword;
-	int secondPassword;
+	char * firstPassword[LEN_PWD];
+	char * secondPassword[LEN_PWD];
 
 	printf("你的账号是%d\n", currentAccount);
 	account.id = currentAccount++;
-	do {
+	while (1)
+	{
+		while (getchar() != '\n')
+			continue;
 		printf("请输入你的密码:");
-		stringGet(firstPassword, PSIZE);
+		stringGet(firstPassword, LEN_PWD);
 		printf("请确认你的密码:");
-		stringGet(secondPassword, PSIZE);
-		if (firstPassword == secondPassword) {
+		stringGet(secondPassword, LEN_PWD);
+		if (strcmp(firstPassword, secondPassword) == 0) {
 			strcpy(account.password, firstPassword);
 			break;
 		}
-	} while (1);
-	printf("注册成功!\n");
+		else
+		{
+			printf("两次输入不一致，请重新输入\n");
+		}
+	}
+	printf("注册成功,请重新登录\n");
 }
+
+/*
+*  操作: 登录账号
+*/
+void logIn()
+{
+
+}
+
 
 /* 局部函数定义 */
-static void showMenu()
-{
-	showChar('-', 45);
-	putchar('\n');
-	printf("欢迎来到超市管理系统，请选择你要进行的操作:\n");
-	printf("1.登录\n");
-	printf("2.注册\n");
-	printf("3.退出\n");
-	showChar('-', 45);
-	putchar('\n');
-}
-
-static void showChar(char ch, int n)
-{
-	for (int i = 0; i < n; i++)
-		putchar(ch);
-}
 
 static char* stringGet(char* st, int n)
 {
@@ -90,7 +95,8 @@ static char* stringGet(char* st, int n)
 			*find = '\0';
 		}
 		else {
-			FLUSH;
+			while (getchar() != '\n')
+				continue;
 		}
 	}
 

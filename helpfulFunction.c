@@ -1,0 +1,7 @@
+#ifndef __HELPFULFUNCTION_H_
+#define __HELPFULFUNCTION_H_
+
+
+
+
+#endif // !__HELPFULFUNCTION_H_
