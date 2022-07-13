@@ -24,57 +24,21 @@
     <ClInclude Include="typeCollection.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SupermarketManageSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="employee.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="product.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="storage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="supplier.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="helpfulFunction.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="list.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="account.c">
+    <ClCompile Include="login.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="UI.c">
+    <ClCompile Include="eastmonsterTest.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="SuperMarketManageSystem.c">
+    <ClCompile Include="linkList.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="employee.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="product.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="storage.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="supplier.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="helpfulFunction.c">
+    <ClCompile Include="login.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

@@ -20,8 +20,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="employee.h" />
+    <ClInclude Include="linkList.h" />
     <ClInclude Include="helpfulFunction.h" />
-    <ClInclude Include="list.h" />
+    <ClInclude Include="files.h" />
     <ClInclude Include="account.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="storage.h" />
@@ -31,11 +32,10 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="employee.c" />
-    <ClCompile Include="helpfulFunction.c" />
-    <ClCompile Include="list.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="files.c" />
     <ClCompile Include="account.c" />
+    <ClCompile Include="linkList.c" />
     <ClCompile Include="product.c" />
     <ClCompile Include="storage.c" />
     <ClCompile Include="SuperMarketManageSystem.c" />

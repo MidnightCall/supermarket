@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+# Test file from East Monster
+eastmonsterTest.c
+data/test.txt
+
+
 # User-specific files
 *.rsuser
 *.suo
