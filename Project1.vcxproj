@@ -19,29 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="customLookup.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="linkList.h" />
     <ClInclude Include="helpfulFunction.h" />
     <ClInclude Include="files.h" />
     <ClInclude Include="account.h" />
+    <ClInclude Include="normalUser.h" />
+    <ClInclude Include="onSaleProduct.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="storage.h" />
+    <ClInclude Include="superAdminSystem.h" />
     <ClInclude Include="SupermarketManageSystem.h" />
     <ClInclude Include="supplier.h" />
     <ClInclude Include="typeCollection.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="accountManage.c" />
+    <ClCompile Include="Admin.c" />
+    <ClCompile Include="helpfulFunction.c" />
     <ClCompile Include="customLookup.c" />
-    <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="employee.c" />
+    <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="files.c" />
     <ClCompile Include="account.c" />
     <ClCompile Include="linkList.c" />
+    <ClCompile Include="normalUser.c" />
+    <ClCompile Include="onSaleProduct.c" />
     <ClCompile Include="product.c" />
     <ClCompile Include="storage.c" />
+    <ClCompile Include="superAdminSystem.c" />
     <ClCompile Include="SuperMarketManageSystem.c" />
     <ClCompile Include="supplier.c" />
     <ClCompile Include="UI.c" />

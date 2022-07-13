@@ -9,6 +9,9 @@
 #include "helpfulFunction.h"
 #include "linkList.h"
 #include "files.h"
+#include "helpfulFunction.h"
+
+extern Node_t* userDat;
 
 /*
 * 操作：运行登录/注册系统

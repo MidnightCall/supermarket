@@ -3,12 +3,13 @@
 #include "files.h"
 
 Node_t* userDat, * employeeDat, * productDat, * storageDat, * supplierDat, * orderDat;
+User_t currentUser;
 
 void systemStart()
 {
 	initData();
 	showWelcomeMessage();
-	logInStart();
+	runAccountManage();
 }
 
 /**

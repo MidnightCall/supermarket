@@ -23,10 +23,22 @@ void showWelcomeMessage();
 void showLoginMessage();
 
 /**
- * @brief 展示功能选择页面
+ * @brief 展示超级管理员功能选择页面
  *
  */
-void showMainMenu();
+void showSuperAdminMenu();
+
+/**
+ * @brief 展示管理员功能选择页面
+ *
+ */
+void showAdminMenu();
+
+ /**
+  * @brief 展示普通用户功能选择页面
+  *
+  */
+void showUserMenu();
 
 /**
  * @brief 展示员工业务办理页面
@@ -53,9 +65,27 @@ void showStorageBusinessMenu();
 void showOrderBusinessMenu();
 
 /**
+ * @brief 展示处理当前订单页面
+ *
+ */
+void showCurrentOrderMenu();
+
+/**
+ * @brief 展示在售商品处理页面
+ *
+ */
+void showOnSaleBusinessMenu();
+
+/**
  * @brief 展示结束页面
  *
  */
 void showExitMessage();
+
+/**
+ * @brief 展示账户管理界面
+ *
+ */
+void showAccountBusinessMenu();
 
 #endif

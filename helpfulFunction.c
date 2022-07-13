@@ -1,7 +1,7 @@
-#ifndef __HELPFULFUNCTION_H_
-#define __HELPFULFUNCTION_H_
+#include "helpfulFunction.h"
 
-
-
-
-#endif // !__HELPFULFUNCTION_H_
+void flush()
+{
+	while (getchar() != '\n')
+		continue;
+}
