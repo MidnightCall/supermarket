@@ -45,6 +45,13 @@ void saveData(void)
 	writeFile(FILE_STORAGE, storageDat, sizeof(Storage_t));
 	writeFile(FILE_SUPPLIER, supplierDat, sizeof(Supplier_t));
 	writeFile(FILE_ORDER, orderDat, sizeof(Order_t));
+
+	freeList(userDat);
+	freeList(employeeDat);
+	freeList(productDat);
+	freeList(storageDat);
+	freeList(supplierDat);
+	freeList(orderDat);
 	return;
 }
 

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="customLookup.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="linkList.h" />
     <ClInclude Include="helpfulFunction.h" />
@@ -32,7 +33,9 @@
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="customLookup.c" />
     <ClCompile Include="eastmonsterTest.c" />
+    <ClCompile Include="employee.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="files.c" />
     <ClCompile Include="account.c" />

@@ -29,7 +29,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 
 	while (length != ftell(fp))
 	{
-		User_t* node = (User_t*)malloc(sizeof(User_t));
+		User_t* node = (User_t*)malloc(sizeof(User_t)); /* 创建新节点用于存储数据 */
 		if (NULL == node)
 		{
 			printf("链表节点初始化失败。\b\n");

@@ -1,8 +1,9 @@
 #ifndef __LINKLIST_H_
 #define __LINKLIST_H_
 
-#include <stdbool.h>
 #include "typeCollection.h"
+#include "customLookup.h"
+#include <stdbool.h>
 
 /**
 * @brief 新建一个链表
@@ -29,26 +30,23 @@ void insert(Node_t* head, int pos, void* data);
 */
 void del(Node_t* head, int pos);
 
-void printList(Node_t* head, void (*type)(void*));
+/**
+* @brief 打印链表内数据
+*
+* @param head 要遍历的链表头指针
+* @param type 指定内容输出格式
+* @param count 是否显示节点计数 (应使用 false, 仅作测试用途)
+*/
+void printList(Node_t* head, void (*type)(void*), bool count);
 
 /**
-* @brief 指定用户信息的输入格式
+* @brief 对链表进行遍历查找操作
 *
-* @param node 要输出的用户信息节点
+* @param head 要遍历的链表头指针
+* @param operation 要对链表数据进行的操作
 */
-void* printUserInfo(User_t* node);
+void retrieveList(Node_t* head, bool(*operation)(Node_t*, void* data));
 
-/* 以下函数执行相似功能 */
-
-void* printProductInfo(Product_t* node);
-
-void* printEmployeeInfo(Employee_t* node);
-
-void* printSupplierInfo(Supplier_t* node);
-
-void* printStorageInfo(Storage_t* node);
-
-void* printOrderInfo(Order_t* node);
 
 /**
 * @brief 链表释放操作
