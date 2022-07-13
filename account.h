@@ -7,6 +7,8 @@
 #include "typeCollection.h"
 #include "UI.h"
 #include "helpfulFunction.h"
+#include "linkList.h"
+#include "files.h"
 
 /*
 * 操作：运行登录/注册系统

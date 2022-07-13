@@ -57,15 +57,19 @@ void registration()
 			continue;
 		printf("请输入你的密码:");
 		stringGet(firstPassword, LEN_PWD);
+		if (strlen(firstPassword) < 6) {
+			printf("密码至少六位,请重新输入\n");
+			printf("按(Enter)重新输入..\n");
+			continue;
+		}
 		printf("请确认你的密码:");
 		stringGet(secondPassword, LEN_PWD);
 		if (strcmp(firstPassword, secondPassword) == 0) {
 			strcpy(account.password, firstPassword);
 			break;
-		}
-		else
-		{
+		}else{
 			printf("两次输入不一致，请重新输入\n");
+			printf("按(Enter)重新输入..\n");
 		}
 	}
 	printf("注册成功,请重新登录\n");
@@ -76,6 +80,12 @@ void registration()
 */
 void logIn()
 {
+	int id;
+	char* password[LEN_PWD];
+
+	User_t* accounts = newList();
+	loadFile("account.dat", accounts, sizeof(accounts));
+
 
 }
 
