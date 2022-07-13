@@ -82,4 +82,10 @@ void showOnSaleBusinessMenu();
  */
 void showExitMessage();
 
+/**
+ * @brief 展示账户管理界面
+ *
+ */
+void showAccountBusinessMenu();
+
 #endif

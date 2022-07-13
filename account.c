@@ -5,7 +5,7 @@
 static char* stringGet(char *st, int n);
 
 /*
-* 操作：运行登录/注册系统
+* @brief：运行登录/注册系统
 */
 void runLogIn()
 {
@@ -22,8 +22,8 @@ void runLogIn()
 }
 
 /*
-* 操作：显示操作菜单、读取用户的选择的操作
-* 后置条件：显示操作菜单
+* @brief：显示操作菜单、读取用户的选择的操作
+* 
 */
 int getChoice()
 {
@@ -34,14 +34,13 @@ int getChoice()
 		showLoginMessage();
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
-	while (getchar() != '\n')
-		continue;
+	flush();
 
 	return choice;
 }
 
 /*
-* 操作：注册账号
+* @brief：注册账号
 */
 void registration()
 {
@@ -62,8 +61,8 @@ void registration()
 		printf("1.普通用户\n2.管理员\n3.超级管理员\n");
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
-	while (getchar() != '\n')
-		continue;
+	
+	flush();
 	switch (choice)
 	{
 		default:
@@ -92,6 +91,8 @@ void registration()
 		stringGet(secondPassword, LEN_PWD);
 		if (strcmp(firstPassword, secondPassword) == 0) {
 			strcpy(account.password, firstPassword);
+			insert(userDat, END, FILE_USER);
+			writeFile(FILE_USER, userDat, sizeof(User_t));
 			break;
 		}else{
 			printf("两次输入不一致，请重新输入\n");
@@ -101,22 +102,23 @@ void registration()
 }
 
 /*
-*  操作: 登录账号
+*  @brief: 登录账号
 */
 void logIn()
 {
 	int id;
 	char* password[LEN_PWD];
 
-	User_t* accounts = newList();
-	loadFile("account.dat", accounts, sizeof(accounts));
+	do {
+		printf("请输入账号:");
+		scanf("%d", &id);
+	} while (1);
 
 
 }
 
 
 /* 局部函数定义 */
-
 static char* stringGet(char* st, int n)
 {
 	char* ret_val;
@@ -126,7 +128,7 @@ static char* stringGet(char* st, int n)
 	if (ret_val)
 	{
 		find = strchr(st, '\n');
-		if (find){
+		if (find) {
 			*find = '\0';
 		}
 		else {

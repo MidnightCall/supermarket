@@ -43,7 +43,7 @@ void showAdminMenu()
 {
     printf(" ------------------------------------------------\n");
     printf("|                                                |\n");
-    printf("|                1. 商品信息管理                 |\n");
+    printf("|              1. 在售商品信息管理               |\n");
     printf("|                 2. 供货商信息                  |\n");
     printf("|                  3. 订单管理                   |\n");
     printf("|                  4. 库存管理                   |\n");
@@ -152,6 +152,19 @@ void showExitMessage()
     printf("|                    感谢使用                    |\n");
     printf("|                                                |\n");
     printf("|                                                |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
+void showAccountBusinessMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|                 1. 更改管理员权限              |\n");
+    printf("|                 2. 删除管理员账户              |\n");
+    printf("|                  3. 添加用户账户               |\n");
+    printf("|                  4. 查找用户账户               |\n");
+    printf("|                     5. 退出                    |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }

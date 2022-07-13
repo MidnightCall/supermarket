@@ -48,6 +48,21 @@
     <ClInclude Include="UI.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="accountManage.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="superAdminSystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Admin.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="normalUser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="onSaleProduct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -75,6 +90,24 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="UI.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="accountManage.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="helpfulFunction.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="superAdminSystem.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Admin.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="normalUser.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="onSaleProduct.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
