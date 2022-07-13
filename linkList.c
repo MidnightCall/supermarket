@@ -86,7 +86,7 @@ void del(Node_t* head, int pos)
 	return;
 }
 
-void* printUserInfo(UserInfo_t* node)
+void* printUserInfo(User_t* node)
 {
 	printf("%d, %s, %d\n", node->id, node->password, node->permission);
 	return 0;

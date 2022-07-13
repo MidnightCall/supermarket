@@ -6,9 +6,9 @@
 #ifndef __TYPECOLLECTION_H_
 #define __TYPECOLLECTION_H_
 
-const int LEN_PWD = 12;  /* 账户密码最大长度 */
-const int LEN_NAME = 9;  /* 职工名字最大长度 */
-const int LEN_POS = 11;  /* 职工职位最大长度 */
+#define LEN_PWD 12  /* 账户密码最大长度 */
+#define LEN_NAME 9  /* 职工名字最大长度 */
+#define LEN_POS 11  /* 职工职位最大长度 */
 
 #define END 2147483647
 

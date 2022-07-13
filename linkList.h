@@ -36,7 +36,7 @@ void printList(Node_t* head, void (*type)(void*));
 *
 * @param node 要输出的用户信息节点
 */
-void* printUserInfo(UserInfo_t* node);
+void* printUserInfo(User_t* node);
 
 /* 以下函数执行相似功能 */
 
