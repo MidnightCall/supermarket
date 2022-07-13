@@ -5,7 +5,7 @@
 #include "typeCollection.h"
 #include "files.h"
 
-const char* FILE_ACCOUNT  = "data/account.dat";
+const char* FILE_USER     = "data/user.dat";
 const char* FILE_EMPLOYEE = "data/employee.dat";
 const char* FILE_PRODUCT  = "data/product.dat";
 const char* FILE_STORAGE  = "data/storage.dat";
