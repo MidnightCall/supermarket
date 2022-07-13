@@ -6,9 +6,9 @@
 #ifndef __TYPECOLLECTION_H_
 #define __TYPECOLLECTION_H_
 
-#define LEN_PWD 12 /* 账户密码最大长度 */
-#define LEN_NAME 9 /* 职工名字最大长度 */
-#define LEN_POS 11 /* 职工职位最大长度 */
+const int LEN_PWD = 12;  /* 账户密码最大长度 */
+const int LEN_NAME = 9;  /* 职工名字最大长度 */
+const int LEN_POS = 11;  /* 职工职位最大长度 */
 
 #define END 2147483647
 
@@ -32,12 +32,12 @@ typedef struct tagNode_t
 } Node_t;
 
 /* 用户信息 */
-typedef struct tagUserInfo_t
+typedef struct tagUser_t
 {
     int id;
     char password[LEN_PWD];
     PermissionEnum permission;
-} UserInfo_t;
+} User_t;
 
 /* 商品信息节点 */
 typedef struct tagProduct_t

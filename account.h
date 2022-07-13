@@ -1,17 +1,12 @@
-#ifndef LOGIN_H_
-#define LOGIN_H_
+#ifndef __ACCOUNT_H_
+#define __ACCOUNT_H_
 
-#define FLUSH while(getchar() != '\n')
-#define PSIZE 12  /* 存储密码的数组大小 */
-
-struct userInfo
-{
-	int id;
-	char* password[PSIZE];
-};
-
-/* 一般类型定义 */
-typedef struct userInfo UI;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "typeCollection.h"
+#include "UI.h"
+#include "helpfulFunction.h"
 
 /*
 * 操作：运行登录/注册系统
@@ -32,5 +27,6 @@ void registration();
 /*
 * 操作：登录账号
 */
+void logIn();
 
 #endif // !REGGISTER_H_
