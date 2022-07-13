@@ -5,7 +5,7 @@
 
 /* 文件名常量，具体定义在 files.c 中 */
 
-extern const char* FILE_ACCOUNT;
+extern const char* FILE_USER;
 extern const char* FILE_EMPLOYEE;
 extern const char* FILE_PRODUCT;
 extern const char* FILE_STORAGE;

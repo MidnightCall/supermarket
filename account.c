@@ -2,7 +2,7 @@
 
 
 /* 局部函数模型 */
-static char* stringGet(char *st,int n);
+static char* stringGet(char *st, int n);
 
 /*
 * 操作：运行登录/注册系统
@@ -40,7 +40,7 @@ int getChoice()
 }
 
 /*
-* 操作：注册账号
+* 操作：注册账号 12131213132311321132213
 */
 void registration()
 {
@@ -49,7 +49,7 @@ void registration()
 	char * firstPassword[LEN_PWD];
 	char * secondPassword[LEN_PWD];
 
-	printf("你的账号是%d\n", currentAccount);
+	printf("你的账号是 %d\n", currentAccount);
 	account.id = currentAccount++;
 	while (1)
 	{
