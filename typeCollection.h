@@ -47,6 +47,7 @@ typedef struct tagProduct_t
     float price; /* 商品价格 */
 } Product_t;
 
+
 /* 职工信息节点 */
 typedef struct tagEmployee_t
 {
@@ -62,14 +63,20 @@ typedef struct tagSupplier_t
 {
     unsigned int id;
     char name[21];
-    char tel[12];
 } Supplier_t;
+
+/* 上架的商品信息节点 */
+typedef struct tagOnSale_t
+{
+    Product_t product;
+    unsigned int allowance; /* 余量 */
+} OnSale_t;
 
 /* 库存信息节点 */
 typedef struct tagStorage_t
 {
     Product_t product;
-    unsigned int allowance;
+    unsigned int allowance; /* 余量 */
 } Storage_t;
 
 /* 订单商品信息节点 */

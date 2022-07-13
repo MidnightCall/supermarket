@@ -15,12 +15,22 @@
  /**
   * @brief 启动超市管理系统
   */
-void systemStart();
+void systemStart(void);
 
 /**
  * @brief 登录/注册账号
  */
-void logInStart();
+void logInStart(void);
+
+/**
+* @brief 从文件中加载数据
+*/
+void initData(void);
+
+/**
+* @brief 将数据保存到文件中
+*/
+void saveData(void);
 
 /**
  * @brief 启动员工管理模块

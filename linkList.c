@@ -106,7 +106,7 @@ void* printEmployeeInfo(Employee_t* node)
 
 void* printSupplierInfo(Supplier_t* node)
 {
-	printf("%u, %s, %s\n", node->id, node->name, node->tel);
+	printf("%u, %s\n", node->id, node->name);
 	return 0;
 }
 
