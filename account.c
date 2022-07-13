@@ -10,7 +10,6 @@ static char* stringGet(char *st, int n);
 void runLogIn()
 {
 	int choice = getChoice();
-
 	switch (choice)
 	{
 		default:
@@ -35,6 +34,8 @@ int getChoice()
 		showLoginMessage();
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
+	while (getchar() != '\n')
+		continue;
 
 	return choice;
 }
@@ -44,22 +45,47 @@ int getChoice()
 */
 void registration()
 {
+	int choice;
 	User_t account;
 	static int currentAccount = 10000;
 	char * firstPassword[LEN_PWD];
 	char * secondPassword[LEN_PWD];
 
+	/* 账号显示 */
 	printf("你的账号是 %d\n", currentAccount);
 	account.id = currentAccount++;
+
+	/* 账号权限分配 */
+	do
+	{
+		printf("请选择你要注册的权限类型:\n");
+		printf("1.普通用户\n2.管理员\n3.超级管理员\n");
+		scanf("%d", &choice);
+	} while (choice > 3 || choice < 1);
+	while (getchar() != '\n')
+		continue;
+	switch (choice)
+	{
+		default:
+			break;
+		case 1:
+			account.permission = USER;
+			break;
+		case 2:
+			account.permission = ADMIN;
+			break;
+		case 3:
+			account.permission = SU;
+			break;
+	}
+
+	/* 确认密码 */
 	while (1)
 	{
-		while (getchar() != '\n')
-			continue;
 		printf("请输入你的密码:");
 		stringGet(firstPassword, LEN_PWD);
 		if (strlen(firstPassword) < 6) {
 			printf("密码至少六位,请重新输入\n");
-			printf("按(Enter)重新输入..\n");
 			continue;
 		}
 		printf("请确认你的密码:");
@@ -69,7 +95,6 @@ void registration()
 			break;
 		}else{
 			printf("两次输入不一致，请重新输入\n");
-			printf("按(Enter)重新输入..\n");
 		}
 	}
 	printf("注册成功,请重新登录\n");

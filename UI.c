@@ -26,15 +26,41 @@ void showLoginMessage()
     printf(" ------------------------------------------------\n");
 }
 
-void showMainMenu()
+void showSuperAdminMenu()
 {
     printf(" ------------------------------------------------\n");
     printf("|                                                |\n");
-    printf("|                1. 职工信息管理                 |\n");
+    printf("|                                                |\n");
+    printf("|                  1.管理员账户管理              |\n");
+    printf("|                   2.职工信息管理               |\n");
+    printf("|                      3.退出                    |\n");
+    printf("|                                                |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
+void showAdminMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|                1. 商品信息管理                 |\n");
     printf("|                 2. 供货商信息                  |\n");
     printf("|                  3. 订单管理                   |\n");
     printf("|                  4. 库存管理                   |\n");
-    printf("|                     5. 退出                     |\n");
+    printf("|                     5. 退出                    |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
+void showUserMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|                 1. 在售商品查询                |\n");
+    printf("|                  2. 营业额查询                 |\n");
+    printf("|                  3. 购物车管理                 |\n");
+    printf("|                     4. 退出                    |\n");
+    printf("|                                                |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }
@@ -78,6 +104,19 @@ void showOrderBusinessMenu()
     printf(" ------------------------------------------------\n");
 }
 
+void showCurrentOrderMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|                 1. 添加商品                    |\n");
+    printf("|                 2. 删除商品                    |\n");
+    printf("|                3. 交付订单商品                 |\n");
+    printf("|                    4. 退出                     |\n");
+    printf("|                                                |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
 void showStorageBusinessMenu()
 {
     printf(" ------------------------------------------------\n");
@@ -87,6 +126,19 @@ void showStorageBusinessMenu()
     printf("|                      3. 入库                   |\n");
     printf("|                      4. 出库                   |\n");
     printf("|                      5. 退出                   |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
+void showOnSaleBusinessMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|            1. 显示所有在售商品信息             |\n");
+    printf("|              2. 查找在售商品信息               |\n");
+    printf("|            3. 添加新的在售商品信息             |\n");
+    printf("|              4. 删除在售商品信息               |\n");
+    printf("|                    5. 退出                     |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }
