@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="accountManage.h" />
-    <ClInclude Include="Admin.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="linkList.h" />
     <ClInclude Include="helpfulFunction.h" />
@@ -40,6 +38,9 @@
     <ClCompile Include="accountManage.c" />
     <ClCompile Include="Admin.c" />
     <ClCompile Include="helpfulFunction.c" />
+    <ClCompile Include="customLookup.c" />
+    <ClCompile Include="employee.c" />
+    <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="files.c" />
     <ClCompile Include="account.c" />

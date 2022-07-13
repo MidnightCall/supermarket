@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "linkList.h"
 #include "typeCollection.h"
 
@@ -86,46 +87,34 @@ void del(Node_t* head, int pos)
 	return;
 }
 
-void* printUserInfo(User_t* node)
-{
-	printf("%d, %s, %d\n", node->id, node->password, node->permission);
-	return 0;
-}
-
-void* printProductInfo(Product_t* node)
-{
-	printf("%s, %s, %f\n", node->name, node->supplier, node->price);
-	return 0;
-}
-
-void* printEmployeeInfo(Employee_t* node)
-{
-	printf("%u, %u, %d, %s, %s\n", node->id, node->age, node->sex, node->name, node->position);
-	return 0;
-}
-
-void* printSupplierInfo(Supplier_t* node)
-{
-	printf("%u, %s\n", node->id, node->name);
-	return 0;
-}
-
-void* printStorageInfo(Storage_t* node)
-{
-	// TODO
-	return 0;
-}
-
-void* printOrderInfo(Order_t* node)
-{
-	// TODO
-	return 0;
-}
-
-void printList(Node_t* head, void (*type)(void*))
+void retrieveList(Node_t* head, bool(*matching)(int* count, void* data))
 {
 	Node_t* tHead = head;
-	printf("COUNT = %d\n", *(int*)(head->data));
+	int* count = &(head->data), i = 1;
+
+	if (tHead->next == NULL)
+	{
+		return;
+	}
+
+	tHead = head->next;
+
+	while (tHead->next != NULL && i < *count)
+	{
+		//(*operation)(count, tHead->data);
+		tHead = tHead->next;
+	}
+	return;
+}
+
+void printList(Node_t* head, void (*type)(void*), bool count)
+{
+	Node_t* tHead = head;
+	if (count)
+	{
+		printf("COUNT = %d\n", *(int*)(head->data));
+	}
+
 	tHead = tHead->next;
 	while (tHead != NULL)
 	{

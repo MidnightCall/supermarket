@@ -29,7 +29,7 @@ void logInStart(void);
 void initData(void);
 
 /**
-* @brief 将数据保存到文件中
+* @brief 将数据保存到文件中并释放链表使用的内存
 */
 void saveData(void);
 

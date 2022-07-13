@@ -110,5 +110,11 @@
     <ClCompile Include="onSaleProduct.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="employee.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="customLookup.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
