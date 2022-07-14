@@ -20,12 +20,6 @@ void runOnSaleSystem()
 	case 2:
 		queryOnSaleProduct();
 		break;
-	case 3:
-		addOnSaleProduct();
-		break;
-	case 4:
-		delOnSaleProduct();
-		break;
 	}
 	
 }
@@ -49,31 +43,18 @@ void queryOnSaleProduct()
 
 /**
 *  @brief: 添加新的商品
+*  @param product 添加的商品信息
+*  @param allowance 添加的库存数量
 *
 */
-void addOnSaleProduct()
+void addOnSaleProduct(Product_t product, int allowance)
 {
-	OnSale_t* newOnSaleProduct = (OnSale_t*)malloc(sizeof(OnSale_t));
-
-	while (true)
-	{
-		printf("请输入商品id:");
-		scanf("%d",&(newOnSaleProduct->product.id));
-		if (0 != findIndexByID(productDat, newOnSaleProduct->product.id)) {
-			printf("商品id已存在，请重新输入\n");
-		}else{
-			break;
-		}
-	}
-	flush();
-	printf("请输入商品名称:");
-	stringGet(newOnSaleProduct->product.name, 48);
-	printf("请输入供应商名称:");
-	stringGet(newOnSaleProduct->product.supplier, 24);
-	printf("请输入价格($/件):");
-	scanf("%f", &(newOnSaleProduct->product.price));
-	insert(productDat, END, newOnSaleProduct);
-	printf("添加完成\n");
+	OnSale_t onSaleProduct;
+	onSaleProduct.product.id = product.id;
+	onSaleProduct.product.price = product.price;
+	onSaleProduct.allowance = allowance;
+	strcpy(onSaleProduct.product.supplier, product.supplier);
+	// 插入到onSale链表操作
 }
 
 /**
@@ -87,7 +68,7 @@ void delOnSaleProduct()
 	printf("请输入待删除商品id:");
 	scanf("%d", &id);
 	if ((pos = findIndexByID(productDat, id)) != 0) {
-		del(productDat, pos);
+		// 删除对应id的代码
 		printf("删除成功\n");
 	}else {
 		printf("不存在id%d的商品\n", id);
@@ -100,7 +81,7 @@ void delOnSaleProduct()
 */
 void displayOnSaleProduct()
 {
-	printList(productDat, printProductInfo, false);
+	// 打印所有待售商品信息
 }
 
 /* 局部函数实现 */

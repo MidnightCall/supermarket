@@ -41,7 +41,6 @@
   <ItemGroup>
     <ClCompile Include="accountManage.c" />
     <ClCompile Include="Admin.c" />
-    <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="helpfulFunction.c" />
     <ClCompile Include="customLookup.c" />
     <ClCompile Include="employee.c" />

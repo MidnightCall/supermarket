@@ -15,7 +15,7 @@ void runStorageSystem()
 	default:
 		break;
 	case 1:
-		displayStroage();
+		displayStorage();
 		break;
 	case 2:
 		queryProduct();
@@ -75,7 +75,7 @@ void inStorage()
 		stringGet(newStorage->product.name, 48);
 		printf("请输入供应商名称:");
 		stringGet(newStorage->product.supplier, 24);
-		if (findIndexByName_d(supplierDat, newStorage->product.supplier, &supplier, sizeof(Supplier_t)))
+		if (findIndexByName_d(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER, &supplier, sizeof(Supplier_t)))
 		{
 			//生成供应商id
 			strcpy(supplier.name, newStorage->product.supplier);
