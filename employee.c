@@ -244,7 +244,8 @@ void findEmployee(void)
 			index = findIndexByID_d(employeeDat, tId, &tEmployee, sizeof(Employee_t));
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。按 Enter 键继续。\b");
+				printf("没有符合条件的员工。\b");
+				system("pause");
 				return;
 			}
 			showSingleEmployee(tEmployee);
