@@ -6,7 +6,7 @@ void flush()
 		continue;
 }
 
-static char* stringGet(char* st, int n)
+char* stringGet(char* st, int n)
 {
 	char* ret_val;
 	char* find;

@@ -67,7 +67,7 @@ void insert(Node_t* head, int pos, void* data)
 void del(Node_t* head, int pos)
 {
 	Node_t* tHead = head, * prev = NULL;
-	int* count = &(head->data), i = 0;
+	int* count = head->data, i = 0;
 	if (pos > *count || pos < 1)
 	{
 		printf("错误：无效的索引。\b\n");

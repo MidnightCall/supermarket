@@ -8,6 +8,7 @@
 #include "files.h"
 #include "linkList.h"
 #include "helpfulFunction.h"
+#include "customLookup.h"
 
 extern Node_t* productDat;
 

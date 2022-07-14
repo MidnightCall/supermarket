@@ -2,7 +2,6 @@
 
 /* 局部函数模型 */
 static int getChoice();
-static char* stringGet(char* st, int n);
 
 /**
 *  @brief: 运行在售商品操作
@@ -37,7 +36,15 @@ void runOnSaleSystem()
 */
 void queryOnSaleProduct()
 {
-
+	int id;
+	Product_t product;
+	printf("请输入待查询的商品id:");
+	scanf("%d", &id);
+	if (findIndexByID_d(productDat, id, &product, sizeof(Product_t) != 0)) {
+		printProductInfo(&product);
+	}else {
+		printf("不存在%d号商品\n");
+	}
 }
 
 /**
@@ -51,7 +58,7 @@ void addOnSaleProduct()
 	while (true)
 	{
 		printf("请输入商品id:");
-		scanf("%d", newProduct->id);
+		scanf("%d",& newProduct->id);
 		if (findIndexByID(productDat, newProduct->id) != 0) {
 			printf("商品id已存在，请重新输入\n");
 		}else{
@@ -64,9 +71,8 @@ void addOnSaleProduct()
 	printf("请输入供应商名称:");
 	stringGet(newProduct->supplier, 24);
 	printf("请输入价格($/件):");
-	scanf("%f", newProduct->price);
+	scanf("%f", &newProduct->price);
 	insert(productDat, END, newProduct);
-	writeFile(FILE_PRODUCT, newProduct, sizeof(Product_t));
 	printf("添加完成\n");
 }
 
@@ -76,7 +82,16 @@ void addOnSaleProduct()
 */
 void delOnSaleProduct()
 {
-
+	int id;
+	int pos;
+	printf("请输入待删除商品id:");
+	scanf("%d", &id);
+	if ((pos = findIndexByID(productDat, id)) != 0) {
+		del(productDat, pos);
+		printf("删除成功\n");
+	}else {
+		printf("不存在id%d的商品\n", id);
+	}
 }
 
 /**
@@ -100,25 +115,4 @@ static int getChoice()
 	} while (choice > 5 || choice < 1);
 
 	return choice;
-}
-
-static char* stringGet(char* st, int n)
-{
-	char* ret_val;
-	char* find;
-
-	ret_val = fgets(st, n, stdin);
-	if (ret_val)
-	{
-		find = strchr(st, '\n');
-		if (find) {
-			*find = '\0';
-		}
-		else {
-			while (getchar() != '\n')
-				continue;
-		}
-	}
-
-	return ret_val;
 }

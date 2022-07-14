@@ -16,7 +16,7 @@ void printUserInfo(User_t* node)
 
 void printProductInfo(Product_t* node)
 {
-	printf("%s, %s, %f\n", node->name, node->supplier, node->price);
+	printf("%d, %s, %s, %f\n",node->id, node->name, node->supplier, node->price);
 	return;
 }
 

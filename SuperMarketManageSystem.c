@@ -9,7 +9,7 @@ void systemStart()
 {
 	initData();
 	showWelcomeMessage();
-	runLogIn();
+	runAdminSystem();
 	saveData();
 }
 
