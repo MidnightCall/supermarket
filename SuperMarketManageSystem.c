@@ -10,6 +10,7 @@ void systemStart()
 	initData();
 	showWelcomeMessage();
 	runLogIn();
+	saveData();
 }
 
 /**

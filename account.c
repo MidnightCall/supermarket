@@ -4,11 +4,27 @@
 /* 局部函数模型 */
 static char* stringGet(char* st, int n);
 
+extern Node_t* userDat;
+
 /*
 * @brief：运行登录/注册系统
 */
 void runLogIn()
 {
+	if (0 == *(int*)userDat->data) /* 如果文件里一个账户都没有，则自动创建一个超管 (SU) */ /* passed */
+	{
+		User_t Su = { 10000, "nE0ntLUlE", SU }; /* 超管默认属性 */
+		User_t* newSu = (User_t*)malloc(sizeof(User_t));
+
+		if (NULL == newSu)
+		{
+			printf("超级管理员账户初始化失败。\b\n");
+			exit(0);
+		}
+		memcpy(newSu, &Su, sizeof(User_t));
+		insert(userDat, END, newSu);
+	}
+
 	int choice = getChoice();
 	switch (choice)
 	{
@@ -19,6 +35,9 @@ void runLogIn()
 			break;
 		case 2:
 			registration();
+			break;
+		case 3:
+			showExitMessage();
 			break;
 	}
 }

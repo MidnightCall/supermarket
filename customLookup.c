@@ -10,7 +10,7 @@ const int OFFSET_SUPPLIER = 4;
 
 void printUserInfo(User_t* node)
 {
-	printf("%d, %s, %d\n", node->id, node->password, node->permission);
+	printf("%u, %s, %d\n", node->id, node->password, node->permission);
 	return;
 }
 
