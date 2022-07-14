@@ -2,7 +2,7 @@
 #include "helpfulFunction.h"
 
 /* 局部函数模型 */
-static char* stringGet(char* st, int n);
+//static char* stringGet(char* st, int n);
 
 extern Node_t* userDat;
 
@@ -145,8 +145,9 @@ void logIn()
 				currentUser.permission = account.permission;
 				strcpy(currentUser.password, account.password);
 				break;
-			}else{
+			} else {
 				printf("密码错误,请重新输入账号和密码\n");
+				flush();
 				continue;
 			}
 		}
@@ -158,7 +159,7 @@ void logIn()
 	
 }
 
-/* 局部函数定义 */
+/* 局部函数定义 
 static char* stringGet(char* st, int n)
 {
 	char* ret_val;
@@ -176,6 +177,6 @@ static char* stringGet(char* st, int n)
 				continue;
 		}
 	}
-
 	return ret_val;
 }
+*/

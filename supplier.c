@@ -54,7 +54,7 @@ void addSupplier()
 */
 void delSupplier()
 {
-
+	
 }
 
 /**
