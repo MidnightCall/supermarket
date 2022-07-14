@@ -19,4 +19,13 @@ void flush();
 */
 char* stringGet(char* st, int n);
 
+/**
+* @brief 判断字符串是否含非数字字符
+* 
+* @param str 需要检测的字符串
+* 
+* @return 如果含非数字字符，返回 false；如果不含，返回 true.
+*/
+bool hasNonNumerical(char* str);
+
 #endif 

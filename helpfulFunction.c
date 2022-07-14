@@ -1,5 +1,7 @@
 #include "helpfulFunction.h"
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 void flush()
 {
@@ -24,6 +26,17 @@ char* stringGet(char* st, int n)
 				continue;
 		}
 	}
-
 	return ret_val;
+}
+
+bool hasNonNumerical(char* str)
+{
+	for (int i = 0; i < strlen(str); ++i)
+	{
+		if (!isdigit(str[i]))
+		{
+			return true;
+		}
+	}
+	return false;
 }
