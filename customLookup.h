@@ -1,6 +1,7 @@
 #ifndef __CUSTOM_LOOKUP_H_
 #define __CUSTOM_LOOKUP_H_
 
+/* ÄÚ´æÆ«ÒÆÖµ */
 extern const int OFFSET_PRODUCT;
 extern const int OFFSET_EMPLOYEE;
 extern const int OFFSET_SUPPLIER;

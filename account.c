@@ -75,38 +75,13 @@ void registration()
 	printf("你的账号是 %d\n", currentAccount);
 	account->id = currentAccount++;
 
-	/* 账号权限分配
-	do
-	{
-		printf("请选择你要注册的权限类型:\n");
-		printf("1.普通用户\n2.管理员\n3.超级管理员\n");
-		scanf("%d", &choice);
-	} while (choice > 3 || choice < 1);
-	
-	flush();
-	switch (choice)
-	{
-		default:
-			break;
-		case 1:
-			account->permission = COMMON;
-			break;
-		case 2:
-			account->permission = ADMIN;
-			break;
-		case 3:
-			account->permission = SU;
-			break;
-	}
-	*/
-
 	/* 确认密码 */
 	while (1)
 	{
 		printf("请输入你的密码: ");
 		stringGet(firstPassword, LEN_PWD);
 		if (strlen(firstPassword) < 6) {
-			printf("密码至少六位，请重新输入\n");
+			printf("密码至少六位，请重新输入.\n");
 			continue;
 		}
 		printf("请确认你的密码:");
@@ -153,7 +128,6 @@ void logIn()
 		User_t account;
 		if (findIndexByID_d(userDat, id, &account, sizeof(User_t)) != 0) {
 			printf("你好，ID %d 的用户\n", id);
-			flush();
 			printf("请输入密码:");
 			stringGet(password, LEN_PWD);
 			if (strcmp(password, account.password) == 0) {

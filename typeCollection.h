@@ -31,6 +31,16 @@ typedef struct tagNode_t
     struct tagNode_t* next;
 } Node_t;
 
+/* 程序设置信息节点 */
+typedef struct tagConfig_t
+{
+    unsigned int maxId_User; /* 5 位 */
+    unsigned int maxId_Product; /* 6 位 */
+    unsigned int maxId_Employee; /* 4 位 */
+    unsigned int maxId_Supplier; /* 3 位 */
+    unsigned int maxId_Order; /* 7 位 */
+} Config_t;
+
 /* 用户信息 */ /* size: 20 */
 typedef struct tagUser_t
 {
@@ -66,40 +76,32 @@ typedef struct tagSupplier_t
     char name[21];
 } Supplier_t;
 
-/* 上架的商品信息节点 */ /* size: 80 */
+/* 上架的商品信息节点 */ /* size: 84 */
 typedef struct tagOnSale_t 
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } OnSale_t;
 
-/* 库存信息节点 */ /* size: 80 */
+/* 库存信息节点 */ /* size: 84 */
 typedef struct tagStorage_t
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } Storage_t;
 
-/* 订单商品信息节点 */ /* size: 80 */
+/* 订单商品信息节点 */ /* size: 84 */
 typedef struct tagOrderItem_t
 {
     Product_t product;
     unsigned int quantity;
 } OrderItem_t;
 
-/* 订单信息节点 */ /* size: 8012 */
+/* 订单信息节点 */ /* size: 8412 */
 typedef struct tagOrder_t
 {
+    unsigned int id;
     char customer[LEN_NAME];
     OrderItem_t items[100];
 } Order_t;
-
-/* 程序设置信息节点 */
-typedef struct tagConfig_t
-{
-    unsigned int userId;
-    unsigned int productId;
-    unsigned int employeeId;
-    unsigned int supplierId;
-} Config_t;
 #endif

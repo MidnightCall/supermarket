@@ -14,6 +14,7 @@ void showWelcomeMessage()
 }
 
 void showLoginMessage()
+
 {
     printf(" ------------------------------------------------\n");
     printf("|                                                |\n");
@@ -31,9 +32,9 @@ void showSuperAdminMenu()
     printf(" ------------------------------------------------\n");
     printf("|                                                |\n");
     printf("|                                                |\n");
-    printf("|                  1.管理员账户管理              |\n");
-    printf("|                   2.职工信息管理               |\n");
-    printf("|                      3.退出                    |\n");
+    printf("|                  1. 账户管理                   |\n");
+    printf("|                  2. 职工信息管理               |\n");
+    printf("|                  3. 退出                       |\n");
     printf("|                                                |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
@@ -86,7 +87,7 @@ void showSupplierBusinessMenu()
     printf("|                2. 查找供应商信息               |\n");
     printf("|                3. 添加供应商信息               |\n");
     printf("|                4. 删除供应商信息               |\n");
-    printf("|                      5. 退出                    |\n");
+    printf("|                      5. 退出                   |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }
@@ -98,7 +99,7 @@ void showOrderBusinessMenu()
     printf("|              1. 显示所有订单信息               |\n");
     printf("|                2. 查找订单信息                 |\n");
     printf("|                3. 添加新的订单                 |\n");
-    printf("|               4. 删除订单商信息               |\n");
+    printf("|               4. 删除订单商信息                |\n");
     printf("|                     5. 退出                    |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
@@ -160,11 +161,10 @@ void showAccountBusinessMenu()
 {
     printf(" ------------------------------------------------\n");
     printf("|                                                |\n");
-    printf("|                 1. 更改管理员权限              |\n");
-    printf("|                 2. 删除管理员账户              |\n");
-    printf("|                  3. 添加用户账户               |\n");
-    printf("|                  4. 查找用户账户               |\n");
-    printf("|                     5. 退出                    |\n");
+    printf("|               1. 显示所有用户信息              |\n");
+    printf("|               2. 查询用户信息                  |\n");
+    printf("|               3. 更改用户权限                  |\n");
+    printf("|               4. 注销用户                      |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }

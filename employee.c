@@ -118,11 +118,11 @@ void deleteEmployee(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================查找员工==================\n");
+	printf("================删除员工==================\n");
 	unsigned int op = 0;
 	while (true)
 	{
-		printf("选择操作条件 [0: ID, 1: 姓名]: ");
+		printf("选择查找条件 [0: ID, 1: 姓名]: ");
 		scanf("%u", &op);
 		if (op != 0 && op != 1)
 		{

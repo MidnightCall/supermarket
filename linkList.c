@@ -94,26 +94,19 @@ void del(Node_t* head, int pos)
 	return;
 }
 
-/* retrieveList: 仍未完成 */
+/* getData: 未检查 */
 
-void retrieveList(Node_t* head, bool(*matching)(int* count, void* data))
+void* getData(Node_t* head, int index)
 {
 	Node_t* tHead = head;
-	int* count = &(head->data), i = 1;
-
-	if (tHead->next == NULL)
-	{
-		return;
-	}
-
+	if (NULL == tHead->next)
+		return NULL;
+	
 	tHead = head->next;
-
-	while (tHead->next != NULL && i < *count)
-	{
-		//(*operation)(count, tHead->data);
+	int i = 1;
+	while (tHead->next != NULL && i < index)
 		tHead = tHead->next;
-	}
-	return;
+	return tHead->data;
 }
 
 /* printList: 已检查 */
@@ -121,9 +114,9 @@ void retrieveList(Node_t* head, bool(*matching)(int* count, void* data))
 void printList(Node_t* head, void (*type)(void*), bool count)
 {
 	Node_t* tHead = head;
-	if (count)
+	if (count) /* 仅作调试用途 */
 	{
-		printf("COUNT = %d\n", *(int*)(head->data));
+		printf("[COUNT = %d, %s: %d]\n", *(int*)(head->data), __FILE__, __LINE__);
 	}
 
 	tHead = tHead->next;

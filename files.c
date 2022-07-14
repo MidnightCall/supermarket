@@ -12,8 +12,13 @@ const char* FILE_ONSALE   = "data/onsale.dat";
 const char* FILE_STORAGE  = "data/storage.dat";
 const char* FILE_SUPPLIER = "data/supplier.dat";
 const char* FILE_ORDER    = "data/order.dat";
+const char* FILE_CONFIG   = "data/config.dat";
 
-void loadFile(const char* filename, Node_t* head, size_t size)
+extern Config_t configDat;
+
+/* loadFile: 已完成 */
+
+void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* curMaxId)
 {
 	FILE* fp = fopen(filename, "ab+"); /* 如果文件不存在则自动创建 */
 	if (NULL == fp)
@@ -37,6 +42,8 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 			exit(0);
 		}
 		fread(node, size, 1, fp);
+		if (curMaxId != NULL)
+			*curMaxId = *(unsigned int*)node; /* 由于默认插在链表尾，所以最大的 ID 应出现在最后一次插入的地方。故这里每次进行刷新 */
 		insert(tHead, END, node);
 	}
 
@@ -44,9 +51,10 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 	return;
 }
 
+/* loadFile: 已完成 */
+
 void writeFile(const char* filename, Node_t* head, size_t size)
 {
-	// TODO, 未改成覆写
 	FILE* fp = fopen(filename, "wb");
 	Node_t* tHead = head;
 	int count = *(int*)(head->data);
@@ -72,4 +80,39 @@ void writeFile(const char* filename, Node_t* head, size_t size)
 
 	fclose(fp);
 	return;
+}
+
+void loadConfig()
+{
+	FILE* fp = fopen(FILE_CONFIG, "ab+"); /* 如果文件不存在则自动创建 */
+	if (NULL == fp)
+	{
+		printf("文件 %s 打开失败。\b\n", FILE_CONFIG);
+		exit(0);
+	}
+	fread(&configDat, sizeof(Config_t), 1, fp);
+	fclose(fp);
+	return;
+}
+
+void saveConfig()
+{
+	FILE* fp = fopen(FILE_CONFIG, "wb");
+	if (NULL == fp)
+	{
+		printf("文件 %s 打开失败。\b\n", FILE_CONFIG);
+		exit(0);
+	}
+	fwrite(&configDat, sizeof(Config_t), 1, fp);
+	fclose(fp);
+	return;
+}
+
+void printConfig()
+{
+	printf("maxId_User: %u\n", configDat.maxId_User);
+	printf("maxId_Product: %u\n", configDat.maxId_Product);
+	printf("maxId_Employee: %u\n", configDat.maxId_Employee);
+	printf("maxId_Supplier: %u\n", configDat.maxId_Supplier);
+	printf("maxId_Order: %u\n", configDat.maxId_Order);
 }

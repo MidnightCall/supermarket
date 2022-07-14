@@ -23,21 +23,19 @@ void runAccountManage();
 void queryUser();
 
 /**
-*  @brief: 更改用户权限
-* 
-*/
-void modifyUserPermission();
-
-/**
 *  @brief: 删除用户账户
 *
 */
-void deleteUserInfo();
+void deleteUser();
 
 /**
-*  @brief: 添加用户
+*  @brief: 更改用户权限
 *
 */
-void addUserInfo();
+void modifyUserPermission();
+
+void showSingleUser(User_t e);
+
+void showAllUsers(void);
 
 #endif
