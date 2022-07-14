@@ -88,4 +88,11 @@ void showExitMessage();
  */
 void showAccountBusinessMenu();
 
+/**
+ * @brief 展示商品管理界面
+ *
+ */
+
+void showProductMenu();
+
 #endif

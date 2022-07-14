@@ -45,7 +45,7 @@ void showAdminMenu()
     printf("|                                                |\n");
     printf("|              1. 在售商品信息管理               |\n");
     printf("|                 2. 供货商信息                  |\n");
-    printf("|                  3. 订单管理                   |\n");
+    printf("|                  3. 订单审核                   |\n");
     printf("|                  4. 库存管理                   |\n");
     printf("|                     5. 退出                    |\n");
     printf("|                                                |\n");
@@ -165,6 +165,19 @@ void showAccountBusinessMenu()
     printf("|                  3. 添加用户账户               |\n");
     printf("|                  4. 查找用户账户               |\n");
     printf("|                     5. 退出                    |\n");
+    printf("|                                                |\n");
+    printf(" ------------------------------------------------\n");
+}
+
+void showProductMenu()
+{
+    printf(" ------------------------------------------------\n");
+    printf("|                                                |\n");
+    printf("|              1. 显示所有商品信息               |\n");
+    printf("|                2. 查找商品信息                 |\n");
+    printf("|              3. 添加新的商品信息               |\n");
+    printf("|                4. 删除商品信息                 |\n");
+    printf("|                    5. 退出                     |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");
 }

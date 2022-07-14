@@ -9,7 +9,7 @@
 #include "linkList.h"
 #include "helpfulFunction.h"
 
-extern Node_t* supplierDat;
+extern Node_t* supplierDat,* productDat;
 
 /**
 *  @brief: 运行供应商操作

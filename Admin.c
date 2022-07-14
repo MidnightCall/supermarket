@@ -21,7 +21,7 @@ void runAdminSystem()
 			// 订单管理
 			break;
 		case 4:
-			//库存管理
+			runStorageSystem();
 			break;
 	}
 }

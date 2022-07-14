@@ -10,7 +10,6 @@ static int getChoice();
 void runOnSaleSystem()
 {
 	int choice = getChoice();
-
 	switch (choice)
 	{
 	default:
@@ -28,6 +27,7 @@ void runOnSaleSystem()
 		delOnSaleProduct();
 		break;
 	}
+	
 }
 
 /**
@@ -37,29 +37,29 @@ void runOnSaleSystem()
 void queryOnSaleProduct()
 {
 	int id;
-	Product_t product;
+	OnSale_t onSale;
 	printf("请输入待查询的商品id:");
 	scanf("%d", &id);
-	if (findIndexByID_d(productDat, id, &product, sizeof(Product_t) != 0)) {
-		printProductInfo(&product);
+	if (findIndexByID_d(productDat, id, &onSale, sizeof(Product_t)) != 0/* 此处替换为查询上架商品的操作 */) {
+		/* 打印单条上架商品信息 */
 	}else {
-		printf("不存在%d号商品\n");
+		printf("不存在%d号商品\n", id);
 	}
 }
 
 /**
-*  @brief: 添加代售商品
+*  @brief: 添加新的商品
 *
 */
 void addOnSaleProduct()
 {
-	Product_t* newProduct = (Product_t*)malloc(sizeof(Product_t));
+	OnSale_t* newOnSaleProduct = (OnSale_t*)malloc(sizeof(OnSale_t));
 
 	while (true)
 	{
 		printf("请输入商品id:");
-		scanf("%d",& newProduct->id);
-		if (findIndexByID(productDat, newProduct->id) != 0) {
+		scanf("%d",&(newOnSaleProduct->product.id));
+		if (0 != findIndexByID(productDat, newOnSaleProduct->product.id)) {
 			printf("商品id已存在，请重新输入\n");
 		}else{
 			break;
@@ -67,12 +67,12 @@ void addOnSaleProduct()
 	}
 	flush();
 	printf("请输入商品名称:");
-	stringGet(newProduct->name, 48);
+	stringGet(newOnSaleProduct->product.name, 48);
 	printf("请输入供应商名称:");
-	stringGet(newProduct->supplier, 24);
+	stringGet(newOnSaleProduct->product.supplier, 24);
 	printf("请输入价格($/件):");
-	scanf("%f", &newProduct->price);
-	insert(productDat, END, newProduct);
+	scanf("%f", &(newOnSaleProduct->product.price));
+	insert(productDat, END, newOnSaleProduct);
 	printf("添加完成\n");
 }
 
