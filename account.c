@@ -16,8 +16,10 @@ void runLogIn()
 			break;
 		case 1:
 			logIn();
+			break;
 		case 2:
 			registration();
+			break;
 	}
 }
 
@@ -92,7 +94,6 @@ void registration()
 		if (strcmp(firstPassword, secondPassword) == 0) {
 			strcpy(account->password, firstPassword);
 			insert(userDat, END, account);
-			writeFile(FILE_USER, userDat, sizeof(User_t));
 			break;
 		}else{
 			printf("两次输入不一致，请重新输入\n");
@@ -107,21 +108,35 @@ void registration()
 void logIn()
 {
 	int id;
-	char* password[LEN_PWD];
+	char password[LEN_PWD];
 
-	
-	printf("请输入账号:");
-	scanf("%d", &id);
-	if (findIndexByID(userDat, id) != 0) {
-		printf("你好,id%d的用户", id);
-		printf("请输入密码:");
-		stringGet(password, LEN_PWD);
-	}else{
-		printf("账号不存在,请重新确认后输入\n");
+	while (true)
+	{
+		printf("请输入账号:");
+		scanf("%d", &id);
+		User_t account;
+		if (findIndexByID_d(userDat, id, &account, sizeof(User_t)) != 0) {
+			printf("你好,id%d的用户\n", id);
+			flush();
+			printf("请输入密码:");
+			stringGet(password, LEN_PWD);
+			if (strcmp(password, account.password) == 0) {
+				printf("登陆成功\n");
+				currentUser.id = account.id;
+				currentUser.permission = account.permission;
+				strcpy(currentUser.password, account.password);
+				break;
+			}else{
+				printf("密码错误,请重新输入账号和密码\n");
+				continue;
+			}
+		}
+		else {
+			printf("账号不存在,请重新确认后输入\n");
+			continue;
+		}
 	}
 	
-
-
 }
 
 /* 局部函数定义 */

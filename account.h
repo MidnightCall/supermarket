@@ -10,8 +10,10 @@
 #include "linkList.h"
 #include "files.h"
 #include "helpfulFunction.h"
+#include "customLookup.h"
 
 extern Node_t* userDat;
+extern User_t currentUser;
 
 /*
 * 操作：运行登录/注册系统

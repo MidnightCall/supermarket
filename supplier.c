@@ -45,7 +45,7 @@ void querySupplier()
 */
 void addSupplier()
 {
-	printf("请输入供货商提供的商品名称")
+	printf("请输入供货商提供的商品名称");
 }
 
 /**
