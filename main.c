@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "SupermarketManageSystem.h"
 
-
 #ifndef __DEBUG
+
 int main(void)
 {
 	systemStart();

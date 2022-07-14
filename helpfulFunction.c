@@ -1,4 +1,5 @@
 #include "helpfulFunction.h"
+#include <stdio.h>
 
 void flush()
 {

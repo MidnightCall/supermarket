@@ -24,11 +24,6 @@ typedef enum tagSexEnum
     FEMALE = 0, MALE = 1
 } SexEnum;
 
-typedef enum tagRequiredTypeEnum
-{
-    USER, PRODUCT, EMPLOYEE, SUPPLIER, ONSALE, STORAGE, ORDERITEM, ORDER
-} RequiredTypeEnum;
-
 /* 通用链表节点 */
 typedef struct tagNode_t
 {
@@ -44,7 +39,7 @@ typedef struct tagUser_t
     PermissionEnum permission;
 } User_t;
 
-/* 商品信息节点 */ /* size: 76 */
+/* 商品信息节点 */ /* size: 80 */
 typedef struct tagProduct_t
 {
     unsigned int id;
@@ -98,4 +93,13 @@ typedef struct tagOrder_t
     char customer[LEN_NAME];
     OrderItem_t items[100];
 } Order_t;
+
+/* 程序设置信息节点 */
+typedef struct tagConfig_t
+{
+    unsigned int userId;
+    unsigned int productId;
+    unsigned int employeeId;
+    unsigned int supplierId;
+} Config_t;
 #endif

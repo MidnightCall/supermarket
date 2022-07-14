@@ -8,9 +8,11 @@
 extern const char* FILE_USER;
 extern const char* FILE_EMPLOYEE;
 extern const char* FILE_PRODUCT;
+extern const char* FILE_ONSALE;
 extern const char* FILE_STORAGE;
 extern const char* FILE_SUPPLIER;
 extern const char* FILE_ORDER;
+
 
 /**
 * @brief 从文件中加载数据

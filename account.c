@@ -1,4 +1,5 @@
 #include "account.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static char* stringGet(char* st, int n);
@@ -67,7 +68,7 @@ void registration()
 		default:
 			break;
 		case 1:
-			account->permission = USER;
+			account->permission = COMMON;
 			break;
 		case 2:
 			account->permission = ADMIN;

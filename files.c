@@ -8,6 +8,7 @@
 const char* FILE_USER     = "data/user.dat";
 const char* FILE_EMPLOYEE = "data/employee.dat";
 const char* FILE_PRODUCT  = "data/product.dat";
+const char* FILE_ONSALE   = "data/onsale.dat";
 const char* FILE_STORAGE  = "data/storage.dat";
 const char* FILE_SUPPLIER = "data/supplier.dat";
 const char* FILE_ORDER    = "data/order.dat";
@@ -29,7 +30,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 
 	while (length != ftell(fp))
 	{
-		User_t* node = (User_t*)malloc(sizeof(User_t)); /* 创建新节点用于存储数据 */
+		void* node = (void*)malloc(size); /* 创建新节点用于存储数据 */
 		if (NULL == node)
 		{
 			printf("链表节点初始化失败。\b\n");
