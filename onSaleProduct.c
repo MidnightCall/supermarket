@@ -38,12 +38,12 @@ void queryOnSaleProduct()
 {
 	int id;
 	Product_t product;
-	printf("请输入待查询的商品id:");
+	printf("请输入待查询的商品 ID: ");
 	scanf("%d", &id);
-	if (findIndexByID_d(productDat, id, &product, sizeof(Product_t) != 0)) {
+	if (findIndexByID_d(productDat, id, &product, sizeof(Product_t)) != 0) {
 		printProductInfo(&product);
 	}else {
-		printf("不存在%d号商品\n");
+		printf("不存在 %d 号商品\n", id);
 	}
 }
 

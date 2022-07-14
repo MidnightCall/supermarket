@@ -40,12 +40,14 @@ void del(Node_t* head, int pos);
 void printList(Node_t* head, void (*type)(void*), bool count);
 
 /**
-* @brief 对链表进行遍历查找操作
-*
-* @param head 要遍历的链表头指针
-* @param operation 要对链表数据进行的操作
+* @brief 获取链表中位置在 index 处的数据
+* 
+* @param head 内容所在的的链表头指针
+* @param index 内容在链表中的位置 (索引)
+* 
+* @return 目标数据的地址。若链表为空，则返回 NULL.
 */
-void retrieveList(Node_t* head, bool(*operation)(Node_t*, void* data));
+void* getData(Node_t* head, int index);
 
 
 /**
