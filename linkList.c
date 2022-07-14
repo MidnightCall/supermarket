@@ -73,6 +73,7 @@ void del(Node_t* head, int pos)
 		printf("错误：无效的索引。\b\n");
 		return;
 	}
+
 	while (i != pos)
 	{
 		prev = tHead;

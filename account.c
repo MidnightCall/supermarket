@@ -1,5 +1,6 @@
 #include "account.h"
 #include "helpfulFunction.h"
+#include <stdbool.h>
 
 extern Node_t* userDat;
 
@@ -34,6 +35,7 @@ void runLogIn()
 			registration();
 			break;
 		case 3:
+			system("cls");
 			showExitMessage();
 			break;
 	}
@@ -62,6 +64,7 @@ int getChoice()
 */
 void registration()
 {
+	printList(userDat, printUserInfo, false);
 	int choice;
 	User_t* account = (User_t*) malloc(sizeof(User_t));
 	static int currentAccount = 10000;
@@ -72,7 +75,7 @@ void registration()
 	printf("你的账号是 %d\n", currentAccount);
 	account->id = currentAccount++;
 
-	/* 账号权限分配 */
+	/* 账号权限分配
 	do
 	{
 		printf("请选择你要注册的权限类型:\n");
@@ -95,27 +98,29 @@ void registration()
 			account->permission = SU;
 			break;
 	}
+	*/
 
 	/* 确认密码 */
 	while (1)
 	{
-		printf("请输入你的密码:");
+		printf("请输入你的密码: ");
 		stringGet(firstPassword, LEN_PWD);
 		if (strlen(firstPassword) < 6) {
-			printf("密码至少六位,请重新输入\n");
+			printf("密码至少六位，请重新输入\n");
 			continue;
 		}
 		printf("请确认你的密码:");
 		stringGet(secondPassword, LEN_PWD);
 		if (strcmp(firstPassword, secondPassword) == 0) {
 			strcpy(account->password, firstPassword);
+			account->permission = COMMON; /* 默认为普通用户 */
 			insert(userDat, END, account);
 			break;
 		}else{
 			printf("两次输入不一致，请重新输入\n");
 		}
 	}
-	printf("注册成功,请重新登录\n");
+	printf("注册成功，请重新登录。\n");
 }
 
 /*
@@ -124,15 +129,30 @@ void registration()
 void logIn()
 {
 	int id;
+	char rawId[10]; /* ID 原始字符串 */
 	char password[LEN_PWD];
 
 	while (true)
 	{
-		printf("请输入账号:");
-		scanf("%d", &id);
+		printf("请输入账号: ");
+		stringGet(rawId, 10);
+		if (strlen(rawId) > 5)
+		{
+			printf("你输入的 ID 过长，请重新输入。\n");
+			continue;
+		}
+
+		if (hasNonNumerical(rawId))
+		{
+			printf("你输入的 ID 格式有误，请重新输入。\n");
+			continue;
+		}
+
+		id = atoi(rawId);
+
 		User_t account;
 		if (findIndexByID_d(userDat, id, &account, sizeof(User_t)) != 0) {
-			printf("你好,id%d的用户\n", id);
+			printf("你好，ID %d 的用户\n", id);
 			flush();
 			printf("请输入密码:");
 			stringGet(password, LEN_PWD);
@@ -142,39 +162,16 @@ void logIn()
 				currentUser.permission = account.permission;
 				strcpy(currentUser.password, account.password);
 				break;
-			}else{
+			} else {
 				printf("密码错误,请重新输入账号和密码\n");
+				flush();
 				continue;
 			}
 		}
 		else {
-			printf("账号不存在,请重新确认后输入\n");
+			printf("账号不存在，请重新确认后输入\n");
 			continue;
 		}
 	}
 	
-
-
-}
-
-/* 局部函数定义 */
-static char* stringGet(char* st, int n)
-{
-	char* ret_val;
-	char* find;
-
-	ret_val = fgets(st, n, stdin);
-	if (ret_val)
-	{
-		find = strchr(st, '\n');
-		if (find) {
-			*find = '\0';
-		}
-		else {
-			while (getchar() != '\n')
-				continue;
-		}
-	}
-
-	return ret_val;
 }
