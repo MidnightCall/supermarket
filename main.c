@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "SupermarketManageSystem.h"
 
+#define __DEBUG
 #ifndef __DEBUG
 
 int main(void)

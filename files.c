@@ -46,6 +46,7 @@ void loadFile(const char* filename, Node_t* head, size_t size)
 
 void writeFile(const char* filename, Node_t* head, size_t size)
 {
+	// TODO, δ�ĳɸ�д
 	FILE* fp = fopen(filename, "wb");
 	Node_t* tHead = head;
 	int count = *(int*)(head->data);
