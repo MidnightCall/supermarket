@@ -38,7 +38,8 @@ void initData(void)
 	loadFile(FILE_SUPPLIER, supplierDat, sizeof(Supplier_t), &configDat.maxId_Supplier);
 	loadFile(FILE_ORDER, orderDat, sizeof(Order_t), &configDat.maxId_Order);
 	loadConfig();
-	printConfig();
+
+	printConfig(); /* Debug */
 	return;
 }
 

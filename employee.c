@@ -7,9 +7,7 @@
 #include "employee.h"
 
 extern Node_t* employeeDat;
-
-static unsigned int id = 1000;
-
+extern Config_t configDat;
 
 void showSingleEmployee(Employee_t e)
 {
@@ -46,12 +44,12 @@ void addEmployee(void)
 		exit(0);
 	}
 
-	e->id = id++;
+	e->id = ++configDat.maxId_Employee; /* 自动赋予 ID */
 	printf("================添加员工==================\n");
 	while (true)
 	{
 		printf("请输入员工姓名: ");
-		scanf_s("%[^\n]", &buffer);
+		scanf("%[^\n]", &buffer);
 		if (strlen(buffer) > LEN_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
 		{
 			printf("你输入的姓名过长，请重新输入。\b\n");

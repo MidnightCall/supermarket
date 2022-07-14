@@ -34,7 +34,7 @@ void addProduct();
 *  @brief: 删除商品
 *
 */
-void delOnSaleProduct();
+void delProduct();
 
 /**
 *  @brief: 显示所有代售商品信息
