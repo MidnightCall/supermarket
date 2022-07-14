@@ -5,3 +5,4 @@ void flush()
 	while (getchar() != '\n')
 		continue;
 }
+

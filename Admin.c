@@ -12,10 +12,10 @@ void runAdminSystem()
 		default:
 			break;
 		case 1:
-			// 在售商品管理
+			runOnSaleSystem();
 			break;
 		case 2:
-			// 供货商管理
+			runSupplierSystem();
 			break;
 		case 3:
 			// 订单管理

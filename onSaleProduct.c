@@ -2,6 +2,7 @@
 
 /* 局部函数模型 */
 static int getChoice();
+static char* stringGet(char* st, int n);
 
 /**
 *  @brief: 运行在售商品操作
@@ -31,7 +32,7 @@ void runOnSaleSystem()
 }
 
 /**
-*  @brief: 运行在售商品操作
+*  @brief: 查询在售商品
 *
 */
 void queryOnSaleProduct()
@@ -45,7 +46,27 @@ void queryOnSaleProduct()
 */
 void addOnSaleProduct()
 {
+	Product_t* newProduct = (Product_t*)malloc(sizeof(Product_t));
 
+	while (true)
+	{
+		printf("请输入商品id:");
+		scanf("%d", newProduct->id);
+		if (findIndexByID(productDat, newProduct->id) != 0) {
+			printf("商品id已存在，请重新输入\n");
+		}else{
+			break;
+		}
+	}
+	flush();
+	printf("请输入商品名称:");
+	stringGet(newProduct->name, 48);
+	printf("请输入供应商名称:");
+	stringGet(newProduct->supplier, 24);
+	printf("请输入价格($/件):");
+	scanf("%f", newProduct->price);
+	insert(productDat, END, newProduct);
+	writeFile(FILE_PRODUCT, newProduct, sizeof(Product_t));
 }
 
 /**
@@ -63,7 +84,7 @@ void delOnSaleProduct()
 */
 void displayOnSaleProduct()
 {
-
+	printList(productDat, printProductInfo, false);
 }
 
 /* 局部函数实现 */
@@ -78,4 +99,25 @@ static int getChoice()
 	} while (choice > 5 || choice < 1);
 
 	return choice;
+}
+
+static char* stringGet(char* st, int n)
+{
+	char* ret_val;
+	char* find;
+
+	ret_val = fgets(st, n, stdin);
+	if (ret_val)
+	{
+		find = strchr(st, '\n');
+		if (find) {
+			*find = '\0';
+		}
+		else {
+			while (getchar() != '\n')
+				continue;
+		}
+	}
+
+	return ret_val;
 }

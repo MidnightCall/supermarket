@@ -9,6 +9,8 @@
 #include "linkList.h"
 #include "helpfulFunction.h"
 
+extern Node_t* productDat;
+
 /**
 *  @brief: 运行在售商品操作
 *

@@ -47,6 +47,7 @@ typedef struct tagUser_t
 /* 商品信息节点 */ /* size: 76 */
 typedef struct tagProduct_t
 {
+    unsigned int id;
     char name[48]; /* 商品名 */
     char supplier[24]; /* 商品供货商 */
     float price; /* 商品价格 */

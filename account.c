@@ -1,8 +1,7 @@
 #include "account.h"
 
-
 /* 局部函数模型 */
-static char* stringGet(char *st, int n);
+static char* stringGet(char* st, int n);
 
 /*
 * @brief：运行登录/注册系统
@@ -45,14 +44,14 @@ int getChoice()
 void registration()
 {
 	int choice;
-	User_t account;
+	User_t* account = (User_t*) malloc(sizeof(User_t));
 	static int currentAccount = 10000;
-	char * firstPassword[LEN_PWD];
-	char * secondPassword[LEN_PWD];
+	char firstPassword[LEN_PWD];
+	char secondPassword[LEN_PWD];
 
 	/* 账号显示 */
 	printf("你的账号是 %d\n", currentAccount);
-	account.id = currentAccount++;
+	account->id = currentAccount++;
 
 	/* 账号权限分配 */
 	do
@@ -68,13 +67,13 @@ void registration()
 		default:
 			break;
 		case 1:
-			account.permission = USER;
+			account->permission = USER;
 			break;
 		case 2:
-			account.permission = ADMIN;
+			account->permission = ADMIN;
 			break;
 		case 3:
-			account.permission = SU;
+			account->permission = SU;
 			break;
 	}
 
@@ -90,8 +89,8 @@ void registration()
 		printf("请确认你的密码:");
 		stringGet(secondPassword, LEN_PWD);
 		if (strcmp(firstPassword, secondPassword) == 0) {
-			strcpy(account.password, firstPassword);
-			insert(userDat, END, FILE_USER);
+			strcpy(account->password, firstPassword);
+			insert(userDat, END, account);
 			writeFile(FILE_USER, userDat, sizeof(User_t));
 			break;
 		}else{
@@ -109,14 +108,20 @@ void logIn()
 	int id;
 	char* password[LEN_PWD];
 
-	do {
-		printf("请输入账号:");
-		scanf("%d", &id);
-	} while (1);
+	
+	printf("请输入账号:");
+	scanf("%d", &id);
+	if (findIndexByID(userDat, id) != 0) {
+		printf("你好,id%d的用户", id);
+		printf("请输入密码:");
+		stringGet(password, LEN_PWD);
+	}else{
+		printf("账号不存在,请重新确认后输入\n");
+	}
+	
 
 
 }
-
 
 /* 局部函数定义 */
 static char* stringGet(char* st, int n)

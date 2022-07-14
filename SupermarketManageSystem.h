@@ -12,6 +12,7 @@
 #include "account.h"
 #include "UI.h"
 #include "superAdminSystem.h"
+#include "Admin.h"
 
  /**
   * @brief 启动超市管理系统

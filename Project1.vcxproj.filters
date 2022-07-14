@@ -48,19 +48,19 @@
     <ClInclude Include="UI.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="accountManage.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="superAdminSystem.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Admin.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="normalUser.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="onSaleProduct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="customLookup.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Admin.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
