@@ -2,6 +2,7 @@
 #define __HELPFULFUNCTION_H_
 
 #include <stdio.h>
+#include <string.h>
 
 /**
 * @brief Ë¢ÐÂ»º³åÇø

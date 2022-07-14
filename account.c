@@ -1,9 +1,6 @@
 #include "account.h"
 #include "helpfulFunction.h"
 
-/* 局部函数模型 */
-static char* stringGet(char* st, int n);
-
 extern Node_t* userDat;
 
 /*
@@ -156,6 +153,8 @@ void logIn()
 		}
 	}
 	
+
+
 }
 
 /* 局部函数定义 */
