@@ -2,9 +2,6 @@
 #include "helpfulFunction.h"
 #include <stdbool.h>
 
-/* 局部函数模型 */
-//static char* stringGet(char* st, int n);
-
 extern Node_t* userDat;
 
 /*
