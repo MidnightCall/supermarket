@@ -67,6 +67,7 @@ void addOnSaleProduct()
 	scanf("%f", newProduct->price);
 	insert(productDat, END, newProduct);
 	writeFile(FILE_PRODUCT, newProduct, sizeof(Product_t));
+	printf("ÃÌº”ÕÍ≥…\n");
 }
 
 /**
