@@ -4,6 +4,8 @@
 #include "linkList.h"
 #include "typeCollection.h"
 
+/* newList: 已检查 */
+
 Node_t* newList(void)
 {
 	Node_t* head = NULL;
@@ -28,6 +30,8 @@ Node_t* newList(void)
 	}
 	return head;
 }
+
+/* insert: 已检查 */
 
 void insert(Node_t* head, int pos, void* data)
 {
@@ -58,13 +62,15 @@ void insert(Node_t* head, int pos, void* data)
 	return;
 }
 
+/* del: 已检查 */
+
 void del(Node_t* head, int pos)
 {
 	Node_t* tHead = head, * prev = NULL;
 	int* count = &(head->data), i = 0;
 	if (pos > *count || pos < 1)
 	{
-		printf("Error: invalid index.\n");
+		printf("错误：无效的索引。\b\n");
 		return;
 	}
 	while (i != pos)
@@ -87,6 +93,8 @@ void del(Node_t* head, int pos)
 	return;
 }
 
+/* retrieveList: 仍未完成 */
+
 void retrieveList(Node_t* head, bool(*matching)(int* count, void* data))
 {
 	Node_t* tHead = head;
@@ -107,6 +115,8 @@ void retrieveList(Node_t* head, bool(*matching)(int* count, void* data))
 	return;
 }
 
+/* printList: 已检查 */
+
 void printList(Node_t* head, void (*type)(void*), bool count)
 {
 	Node_t* tHead = head;
@@ -123,15 +133,28 @@ void printList(Node_t* head, void (*type)(void*), bool count)
 	}
 }
 
+/* freeList: 已检查 */
+
 void freeList(Node_t* head)
 {
-	Node_t* tHead = head, * next = head->next;
-	while (tHead != NULL)
+	Node_t* tHead = head, * next;
+
+	if (tHead->next == NULL)
 	{
 		free(tHead->data);
 		free(tHead);
-		tHead = next;
-		next = next->next;
+		return;
 	}
+
+	next = tHead->next;
+	while (tHead->next != NULL)
+	{
+		next = tHead->next;
+		free(tHead->data);
+		free(tHead);
+		tHead = next;
+	}
+	free(tHead->data);
+	free(tHead);
 	return;
 }

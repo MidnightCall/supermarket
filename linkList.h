@@ -8,7 +8,7 @@
 /**
 * @brief 新建一个链表
 *
-* @return 新链表的表头指针 (void*)
+* @return 新链表的表头指针
 */
 Node_t* newList(void);
 

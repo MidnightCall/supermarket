@@ -1,8 +1,9 @@
 #include "account.h"
+#include "helpfulFunction.h"
 
 
 /* 局部函数模型 */
-static char* stringGet(char *st, int n);
+static char* stringGet(char* st, int n);
 
 /*
 * @brief：运行登录/注册系统
@@ -47,8 +48,8 @@ void registration()
 	int choice;
 	User_t account;
 	static int currentAccount = 10000;
-	char * firstPassword[LEN_PWD];
-	char * secondPassword[LEN_PWD];
+	char firstPassword[LEN_PWD];
+	char secondPassword[LEN_PWD];
 
 	/* 账号显示 */
 	printf("你的账号是 %d\n", currentAccount);
@@ -68,7 +69,7 @@ void registration()
 		default:
 			break;
 		case 1:
-			account.permission = USER;
+			account.permission = COMMON;
 			break;
 		case 2:
 			account.permission = ADMIN;
@@ -113,12 +114,8 @@ void logIn()
 		printf("请输入账号:");
 		scanf("%d", &id);
 	} while (1);
-
-
 }
 
-
-/* 局部函数定义 */
 static char* stringGet(char* st, int n)
 {
 	char* ret_val;

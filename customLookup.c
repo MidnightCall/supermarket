@@ -4,6 +4,10 @@
 #include <string.h>
 #include "customLookup.h"
 
+const int OFFSET_PRODUCT = 4;
+const int OFFSET_EMPLOYEE = 12;
+const int OFFSET_SUPPLIER = 4;
+
 void printUserInfo(User_t* node)
 {
 	printf("%d, %s, %d\n", node->id, node->password, node->permission);
@@ -68,7 +72,7 @@ int findIndexByID(Node_t* head, unsigned int id)
 		return 0;
 }
 
-int findIndexByName(Node_t* head, char* name, RequiredTypeEnum type)
+int findIndexByID_d(Node_t* head, unsigned int id, void* dest, size_t size)
 {
 	int count = 1;
 	bool flag = false;
@@ -78,51 +82,77 @@ int findIndexByName(Node_t* head, char* name, RequiredTypeEnum type)
 
 	Node_t* tHead = head->next;
 
-	switch (type)
+	while (tHead != NULL)
 	{
-	case PRODUCT:
-		while (tHead != NULL)
+		if (*(unsigned int*)(tHead->data) == id)
 		{
-			if (0 == strcmp((char*)tHead->data, name))
-			{
-				flag = true;
-				break;
-			}
-			tHead = tHead->next;
-			++count;
+			flag = true;
+			if (dest != NULL)
+				memcpy(dest, tHead->data, size);
+			break;
 		}
-		break;
-	case EMPLOYEE:
-		while (tHead != NULL)
-		{
-			if (0 == strcmp((char*)tHead->data + 12, name))
-			{
-				flag = true;
-				break;
-			}
-			tHead = tHead->next;
-			++count;
-		}
-		break;
-	case SUPPLIER:
-		while (tHead != NULL)
-		{
-			if (0 == strcmp((char*)tHead->data + 4, name))
-			{
-				flag = true;
-				break;
-			}
-			tHead = tHead->next;
-			++count;
-		}
-		break;
-	default:
-		return 0;
+		tHead = tHead->next;
+		++count;
 	}
 
 	if (flag)
 		return count;
 	else
 		return 0;
+}
 
+int findIndexByName(Node_t* head, char* name, const int offset)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (0 == strcmp((char*)tHead->data + offset, name))
+		{
+			flag = true;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+int findIndexByName_d(Node_t* head, char* name, const int offset, void* dest, size_t size)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (0 == strcmp((char*)tHead->data + offset, name))
+		{
+			flag = true;
+			if (dest != NULL)
+				memcpy(dest, tHead->data, size);
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
 }
