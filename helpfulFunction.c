@@ -1,4 +1,7 @@
 #include "helpfulFunction.h"
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
 void flush()
 {
@@ -6,10 +9,10 @@ void flush()
 		continue;
 }
 
-static char* stringGet(char* st, int n)
+char* stringGet(char* st, int n)
 {
-	char* ret_val;
-	char* find;
+	char* ret_val = NULL;
+	char* find = NULL;
 
 	ret_val = fgets(st, n, stdin);
 	if (ret_val)
@@ -23,6 +26,17 @@ static char* stringGet(char* st, int n)
 				continue;
 		}
 	}
-
 	return ret_val;
+}
+
+bool hasNonNumerical(char* str)
+{
+	for (int i = 0; i < strlen(str); ++i)
+	{
+		if (!isdigit(str[i]))
+		{
+			return true;
+		}
+	}
+	return false;
 }

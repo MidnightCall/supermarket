@@ -2,7 +2,7 @@
 
 /* 局部函数模型 */
 static int getChoice();
-static char* stringGet(char* st, int n);
+//static char* stringGet(char* st, int n);
 
 /**
 *  @brief: 运行在售商品操作
@@ -100,25 +100,4 @@ static int getChoice()
 	} while (choice > 5 || choice < 1);
 
 	return choice;
-}
-
-static char* stringGet(char* st, int n)
-{
-	char* ret_val;
-	char* find;
-
-	ret_val = fgets(st, n, stdin);
-	if (ret_val)
-	{
-		find = strchr(st, '\n');
-		if (find) {
-			*find = '\0';
-		}
-		else {
-			while (getchar() != '\n')
-				continue;
-		}
-	}
-
-	return ret_val;
 }
