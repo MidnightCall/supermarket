@@ -40,3 +40,14 @@ bool hasNonNumerical(char* str)
 	}
 	return false;
 }
+
+void assert_null(void* ptr)
+{
+	if (ptr == NULL)
+	{
+		printf("内存分配失败，程序即将退出。");
+		system("pause");
+		exit(-1);
+	}
+	return;
+}

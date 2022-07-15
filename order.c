@@ -4,6 +4,7 @@
 
 extern Node_t* orderDat, * productDat;
 extern Config_t configDat;
+extern User_t currentUser;
 int currentIndex = 0;
 Order_t currentOrder;
 
@@ -35,7 +36,7 @@ void runOrderSystem()
 }
 
 /**
-*  @brief: 运行当前订单管理模块(供收银员使用)
+*  @brief: 运行当前订单管理模块 (供收银员使用)
 *
 */
 void runNormalUserOrderSystem()
@@ -87,7 +88,7 @@ void queryOrder()
 {
 	int id;
 	Order_t order;
-	printf("请输入待查询的订单id:");
+	printf("请输入待查询的订单 ID: ");
 	scanf("%d", &id);
 	if (0 != findIndexByID_d(orderDat, id, &order, sizeof(Order_t))) {
 		printOrderInfo(&order);
@@ -105,21 +106,22 @@ void calTurnover()
 
 }
 
-void addProductToCurrentOrder()
+void addProductToCurrentOrder(void)
 {
 	int id;
 	int quantity;
 	bool flag = false;
-	OnSale_t* onSaleProduct;
+	OnSale_t* onSaleProduct = NULL;
 	currentIndex = 0;
 
-	printf("请输入商品id:");
+	printf("请输入商品 ID: ");
 	scanf("%d", &id);
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
-		printf("不存在的商品id\n");
-	}else{
-		printf("请输入添加数量:");
+		printf("不存在的商品 ID.\n");
+	} else {
+		printf("请输入添加数量: ");
 		scanf("%d", &quantity);
+
 		if (quantity > onSaleProduct->allowance) {
 			if (onSaleProduct->allowance > 0) {
 				printf("余量不足，已将商品全部添加，共添加%d件商品\n", onSaleProduct->allowance);
@@ -148,6 +150,8 @@ void addProductToCurrentOrder()
 		}
 		
 	}
+	PAUSE;
+	return;
 }
 
 void delProductFromCurrentOrder()
@@ -156,15 +160,17 @@ void delProductFromCurrentOrder()
 	int pos;
 	OnSale_t* onSaleProduct = NULL;
 
-	printf("请输入待删除的商品id:");
+	printf("请输入待删除的商品 ID: ");
 	scanf("%d", &id);
 	if (0 != (pos = findProduct_d(productDat, id, &onSaleProduct))) {
 		onSaleProduct->allowance += currentOrder.items[currentIndex - 1].quantity;
 		printf("删除成功\n");
 		currentIndex--;
 	}else {
-		printf("不存在id为%d的商品\n", id);
+		printf("不存在 ID 为 %d 的商品。\n", id);
 	}
+	PAUSE;
+	return;
 }
 
 void modifyProductFromCurrentOrder()
@@ -178,7 +184,7 @@ void modifyProductFromCurrentOrder()
 	scanf("%d", &id);
 	for (int i = 0; i < currentIndex; i++) {
 		if (currentOrder.items[i].product.id == id) {
-			printf("请重新输入需要购买的数量:");
+			printf("请重新输入需要购买的数量: ");
 			scanf("%d", &quantity);
 			currentOrder.items[i].quantity = quantity;
 			flag = true;
@@ -187,7 +193,7 @@ void modifyProductFromCurrentOrder()
 		}
 	}
 	if (flag == false) {
-		printf("当前订单中没有id为%d的商品\n");
+		printf("当前订单中没有 ID 为 %d 的商品。", id);
 	}
 }
 
@@ -235,11 +241,12 @@ void submitCurrentOrder()
 /* 局部函数实现 */
 static int getChoice()
 {
-	int choice;
-
+	int choice = 0;
+	showTitle(currentUser);
 	do
 	{
 		showOrderBusinessMenu();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 
@@ -248,11 +255,12 @@ static int getChoice()
 
 static int getNormalChoice()
 {
-	int choice;
-
+	int choice = 0;
+	showTitle(currentUser);
 	do
 	{
 		showCurrentOrderMenu();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 7 || choice < 1);
 

@@ -46,7 +46,7 @@ void queryUser(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================查询账户==================\n");
+	printf("====================查询账户======================\n");
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
@@ -76,7 +76,7 @@ void modifyUserPermission(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================修改权限==================\n");
+	printf("====================修改权限======================\n");
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
@@ -91,7 +91,7 @@ void modifyUserPermission(void)
 
 		if (tId == 10000)
 		{
-			printf("你无法修改超级管理员 [10000] 的权限。");
+			printf("你无法修改超级管理员 [10000] 的权限。\n");
 			system("pause");
 			return;
 		}
@@ -135,7 +135,7 @@ void deleteUser(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================删除账户==================\n");
+	printf("====================删除账户======================\n");
 	unsigned int index = 0;
 	while (true)
 	{
@@ -144,14 +144,14 @@ void deleteUser(void)
 		scanf("%u", &tId);
 		if (tId < 10000 || tId > 99999)
 		{
-			printf("你输入的 ID 无效，请重新输入。\b\n");
+			printf("你输入的 ID 无效，请重新输入。\n");
 			system("pause");
 			continue;
 		}
 
 		if (tId == 10000)
 		{
-			printf("你无法删除超级管理员 [10000]。");
+			printf("你无法删除超级管理员 [10000]。\n");
 			system("pause");
 			return;
 		}
@@ -210,20 +210,20 @@ static int getChoice()
 
 void showSingleUser(User_t e)
 {
-	printf("================账号信息==================\n");
-	printf("%5s| %12s| %20s|\n", "ID", "密码", "权限等级");
-	printf("-----+-------------+---------------------+\n");
+	printf("--------------------账号信息--------------------\n");
+	printf("| %7s| %12s| %22s|\n", "ID", "密码", "权限等级");
+	printf("|--------+-------------+-----------------------|\n");
 	printUserInfo(&e);
-	printf("==========================================\n");
+	printf("------------------------------------------------\n");
 }
 
 void showAllUsers(void)
 {
-	printf("================账号信息==================\n");
-	printf("%5s| %12s| %20s|\n", "ID", "密码", "权限等级");
-	printf("-----+-------------+---------------------+\n");
+	printf("--------------------账号信息--------------------\n");
+	printf("| %7s| %12s| %22s|\n", "ID", "密码", "权限等级");
+	printf("|--------+-------------+-----------------------|\n");
 	printList(userDat, printUserInfo, false);
-	printf("==========================================\n");
+	printf("------------------------------------------------\n");
 	system("pause");
 	return;
 }
