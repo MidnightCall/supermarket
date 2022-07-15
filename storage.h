@@ -33,7 +33,6 @@ void inStorage();
 
 /**
 *  @brief: ³ö¿â
-*
 */
 void outStorage();
 

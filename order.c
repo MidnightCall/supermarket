@@ -1,8 +1,10 @@
 #include "order.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static int getChoice();
 
+int currentIndex = 0;
 /**
 *  @brief: 运行订单系统
 *

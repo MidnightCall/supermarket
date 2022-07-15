@@ -102,6 +102,7 @@ typedef struct tagOrder_t
 {
     unsigned int id;
     OrderItem_t items[100];
+    float total;
 } Order_t;
 
 #endif

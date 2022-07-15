@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "customLookup.h"
+#include "helpfulFunction.h"
 
 const int OFFSET_PRODUCT = 4;
 const int OFFSET_EMPLOYEE = 12;
@@ -21,6 +22,18 @@ void printProductInfo(Product_t* node)
 	return;
 }
 
+void printOnSaleInfo(OnSale_t* node)
+{
+	printf("%d, %s, %s, %f, %u\n", node->product.id, node->product.name, node->product.supplier, node->product.price, node->allowance);
+	return;
+}
+
+void printStorageInfo(Storage_t* node)
+{
+	printf("%u, %s, %s, %f, %u\n", node->product.id, node->product.name, node->product.supplier, node->product.price, node->allowance);
+	return;
+}
+
 void printEmployeeInfo(Employee_t* node)
 {
 	static char* sexConv[] = { "Å®", "ÄÐ" };
@@ -34,15 +47,9 @@ void printSupplierInfo(Supplier_t* node)
 	return;
 }
 
-void printStorageInfo(Storage_t* node)
-{
-	// TODO
-	return;
-}
-
 void printOrderInfo(Order_t* node)
 {
-	// TODO
+	PASS;
 	return;
 }
 
