@@ -1,8 +1,10 @@
 #include "order.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static int getChoice();
 
+int currentIndex = 0;
 /**
 *  @brief: 运行订单系统
 *
@@ -135,25 +137,37 @@ void addProductToCurrentOrder()
 *  @brief: 删除当前订单的商品
 *
 */
-void delProductFromCurrentOrder();
+void delProductFromCurrentOrder()
+{
+	PASS;
+}
 
 /**
 *  @brief: 更改当前订单的商品数量
 *
 */
-void modifyProductFromCurrentOrder();
+void modifyProductFromCurrentOrder()
+{
+	PASS;
+}
 
 /**
 *  @brief: 计算总价
 *
 */
-void calTurnOverInCurrentOrder();
+void calTurnOverInCurrentOrder()
+{
+	PASS;
+}
 
 /**
 *  @brief: 交付订单
 *
 */
-void submitCurrentOrder();
+void submitCurrentOrder()
+{
+	PASS;
+}
 
 /* 局部函数实现 */
 static int getChoice()
@@ -176,6 +190,6 @@ static int getNormalChoice()
 	do
 	{
 		showCurrentOrderMenu();
-		scanf("%d", &choice)
-	} while (choice > 5 || choice < 1)
+		scanf("%d", &choice);
+	} while (choice > 5 || choice < 1);
 }

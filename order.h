@@ -12,7 +12,6 @@
 
 extern Node_t* orderDat, *productDat;
 Order_t currentOrder;
-int currentIndex = 0;
 
 /**
 *  @brief: 运行订单审核模块(供管理员使用)

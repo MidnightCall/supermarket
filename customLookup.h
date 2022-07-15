@@ -17,11 +17,13 @@ void printUserInfo(User_t* node);
 
 void printProductInfo(Product_t* node);
 
+void printOnSaleInfo(OnSale_t* node);
+
+void printStorageInfo(Storage_t* node);
+
 void printEmployeeInfo(Employee_t* node);
 
 void printSupplierInfo(Supplier_t* node);
-
-void printStorageInfo(Storage_t* node);
 
 void printOrderInfo(Order_t* node);
 
