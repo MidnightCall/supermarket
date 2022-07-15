@@ -113,10 +113,10 @@
     <ClCompile Include="employee.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="customLookup.c">
+    <ClCompile Include="order.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="order.c">
+    <ClCompile Include="customLookup.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

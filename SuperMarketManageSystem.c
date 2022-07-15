@@ -12,7 +12,7 @@ void systemStart()
 	initData();
 	system("title 超市管理系统 v1.0");
 	//showWelcomeMessage();
-	runAdminSystem();
+	runNormalUserOrderSystem();
 	saveData();
 }
 

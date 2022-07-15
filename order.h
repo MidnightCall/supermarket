@@ -63,6 +63,12 @@ void delProductFromCurrentOrder();
 void modifyProductFromCurrentOrder();
 
 /**
+*  @brief: 打印当前订单信息
+*
+*/
+void showCurrentOrderInfo();
+
+/**
 *  @brief: 计算总价
 *
 */

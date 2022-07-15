@@ -15,23 +15,25 @@ void runSupplierSystem()
 	while (1)
 	{
 		int choice = getChoice();
-
-		switch (choice)
+		while (true)
 		{
-		default:
-			return;
-		case 1:
-			displaySupplier();
-			break;
-		case 2:
-			querySupplier();
-			break;
-		case 3:
-			addSupplier();
-			break;
-		case 4:
-			delSupplier();
-			break;
+			switch (choice)
+			{
+			default:
+				return;
+			case 1:
+				displaySupplier();
+				break;
+			case 2:
+				querySupplier();
+				break;
+			case 3:
+				addSupplier();
+				break;
+			case 4:
+				delSupplier();
+				break;
+			}
 		}
 	}
 }

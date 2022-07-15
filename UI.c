@@ -112,9 +112,11 @@ void showCurrentOrderMenu()
     printf("|                                                |\n");
     printf("|                 1. 添加商品                    |\n");
     printf("|                 2. 删除商品                    |\n");
-    printf("|                 3. 计算金额                    |\n");
-    printf("|                 4. 交付订单                    |\n");
-    printf("|                    5.退出                      |\n");
+    printf("|                 3. 更改数量                    |\n");
+    printf("|                 4. 计算金额                    |\n");
+    printf("|                 5. 交付订单                    |\n");
+    printf("|                 6. 展示订单信息                |\n");
+    printf("|                    7.退出                      |\n");
     printf("|                                                |\n");
     printf("└------------------------------------------------┘\n");
 }
