@@ -1,8 +1,9 @@
 #include "onSaleProduct.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static int getChoice();
-
+extern User_t currentUser;
 /**
 *  @brief: 运行在售商品操作
 *
