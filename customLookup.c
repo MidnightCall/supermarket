@@ -49,7 +49,13 @@ void printSupplierInfo(Supplier_t* node)
 
 void printOrderInfo(Order_t* node)
 {
-	PASS;
+	printf("%u, %.2f", node->id, node->total);
+	return;
+}
+
+void printOrderDetail(Order_t* node)
+{
+	
 	return;
 }
 

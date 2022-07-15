@@ -27,6 +27,8 @@ void printSupplierInfo(Supplier_t* node);
 
 void printOrderInfo(Order_t* node);
 
+void printOrderDetail(Order_t* node);
+
 /**
 * @brief 根据 ID 查找节点在链表中的位置。适用于含 ID 的结构体类型。
 *
