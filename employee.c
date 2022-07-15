@@ -5,32 +5,44 @@
 #include "linkList.h"
 #include "helpfulFunction.h"
 #include "employee.h"
+#include "UI.h"
 
 extern Node_t* employeeDat;
 extern Config_t configDat;
+extern User_t currentUser;
 
-void showSingleEmployee(Employee_t e)
-{
-	printf("================员工信息==================\n");
-	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
-	printf("-----+---------+-----+------+------------+\n");
-	printEmployeeInfo(&e);
-	printf("==========================================\n");
-}
+/* 局部函数模型 */
+static int getChoice();
 
-void showAllEmployees(void)
+void runEmployeeManage(void)
 {
-	if (0 == *(int*)employeeDat->data)
+	while (1)
 	{
-		printf("没有员工信息。\b\n");
-		return;
+		int choice = getChoice();
+
+		switch (choice)
+		{
+		default:
+			break;
+		case 1:
+			showAllEmployees();
+			break;
+		case 2:
+			findEmployee();
+			break;
+		case 3:
+			addEmployee();
+			break;
+		case 4:
+			deleteEmployee();
+			break;
+		case 5:
+			modifyEmployee();
+			break;
+		case 6:
+			return;
+		}
 	}
-	printf("================员工信息==================\n");
-	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
-	printf("-----+---------+-----+------+------------+\n");
-	printList(employeeDat, printEmployeeInfo, false);
-	printf("==========================================\n");
-	return;
 }
 
 void addEmployee(void)
@@ -107,12 +119,14 @@ void addEmployee(void)
 	insert(employeeDat, END, e);
 
 	printf("员工增加成功！\n");
+	flush();
+	system("pause");
 	return;
 }
 
 void deleteEmployee(void)
 {
-	Employee_t tEmployee;
+	Employee_t* tEmployee = NULL;
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
@@ -145,13 +159,13 @@ void deleteEmployee(void)
 				printf("你输入的 ID 无效，请重新输入。\b\n");
 				continue;
 			}
-			index = findIndexByID_d(employeeDat, tId, &tEmployee, sizeof(Employee_t));
+			index = findIndexByID_d(employeeDat, tId, &tEmployee);
 			if (0 == index)
 			{
 				printf("没有符合条件的员工。按 Enter 键继续。\b");
 				return;
 			}
-			showSingleEmployee(tEmployee);
+			showSingleEmployee(*tEmployee);
 			break;
 		}
 		break;
@@ -166,13 +180,13 @@ void deleteEmployee(void)
 				printf("你输入的姓名无效，请重新输入。\b\n");
 				continue;
 			}
-			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee, sizeof(Employee_t));
+			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee);
 			if (0 == index)
 			{
 				printf("没有符合条件的员工。按 Enter 键继续。\b");
 				return;
 			}
-			showSingleEmployee(tEmployee);
+			showSingleEmployee(*tEmployee);
 			break;
 		}
 		break;
@@ -194,19 +208,20 @@ void deleteEmployee(void)
 		if (deleteOp == 'y' || deleteOp == 'Y')
 		{
 			del(employeeDat, index);
-			printf("员工删除成功！\n");
-			showAllEmployees(employeeDat);
+			printf("员工删除成功！");
 			break;
 		}
 		if (deleteOp == 'n' || deleteOp == 'N')
 			return;
 	}
+
+	system("pause");
 	return;
 }
 
 void findEmployee(void)
 {
-	Employee_t tEmployee;
+	Employee_t* tEmployee = NULL;
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
@@ -239,14 +254,14 @@ void findEmployee(void)
 				printf("你输入的 ID 无效，请重新输入。\b\n");
 				continue;
 			}
-			index = findIndexByID_d(employeeDat, tId, &tEmployee, sizeof(Employee_t));
+			index = findIndexByID_d(employeeDat, tId, &tEmployee);
 			if (0 == index)
 			{
 				printf("没有符合条件的员工。\b");
 				system("pause");
 				return;
 			}
-			showSingleEmployee(tEmployee);
+			showSingleEmployee(*tEmployee);
 			break;
 		}
 		break;
@@ -261,13 +276,13 @@ void findEmployee(void)
 				printf("你输入的姓名无效，请重新输入。\b\n");
 				continue;
 			}
-			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee, sizeof(Employee_t));
+			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee);
 			if (0 == index)
 			{
 				printf("没有符合条件的员工。按 Enter 键继续。\b");
 				return;
 			}
-			showSingleEmployee(tEmployee);
+			showSingleEmployee(*tEmployee);
 			break;
 		}
 		break;
@@ -279,3 +294,135 @@ void findEmployee(void)
 	return;
 }
 
+void modifyEmployee(void)
+{
+	Employee_t* tEmployee = NULL;
+	char buffer[250];
+	memset(buffer, '\0', sizeof(buffer));
+
+	printf("==============修改员工信息================\n");
+	unsigned int op = 0, index = 0;
+	while (true)
+	{
+		printf("请输入员工 ID: ");
+		unsigned int tId = 0;
+		scanf("%u", &tId);
+		if (tId < 1000 || tId > 9999)
+		{
+			printf("你输入的 ID 无效，请重新输入。\b\n");
+			continue;
+		}
+		index = findIndexByID_d(employeeDat, tId, &tEmployee);
+		if (0 == index)
+		{
+			printf("没有符合条件的员工。\b");
+			system("pause");
+			return;
+		}
+		showSingleEmployee(*tEmployee);
+		break;
+	}
+
+	flush();
+	printf("===============输入新信息=================\n");
+	while (true)
+	{
+		printf("请输入员工姓名: ");
+		scanf("%[^\n]", &buffer);
+		if (strlen(buffer) > LEN_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
+		{
+			printf("你输入的姓名过长，请重新输入。\b\n");
+			flush();
+			continue;
+		}
+		memset(tEmployee->name, '\0', sizeof(tEmployee->name));
+		strncpy(tEmployee->name, buffer, strlen(buffer));
+		break;
+	}
+
+	while (true)
+	{
+		printf("请输入员工年龄: ");
+		unsigned int tAge = 0;
+		scanf("%u", &tAge);
+		if (tAge < 0 || tAge > 70)
+		{
+			printf("你输入的年龄无效，请重新输入。\b\n");
+			continue;
+		}
+		tEmployee->age = tAge;
+		break;
+	}
+
+	while (true)
+	{
+		printf("请输入员工性别 (0 为女，1 为男): ");
+		unsigned int tSex = 0;
+		scanf("%u", &tSex);
+		if (tSex != 0 && tSex != 1)
+		{
+			printf("你输入的性别无效，请重新输入。\b\n");
+			continue;
+		}
+		tEmployee->sex = tSex;
+		break;
+	}
+
+	while (true)
+	{
+		printf("请输入员工职位: ");
+		getchar(); /* 读掉空格 */
+		scanf_s("%[^\n]", &buffer, LEN_POS);
+		if (strlen(buffer) > LEN_POS - 1)
+		{
+			printf("你输入的职位过长，请重新输入。\b\n");
+			continue;
+		}
+		memset(tEmployee->position, '\0', sizeof(tEmployee->position));
+		strncpy(tEmployee->position, buffer, strlen(buffer));
+		break;
+	}
+	printf("员工信息修改成功！\n");
+
+	system("pause");
+	return;
+}
+
+void showSingleEmployee(Employee_t e)
+{
+	printf("================员工信息==================\n");
+	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
+	printf("-----+---------+-----+------+------------+\n");
+	printEmployeeInfo(&e);
+	printf("==========================================\n");
+}
+
+void showAllEmployees(void)
+{
+	if (0 == *(int*)employeeDat->data)
+	{
+		printf("没有员工信息。\b\n");
+		return;
+	}
+	printf("================员工信息==================\n");
+	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
+	printf("-----+---------+-----+------+------------+\n");
+	printList(employeeDat, printEmployeeInfo, false);
+	printf("==========================================\n");
+	system("pause");
+	return;
+}
+
+static int getChoice()
+{
+	int choice = 0;
+	showTitle(currentUser);
+	do
+	{
+		showEmployeeBusinessMenu();
+		printf(">>> ");
+		scanf("%d", &choice);
+	} while (choice > 6 || choice < 1);
+
+	return choice;
+}

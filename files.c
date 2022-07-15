@@ -97,8 +97,8 @@ void loadConfig()
 		configDat.maxId_User = 10000; /* 因为默认超管的存在，这里就不用再减一了 */
 	if (configDat.maxId_Product < 100000)
 		configDat.maxId_Product = 99999;
-	if (configDat.maxId_Employee < 100000)
-		configDat.maxId_Employee = 99999;
+	if (configDat.maxId_Employee < 1000)
+		configDat.maxId_Employee = 999;
 	if (configDat.maxId_Supplier < 100)
 		configDat.maxId_Supplier = 99;
 	if (configDat.maxId_Order < 1000000)

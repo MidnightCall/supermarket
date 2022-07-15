@@ -1,4 +1,5 @@
 #include "Admin.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static int getChoice();
@@ -19,6 +20,7 @@ void runAdminSystem()
 			break;
 		case 3:
 			// 订单管理
+			PASS;
 			break;
 		case 4:
 			runStorageSystem();

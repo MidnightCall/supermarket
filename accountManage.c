@@ -1,39 +1,48 @@
+/* 超级管理员特权：用户管理 */
+
 #include "accountManage.h"
 #include "helpfulFunction.h"
 #include "customLookup.h"
 #include "linkList.h"
+#include "typeCollection.h"
 
 extern Node_t* userDat;
+extern User_t currentUser;
 
 /* 局部函数模型 */
 static int getChoice();
 
 void runAccountManage()
 {
-	int choice = getChoice();
-
-	switch (choice)
+	while (1)
 	{
-	default:
-		break;
-	case 1:
-		showAllUsers();
-		break;
-	case 2:
-		queryUser();
-		break;
-	case 3:
-		modifyUserPermission();
-		break;
-	case 4:
-		deleteUser();
-		break;
+		int choice = getChoice();
+
+		switch (choice)
+		{
+		default:
+			break;
+		case 1:
+			showAllUsers();
+			break;
+		case 2:
+			queryUser();
+			break;
+		case 3:
+			modifyUserPermission();
+			break;
+		case 4:
+			deleteUser();
+			break;
+		case 5:
+			return;
+		}
 	}
 }
 
 void queryUser(void)
 {
-	User_t tUser;
+	User_t* tUser = NULL;
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
@@ -48,21 +57,22 @@ void queryUser(void)
 			printf("你输入的 ID 无效，请重新输入。\b\n");
 			continue;
 		}
-		index = findIndexByID_d(userDat, tId, &tUser, sizeof(User_t));
+		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
 			printf("没有符合条件的员工。\b");
 			system("pause");
 			return;
 		}
-		showSingleUser(tUser);
+		showSingleUser(*tUser);
 		break;
 	}
+	system("pause");
 }
 
 void modifyUserPermission(void)
 {
-	User_t tUser;
+	User_t* tUser;
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
@@ -81,18 +91,19 @@ void modifyUserPermission(void)
 
 		if (tId == 10000)
 		{
-			printf("你无法修改超级管理员 [10000] 的权限.\b\n");
+			printf("你无法修改超级管理员 [10000] 的权限。");
+			system("pause");
 			return;
 		}
 
-		index = findIndexByID_d(userDat, tId, &tUser, sizeof(User_t));
+		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
 			printf("没有符合条件的员工。\b");
 			system("pause");
 			return;
 		}
-		showSingleUser(tUser);
+		showSingleUser(*tUser);
 		break;
 	}
 
@@ -110,15 +121,16 @@ void modifyUserPermission(void)
 		tUsr->permission = op;
 		break;
 	}
-	showSingleUser(tUser);
-	printf("权限修改成功！\n");
+	showSingleUser(*tUser);
+	printf("权限修改成功！");
+	system("pause");
 	return;
 
 }
 
 void deleteUser(void)
 {
-	User_t tUser;
+	User_t* tUser = NULL;
 
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
@@ -133,22 +145,25 @@ void deleteUser(void)
 		if (tId < 10000 || tId > 99999)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");
+			system("pause");
 			continue;
 		}
 
 		if (tId == 10000)
 		{
-			printf("你无法删除超级管理员 [10000].\b\n");
+			printf("你无法删除超级管理员 [10000]。");
+			system("pause");
 			return;
 		}
 
-		index = findIndexByID_d(userDat, tId, &tUser, sizeof(User_t));
+		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的账户。按 Enter 键继续。\b");
+			printf("没有符合条件的账户。");
+			system("pause");
 			return;
 		}
-		showSingleUser(tUser);
+		showSingleUser(*tUser);
 		break;
 	}
 
@@ -173,19 +188,22 @@ void deleteUser(void)
 		if (deleteOp == 'n' || deleteOp == 'N')
 			return;
 	}
+	system("pause");
+
 	return;
 }
 
 /* 局部函数实现 */
 static int getChoice()
 {
-	int choice;
-
+	int choice = 0;
+	showTitle(currentUser);
 	do
 	{
 		showAccountBusinessMenu();
+		printf(">>> ");
 		scanf("%d", &choice);
-	} while (choice > 4 || choice < 1);
+	} while (choice > 5 || choice < 1);
 
 	return choice;
 }
@@ -206,5 +224,6 @@ void showAllUsers(void)
 	printf("-----+-------------+---------------------+\n");
 	printList(userDat, printUserInfo, false);
 	printf("==========================================\n");
+	system("pause");
 	return;
 }

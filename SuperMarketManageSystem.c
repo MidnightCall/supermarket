@@ -2,6 +2,7 @@
 #include "linkList.h"
 #include "files.h"
 
+
 Node_t* userDat, * employeeDat, * productDat, * storageDat, * supplierDat, * orderDat;
 Config_t configDat;
 User_t currentUser;
@@ -9,6 +10,7 @@ User_t currentUser;
 void systemStart()
 {
 	initData();
+	system("title 超市管理系统 v1.0");
 	showWelcomeMessage();
 	runAdminSystem();
 	saveData();
@@ -20,6 +22,21 @@ void systemStart()
 void logInStart()
 {
 	runLogIn();
+
+	switch (currentUser.permission)
+	{
+	case COMMON:
+		PASS;
+		break;
+	case ADMIN:
+		runAdminSystem();
+		break;
+	case SU:
+		runSuperAdminSystem();
+		break;
+	default:
+		return;
+	}
 }
 
 void initData(void)
@@ -39,7 +56,7 @@ void initData(void)
 	loadFile(FILE_ORDER, orderDat, sizeof(Order_t), &configDat.maxId_Order);
 	loadConfig();
 
-	printConfig(); /* Debug */
+	//printConfig(); /* Debug */
 	return;
 }
 
@@ -66,22 +83,34 @@ void saveData(void)
  * @brief 启动员工管理模块
  *
  */
-void employeeModuleStart();
+void employeeModuleStart()
+{
+	PASS;
+}
 
 /**
  * @brief 启动供应商管理模块
  *
  */
-void supplierModuleStart();
+void supplierModuleStart()
+{
+	PASS;
+}
 
 /**
  * @brief 启动库存管理模块
  *
  */
-void storageModuleStart();
+void storageModuleStart()
+{
+	PASS;
+}
 
 /**
  * @brief 启动订单管理模块
  *
  */
-void orderModuleStart();
+void orderModuleStart()
+{
+	PASS;
+}

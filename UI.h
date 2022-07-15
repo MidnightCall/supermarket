@@ -8,6 +8,7 @@
  *
  */
 
+#include "typeCollection.h";
 #include <stdio.h>
 
  /**
@@ -92,7 +93,13 @@ void showAccountBusinessMenu();
  * @brief 展示商品管理界面
  *
  */
-
 void showProductMenu();
+
+/**
+ * @brief 显示用户信息表头
+ *
+ * @param user 要显示对应信息的用户
+ */
+void showTitle(User_t user);
 
 #endif
