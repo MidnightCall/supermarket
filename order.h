@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "UI.h"
 #include "linkList.h"
 #include "files.h"
@@ -11,6 +12,7 @@
 #include "typeCollection.h"
 
 extern Node_t* orderDat, *productDat;
+extern Config_t configDat;
 Order_t currentOrder;
 int currentIndex = 0;
 

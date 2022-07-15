@@ -90,16 +90,14 @@ void calTurnover()
 
 }
 
-/**
-*  @brief: 向当前订单添加商品
-*
-*/
 void addProductToCurrentOrder()
 {
-	currentIndex = 0;
 	int id;
 	int quantity;
+	bool flag = false;
 	OnSale_t* onSaleProduct;
+	currentIndex = 0;
+
 	printf("请输入商品id:");
 	scanf("%d", &id);
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
@@ -118,42 +116,100 @@ void addProductToCurrentOrder()
 		for (int i = 0; i < currentIndex; i++) {
 			if (id == currentOrder.items[i].product.id) {
 				currentOrder.items[i].quantity = quantity;
-			}else{
-				currentOrder.items[i].quantity = quantity;
-				currentOrder.items[i].product.id = onSaleProduct->product.id;
-				currentOrder.items[i].product.price = onSaleProduct->product.price;
-				strcpy(currentOrder.items[i].product.name, onSaleProduct->product.name);
-				strcpy(currentOrder.items[i].product.supplier, onSaleProduct->product.supplier);
+				flag = true;
+				break;
 			}
 		}
+		if (flag == false) {
+			OrderItem_t orderItem;
+			orderItem.quantity = quantity;
+			orderItem.product.id = id;
+			strcpy(orderItem.product.name, onSaleProduct->product.name);
+			strcpy(orderItem.product.supplier, onSaleProduct->product.supplier);
+			currentOrder.items[currentIndex++] = orderItem;
+		}
+		
 	}
-	
-	
 }
 
 /**
 *  @brief: 删除当前订单的商品
 *
 */
-void delProductFromCurrentOrder();
+void delProductFromCurrentOrder()
+{
+	int id;
+	int pos;
+
+	printf("请输入待删除的商品id:");
+	scanf("%d", &id);
+	if (0 != (findProduct(productDat, id))) {
+		del(productDat, pos);
+		printf("删除成功\n");
+		currentIndex--;
+	}else {
+		printf("不存在id为%d的商品\n", id);
+	}
+}
 
 /**
 *  @brief: 更改当前订单的商品数量
 *
 */
-void modifyProductFromCurrentOrder();
+void modifyProductFromCurrentOrder()
+{
+	int id;
+	int quantity;
+	bool flag = false;
+	OnSale_t* onSaleProduct;
+
+	printf("请输入需要更改的商品id:");
+	scanf("%d", &quantity);
+	for (int i = 0; i < currentIndex; i++) {
+		if (currentOrder.items[i].product.id == id) {
+			printf("请重新输入需要购买的数量:");
+			scanf("%d", &quantity);
+			currentOrder.items[i].quantity = quantity;
+			flag = true;
+			break;
+		}
+	}
+	if (flag == false) {
+		printf("当前订单中没有id为%d的商品\n");
+	}
+}
 
 /**
 *  @brief: 计算总价
 *
 */
-void calTurnOverInCurrentOrder();
+void calTurnOverInCurrentOrder()
+{
+	float sum = 0;
+
+	for (int i = 0; i < currentIndex; i++) {
+		sum += currentOrder.items[i].quantity * currentOrder.items[i].product.price;
+	}
+
+	printf("总价为%.2f", sum);
+}
 
 /**
 *  @brief: 交付订单
 *
 */
-void submitCurrentOrder();
+void submitCurrentOrder()
+{
+	Order_t* tempOrder = (Order_t*)malloc(tempOrder);
+	tempOrder->id = currentOrder.id;
+	for (int i = 0; i < currentIndex; i++) {
+		tempOrder->items[i].quantity = currentOrder.items[i].quantity;
+		tempOrder->items[i].product.id = currentOrder.items[i].product.id;
+		tempOrder->items[i].product.price = currentOrder.items[i].product.price;
+		strcpy(tempOrder->items[i].product.name, tempOrder->items->product.name);
+		strcpy(tempOrder->items[i].product.supplier, tempOrder->items->product.supplier);
+	}
+}
 
 /* 局部函数实现 */
 static int getChoice()
@@ -176,6 +232,7 @@ static int getNormalChoice()
 	do
 	{
 		showCurrentOrderMenu();
-		scanf("%d", &choice)
-	} while (choice > 5 || choice < 1)
+		scanf("%d", &choice);
+	} while (choice > 5 || choice < 1);
+
 }

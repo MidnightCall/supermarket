@@ -30,7 +30,6 @@
     <ClInclude Include="normalUser.h" />
     <ClInclude Include="onSaleProduct.h" />
     <ClInclude Include="order.h" />
-    <ClInclude Include="product.h" />
     <ClInclude Include="storage.h" />
     <ClInclude Include="superAdminSystem.h" />
     <ClInclude Include="SupermarketManageSystem.h" />
@@ -52,7 +51,6 @@
     <ClCompile Include="normalUser.c" />
     <ClCompile Include="onSaleProduct.c" />
     <ClCompile Include="order.c" />
-    <ClCompile Include="product.c" />
     <ClCompile Include="storage.c" />
     <ClCompile Include="superAdminSystem.c" />
     <ClCompile Include="SuperMarketManageSystem.c" />

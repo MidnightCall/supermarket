@@ -33,9 +33,6 @@
     <ClInclude Include="files.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="product.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="storage.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -81,9 +78,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="account.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="product.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="storage.c">
