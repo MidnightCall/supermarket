@@ -14,7 +14,7 @@ void runAdminSystem()
 		default:
 			return;
 		case 1:
-			runOnSaleSystem();
+			runOnSaleProductSystem();
 			break;
 		case 2:
 			runSupplierSystem();

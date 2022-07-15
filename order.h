@@ -11,9 +11,8 @@
 #include "customLookup.h"
 #include "typeCollection.h"
 
-extern Node_t* orderDat, *productDat;
-extern Config_t configDat;
-Order_t currentOrder;
+
+
 
 /**
 *  @brief: 运行订单审核模块(供管理员使用)

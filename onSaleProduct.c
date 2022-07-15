@@ -7,7 +7,7 @@ static int getChoice();
 *  @brief: 运行在售商品操作
 *
 */
-void runProductSystem()
+void runOnSaleProductSystem()
 {
 	int choice = getChoice();
 	switch (choice)
@@ -15,10 +15,10 @@ void runProductSystem()
 	default:
 		break;
 	case 1:
-		displayProduct();
+		displayOnSaleProduct();
 		break;
 	case 2:
-		queryProduct();
+		queryOnSaleProduct();
 		break;
 	}
 }
@@ -27,7 +27,7 @@ void runProductSystem()
 *  @brief: 查询在售商品
 *
 */
-void queryProduct()
+void queryOnSaleProduct()
 {
 	int id;
 	OnSale_t* onSaleProduct;
@@ -45,7 +45,7 @@ void queryProduct()
 *  @brief: 显示所有代售商品信息
 *
 */
-void displayProduct()
+void displayOnSaleProduct()
 {
 	// 打印全部上架商品信息
 }

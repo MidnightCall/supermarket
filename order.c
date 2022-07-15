@@ -1,10 +1,15 @@
 #include "order.h"
 #include "helpfulFunction.h"
 
+
+extern Node_t* orderDat, * productDat;
+extern Config_t configDat;
+int currentIndex = 0;
+Order_t currentOrder;
+
 /* 局部函数模型 */
 static int getChoice();
 
-int currentIndex = 0;
 /**
 *  @brief: 运行订单系统
 *
@@ -202,8 +207,8 @@ void calTurnOverInCurrentOrder()
 */
 void submitCurrentOrder()
 {
-	Order_t* tempOrder = (Order_t*)malloc(tempOrder);
-	tempOrder->id = currentOrder.id;
+	Order_t* tempOrder = (Order_t*)malloc(sizeof(Order_t));
+	tempOrder->id = ++configDat.maxId_Order;
 	for (int i = 0; i < currentIndex; i++) {
 		tempOrder->items[i].quantity = currentOrder.items[i].quantity;
 		tempOrder->items[i].product.id = currentOrder.items[i].product.id;
@@ -211,6 +216,7 @@ void submitCurrentOrder()
 		strcpy(tempOrder->items[i].product.name, tempOrder->items->product.name);
 		strcpy(tempOrder->items[i].product.supplier, tempOrder->items->product.supplier);
 	}
+	printf("已成功提交.\n");
 }
 
 /* 局部函数实现 */
@@ -237,4 +243,5 @@ static int getNormalChoice()
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 
+	return choice;
 }
