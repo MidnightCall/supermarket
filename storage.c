@@ -125,9 +125,9 @@ void inStorage(void)
 */
 void outStorage(void)
 {
-	unsigned int id, pos;
-	unsigned int outStorageNumber;
-	Storage_t* storage;
+	unsigned int id;
+	unsigned int outStorageNumber = 0;
+	Storage_t* storage = NULL;
 
 	printf("请输入待出库商品 ID: ");
 	scanf("%u", &id);
@@ -160,30 +160,34 @@ void outStorage(void)
 		}
 		else /* 要出库的商品还不在货架上 */
 		{
-			OnSale_t* newOnSale = (OnSale_t*)malloc(sizeof(OnSale_t));
+			OnSale_t* newOnSale = (OnSale_t*)malloc(sizeof(OnSale_t)); /* 新的在售商品节点 */
 			if (NULL == newOnSale)
 			{
 				printf("新商品节点初始化失败。");
 				system("pause");
 				return;
 			}
-		}
-		/*
-		// 补充取得对应的上架商品地址操作
-		if (storage.allowance > 0) {
+
+			newOnSale->product = storage->product;
 			printf("请填写出库数量: ");
 			scanf("%u", &outStorageNumber);
-			if (storage.allowance - outStorageNumber >= 0) {
-				storage.allowance -= outStorageNumber;
-				// 补充上架操作
-				printf("出库成功\n");
-			}else{
-				// 补充上架操作
-				storage.allowance = 0;
-				printf("库存不足，已全部出库，共出库 %u 件商品。", storage.allowance);
+
+			if (storage->allowance >= outStorageNumber) /* 注意，两个 unsigned 变量相减出现负数时会溢出变成超大的正数 */
+			{
+				storage->allowance -= outStorageNumber;
+				newOnSale->allowance = outStorageNumber;
+				printf("出库成功。");
 			}
+			else
+			{
+				newOnSale->allowance = storage->allowance;
+				printf("库存不足，已全部出库，共出库 %u 件商品。", storage->allowance);
+				storage->allowance = 0;
+			}
+
+			insert(productDat, END, newOnSale);
+
 		}
-		*/
 	} else {
 		printf("不存在 ID %u 的商品。", id);
 	}

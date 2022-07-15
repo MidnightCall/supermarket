@@ -29,16 +29,16 @@ void runLogIn()
 	switch (choice)
 	{
 	default:
-		break;
-	case 1:
-		logIn();
-		break;
-	case 2:
-		registration();
-		break;
-	case 3:
 		system("cls");
 		showExitMessage();
+		PAUSE;
+		exit(0);
+		return;
+	case 1:
+		logIn();
+		return;
+	case 2:
+		registration();
 		return;
 	}
 }
@@ -53,6 +53,7 @@ int getChoice()
 	do
 	{
 		showLoginMessage();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
 	flush();

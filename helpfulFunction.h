@@ -7,6 +7,8 @@
 
 /* 功能占位符 */
 #define PASS printf("To be continued... [%s, %s(), LINE %d]", __FILE__, __FUNCTION__, __LINE__)
+#define PAUSE system("pause")
+#define HINT printf(">>> ")
 
 /**
 * @brief 刷新缓冲区

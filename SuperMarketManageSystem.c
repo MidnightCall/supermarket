@@ -11,7 +11,7 @@ void systemStart()
 {
 	initData();
 	system("title 超市管理系统 v1.0");
-	showWelcomeMessage();
+	//showWelcomeMessage();
 	runAdminSystem();
 	saveData();
 }
@@ -21,21 +21,26 @@ void systemStart()
  */
 void logInStart()
 {
-	runLogIn();
-
-	switch (currentUser.permission)
+	while (1)
 	{
-	case COMMON:
-		PASS;
-		break;
-	case ADMIN:
-		runAdminSystem();
-		break;
-	case SU:
-		runSuperAdminSystem();
-		break;
-	default:
-		return;
+		system("cls");
+		showWelcomeMessage();
+		runLogIn();
+
+		switch (currentUser.permission)
+		{
+		case COMMON:
+			PASS;
+			break;
+		case ADMIN:
+			runAdminSystem();
+			break;
+		case SU:
+			runSuperAdminSystem();
+			break;
+		default:
+			return;
+		}
 	}
 }
 

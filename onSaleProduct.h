@@ -25,18 +25,6 @@ void runOnSaleSystem();
 void queryOnSaleProduct();
 
 /**
-*  @brief: 添加代售商品
-*
-*/
-void addOnSaleProduct(Product_t product, int allowance);
-
-/**
-*  @brief: 删除代售商品
-*
-*/
-void delOnSaleProduct();
-
-/**
 *  @brief: 显示所有代售商品信息
 *
 */
