@@ -73,7 +73,7 @@ int findIndexByID(Node_t* head, unsigned int id)
 		return 0;
 }
 
-int findIndexByID_d(Node_t* head, unsigned int id, void* dest, size_t size)
+int findIndexByID_d(Node_t* head, unsigned int id, void** dest)
 {
 	int count = 1;
 	bool flag = false;
@@ -88,8 +88,7 @@ int findIndexByID_d(Node_t* head, unsigned int id, void* dest, size_t size)
 		if (*(unsigned int*)(tHead->data) == id)
 		{
 			flag = true;
-			if (dest != NULL)
-				memcpy(dest, tHead->data, size);
+			*dest = tHead->data;
 			break;
 		}
 		tHead = tHead->next;
@@ -129,7 +128,7 @@ int findIndexByName(Node_t* head, char* name, const int offset)
 		return 0;
 }
 
-int findIndexByName_d(Node_t* head, char* name, const int offset, void* dest, size_t size)
+int findIndexByName_d(Node_t* head, char* name, const int offset, void** dest)
 {
 	int count = 1;
 	bool flag = false;
@@ -144,8 +143,7 @@ int findIndexByName_d(Node_t* head, char* name, const int offset, void* dest, si
 		if (0 == strcmp((char*)tHead->data + offset, name))
 		{
 			flag = true;
-			if (dest != NULL)
-				memcpy(dest, tHead->data, size);
+			*dest = tHead->data;
 			break;
 		}
 		tHead = tHead->next;

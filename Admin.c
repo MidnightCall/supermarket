@@ -1,4 +1,5 @@
 #include "Admin.h"
+#include "helpfulFunction.h"
 
 /* 局部函数模型 */
 static int getChoice();

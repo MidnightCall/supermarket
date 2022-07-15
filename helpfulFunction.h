@@ -5,6 +5,9 @@
 #include <stdbool.h>
 #include <string.h>
 
+/* 功能占位符 */
+#define PASS printf("To be continued... [%s, %s(), LINE %d]", __FILE__, __FUNCTION__, __LINE__)
+
 /**
 * @brief 刷新缓冲区
 *

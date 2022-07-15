@@ -3,6 +3,13 @@
 
 #include "typeCollection.h"
 
+
+/**
+* @brief 运行职工处理模块
+*
+*/
+void runEmployeeManage(void);
+
 /**
 * @brief 显示单条员工信息
 *
@@ -29,5 +36,10 @@ void deleteEmployee(void);
 * @brief 查找员工
 */
 void findEmployee(void);
+
+/**
+* @brief 修改员工信息
+*/
+void modifyEmployee(void);
 
 #endif

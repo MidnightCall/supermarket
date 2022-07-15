@@ -94,7 +94,7 @@ void del(Node_t* head, int pos)
 	return;
 }
 
-/* getData: Î´¼ì²é */
+/* getData: ÒÑ¼ì²é */
 
 void* getData(Node_t* head, int index)
 {
@@ -102,10 +102,13 @@ void* getData(Node_t* head, int index)
 	if (NULL == tHead->next)
 		return NULL;
 	
+	int count = 1;
 	tHead = head->next;
-	int i = 1;
-	while (tHead->next != NULL && i < index)
+	while (tHead->next != NULL && count < index)
+	{
 		tHead = tHead->next;
+		++count;
+	}
 	return tHead->data;
 }
 

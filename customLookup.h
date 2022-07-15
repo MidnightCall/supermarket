@@ -40,12 +40,11 @@ int findIndexByID(Node_t* head, unsigned int id);
 *
 * @param head 要查找的链表头
 * @param id 查找条件 (ID)
-* @param dest 查找到的节点中的数据存放到的地址
-* @param size 对应的数据类型的大小
+* @param dest 回传查找到的数据所在的实际地址
 *
 * @return 节点在链表中的位置。若不存在，则返回 0.
 */
-int findIndexByID_d(Node_t* head, unsigned int id, void* dest, size_t size);
+int findIndexByID_d(Node_t* head, unsigned int id, void** dest);
 
 /**
 * @brief 根据名称查找节点在链表中的位置。适用于类型 Product_t, Employee_t 和 Supplier_t.
@@ -64,11 +63,10 @@ int findIndexByName(Node_t* head, char* name, const int offset);
 * @param head 要查找的链表头
 * @param id 查找条件 (ID)
 * @param offset 对应的数据类型所需要的偏移量 (OFFSET_XXX)
-* @param dest 查找到的节点中的数据存放到的地址
-* @param size 对应的数据类型的大小
+* @param dest 回传查找到的数据所在的实际地址
 *
 * @return 节点在链表中的位置。若不存在，则返回 0.
 */
-int findIndexByName_d(Node_t* head, char* name, const int offset, void* dest, size_t size);
+int findIndexByName_d(Node_t* head, char* name, const int offset, void** dest);
 
 #endif
