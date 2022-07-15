@@ -1,6 +1,7 @@
 #include "Admin.h"
 #include "helpfulFunction.h"
 
+extern User_t currentUser;
 /* 局部函数模型 */
 static int getChoice();
 
@@ -11,7 +12,7 @@ void runAdminSystem()
 	switch (choice)
 	{
 		default:
-			break;
+			return;
 		case 1:
 			runOnSaleSystem();
 			break;
@@ -31,7 +32,7 @@ void runAdminSystem()
 static int getChoice()
 {
 	int choice;
-
+	showTitle(currentUser);
 	do
 	{
 		showAdminMenu();

@@ -155,3 +155,65 @@ int findIndexByName_d(Node_t* head, char* name, const int offset, void** dest)
 	else
 		return 0;
 }
+
+Product_t* getProduct(void* src)
+{
+	return (Product_t*)src;
+}
+
+int findProduct(Node_t* head, unsigned int id)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		/* OnSale_t 和 Storage_t 的结构是一样的 */
+		if ((*(Storage_t*)tHead->data).product.id == id)
+		{
+			flag = true;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+int findProduct_d(Node_t* head, unsigned int id, void** dest)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		/* OnSale_t 和 Storage_t 的结构是一样的 */
+		if ((*(Storage_t*)tHead->data).product.id == id)
+		{
+			flag = true;
+			*dest = tHead->data;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}

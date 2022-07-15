@@ -1,5 +1,8 @@
 #include "supplier.h"
 
+
+extern Config_t configDat;
+extern User_t currentUser;
 /* 局部函数模型 */
 static int getChoice();
 
@@ -9,24 +12,27 @@ static int getChoice();
 */
 void runSupplierSystem()
 {
-	int choice = getChoice();
-
-	switch (choice)
+	while (1)
 	{
-	default:
-		break;
-	case 1:
-		displaySupplier();
-		break;
-	case 2:
-		querySupplier();
-		break;
-	case 3:
-		addSupplier();
-		break;
-	case 4:
-		delSupplier();
-		break;
+		int choice = getChoice();
+
+		switch (choice)
+		{
+		default:
+			return;
+		case 1:
+			displaySupplier();
+			break;
+		case 2:
+			querySupplier();
+			break;
+		case 3:
+			addSupplier();
+			break;
+		case 4:
+			delSupplier();
+			break;
+		}
 	}
 }
 
@@ -36,15 +42,18 @@ void runSupplierSystem()
 */
 void querySupplier()
 {
-	int id;
-	Supplier_t supplier;
-	printf("请输入待查询的供货商id:");
-	scanf("%d", &id);
-	if (0 != findIndexByID_d(supplierDat, id, &supplier, sizeof(Supplier_t))) {
-		printSupplierInfo(&supplier);
-	}else {
-		printf("不存在编号为%d的供货商\n", id);
+	unsigned int id;
+	Supplier_t* supplier = NULL;;
+	printf("请输入待查询的供货商 ID:");
+	scanf("%u", &id);
+
+	if (0 != findIndexByID_d(supplierDat, id, &supplier)) {
+		printSupplierInfo(supplier);
+	} else {
+		printf("不存在编号为 %d 的供货商。", id);
 	}
+	system("pause");
+	return;
 }
 
 /**
@@ -54,75 +63,64 @@ void querySupplier()
 void addSupplier()
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
-	char productName[48];
-	while (true)
+	if (NULL == newSupplier)
 	{
-		printf("请输入商品供货商id:");
-		scanf("%d", &newSupplier->id);
-		if (findIndexByID(supplierDat, newSupplier ->id) != 0) {
-			printf("供货商id已存在，请重新输入\n");
-		}
-		else {
-			break;
-		}
+		printf("供货商节点初始化失败。");
+		system("pause");
+		exit(0);
 	}
+
+	printf("新供货商 ID 是 %d\n", ++configDat.maxId_Supplier);
+	newSupplier->id = configDat.maxId_Supplier;
 	flush();
-	printf("请输入供货商名称:");
+	printf("请输入供货商名称: ");
 	stringGet(newSupplier->name, 21);
-	printf("请输入供货商提供的商品名称:");
-	stringGet(productName, 48);
-	if (0 == findIndexByName(supplierDat, productName, OFFSET_SUPPLIER))
-	{
-		Product_t * newProduct = (Product_t*)malloc(sizeof(Product_t));
-		/*
-			生成对应的商品id
-		*/
-		strcpy(newProduct->name, productName);
-		strcpy(newProduct->supplier, newSupplier->name);
-		printf("请输入该商品的价格:");
-		scanf("%f", &newProduct->price);
-		insert(productDat, END, newProduct);
-	}
 	insert(supplierDat, END, newSupplier);
-	printf("添加完成\n");
+	printf("添加完成。");
+	system("pause");
+	return;
 }
 
 /**
 *  @brief: 删除供应商信息
 *
 */
-void delSupplier()
+void delSupplier(void)
 {
-	int id;
-	int pos;
-	printf("请输入待删除供应商id:");
-	scanf("%d", &id);
+	unsigned int id, pos;
+	printf("请输入待删除供应商 ID:");
+	scanf("%u", &id);
 	if ((pos = findIndexByID(supplierDat, id)) != 0) {
 		del(supplierDat, pos);
 		printf("删除成功\n");
 	}
 	else {
-		printf("不存在id%d的供应商\n", id);
+		printf("不存在 ID %d 的供应商。", id);
 	}
+	system("pause");
+	return;
 }
 
 /**
 *  @brief: 显示所有供应商信息
 *
 */
-void displaySupplier()
+void displaySupplier(void)
 {
-	printList(supplierDat, printProductInfo, false);
+	printList(supplierDat, printSupplierInfo, false);
+	system("pause");
+	return;
 }
 
 /* 局部函数实现 */
-static int getChoice()
+static int getChoice(void)
 {
 	int choice;
-
+	showTitle(currentUser);
 	do
 	{
 		showSupplierBusinessMenu();
+		printf(">>> ");
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 

@@ -1,27 +1,31 @@
 #include "onSaleProduct.h"
 
+extern User_t currentUser;
+
 /* 局部函数模型 */
 static int getChoice();
 
 /**
 *  @brief: 运行在售商品操作
-*
 */
 void runOnSaleSystem()
 {
-	int choice = getChoice();
-	switch (choice)
+	while (1)
 	{
-	default:
-		break;
-	case 1:
-		displayOnSaleProduct();
-		break;
-	case 2:
-		queryOnSaleProduct();
-		break;
+		int choice = getChoice();
+
+		switch (choice)
+		{
+		default:
+			return;
+		case 1:
+			displayOnSaleProduct();
+			break;
+		case 2:
+			queryOnSaleProduct();
+			break;
+		}
 	}
-	
 }
 
 /**
@@ -30,13 +34,13 @@ void runOnSaleSystem()
 */
 void queryOnSaleProduct()
 {
-	int id;
+	unsigned int id;
 	OnSale_t onSale;
 	printf("请输入待查询的商品id:");
-	scanf("%d", &id);
+	scanf("%u", &id);
 	if (findIndexByID_d(productDat, id, &onSale, sizeof(Product_t)) != 0/* 此处替换为查询上架商品的操作 */) {
 		/* 打印单条上架商品信息 */
-	}else {
+	} else {
 		printf("不存在%d号商品\n", id);
 	}
 }
@@ -55,40 +59,43 @@ void addOnSaleProduct(Product_t product, int allowance)
 	onSaleProduct.allowance = allowance;
 	strcpy(onSaleProduct.product.supplier, product.supplier);
 	// 插入到onSale链表操作
+	PASS;
 }
 
 /**
 *  @brief: 删除代售商品
 *
 */
-void delOnSaleProduct()
+void delOnSaleProduct(void)
 {
 	int id;
 	int pos;
-	printf("请输入待删除商品id:");
+	printf("请输入待删除商品 ID: ");
 	scanf("%d", &id);
 	if ((pos = findIndexByID(productDat, id)) != 0) {
-		// 删除对应id的操作
-		printf("删除成功\n");
-	}else {
-		printf("不存在id%d的商品\n", id);
+		// 删除对应 ID 的操作
+		printf("删除成功。");
+	} else {
+		printf("不存在 ID %d 的商品。", id);
 	}
+	system("pause");
+	return;
 }
 
 /**
-*  @brief: 显示所有代售商品信息
+*  @brief: 显示所有待售商品信息
 *
 */
 void displayOnSaleProduct()
 {
-	// 打印所有待售商品信息
+	PASS;
 }
 
 /* 局部函数实现 */
 static int getChoice()
 {
 	int choice;
-
+	showTitle(currentUser);
 	do
 	{
 		showOnSaleBusinessMenu();

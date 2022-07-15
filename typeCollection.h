@@ -101,7 +101,6 @@ typedef struct tagOrderItem_t
 typedef struct tagOrder_t
 {
     unsigned int id;
-    char customer[LEN_NAME];
     OrderItem_t items[100];
 } Order_t;
 
