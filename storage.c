@@ -72,7 +72,7 @@ void inStorage()
 		printf("仓库内已存在该商品。请填写入库数量: ");
 		scanf("%u", &inStorageNumber);
 		storage->allowance += inStorageNumber;
-		printf("入库完毕\n");
+		printf("入库完毕。");
 	}
 	else {
 		flush();
@@ -85,7 +85,7 @@ void inStorage()
 			newStorage->product.id = ++configDat.maxId_Product;
 			strcpy(supplier.name, newStorage->product.supplier);
 		}
-		printf("请输入价格($/件):");
+		printf("请输入价格(￥/件):");
 		scanf("%f", &(newStorage->product.price));
 		insert(storageDat, END, newStorage);
 		printf("添加完成\n");
@@ -130,7 +130,7 @@ void outStorage()
 }
 
 /**
-*  @brief: 显示所有代售商品信息
+*  @brief: 显示所有待售商品信息
 *
 */
 void displayStorage()

@@ -93,7 +93,7 @@ int findProduct(Node_t* head, unsigned int id);
 *
 * @param head 要查找的链表头
 * @param id 查找条件 (ID)
-* @param dest 回传查找到的商品所在库存节点的实际地址
+* @param dest 回传查找到的商品所在库存或货架节点的实际地址
 *
 * @return 节点在链表中的位置。若不存在，则返回 0.
 */
