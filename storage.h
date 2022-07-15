@@ -11,6 +11,7 @@
 #include "customLookup.h"
 
 extern Node_t* storageDat, *supplierDat, *onSale;
+extern Config_t configDat;
 
 /**
 *  @brief: 运行库存管理系统

@@ -77,7 +77,7 @@ void inStorage()
 		stringGet(newStorage->product.supplier, 24);
 		if (findIndexByName_d(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER, &supplier, sizeof(Supplier_t)))
 		{
-			//生成供应商id
+			newStorage->product.id = ++configDat.maxId_Product;
 			strcpy(supplier.name, newStorage->product.supplier);
 		}
 		printf("请输入价格($/件):");

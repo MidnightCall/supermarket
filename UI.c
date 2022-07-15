@@ -98,8 +98,7 @@ void showOrderBusinessMenu()
     printf("|                                                |\n");
     printf("|              1. 显示所有订单信息               |\n");
     printf("|                2. 查找订单信息                 |\n");
-    printf("|                3. 添加新的订单                 |\n");
-    printf("|               4. 删除订单商信息                |\n");
+    printf("|                3. 计算总营业额                 |\n");
     printf("|                     5. 退出                    |\n");
     printf("|                                                |\n");
     printf(" ------------------------------------------------\n");

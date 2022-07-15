@@ -68,7 +68,7 @@ void delOnSaleProduct()
 	printf("请输入待删除商品id:");
 	scanf("%d", &id);
 	if ((pos = findIndexByID(productDat, id)) != 0) {
-		// 删除对应id的代码
+		// 删除对应id的操作
 		printf("删除成功\n");
 	}else {
 		printf("不存在id%d的商品\n", id);

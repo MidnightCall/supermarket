@@ -18,7 +18,7 @@ void runAdminSystem()
 			runSupplierSystem();
 			break;
 		case 3:
-			// ∂©µ•π‹¿Ì
+			runOrderSystem();
 			break;
 		case 4:
 			runStorageSystem();

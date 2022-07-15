@@ -8,6 +8,7 @@
 #include "supplier.h"
 #include "onSaleProduct.h"
 #include "storage.h"
+#include "order.h"
 
 /**
 *  @brief: 运行管理员操作
