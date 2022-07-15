@@ -34,4 +34,8 @@ char* stringGet(char* st, int n);
 */
 bool hasNonNumerical(char* str);
 
+/**
+* @brief ÅĞ¶ÏÖ¸ÕëÊÇ·ñÎª¿Õ
+*/
+void assert_null(void* ptr);
 #endif 

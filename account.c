@@ -14,12 +14,8 @@ void runLogIn()
 	{
 		User_t Su = { 10000, "admin", SU }; /* 超管默认属性 */
 		User_t* newSu = (User_t*)malloc(sizeof(User_t));
+		assert_null(newSu);
 
-		if (NULL == newSu)
-		{
-			printf("超级管理员账户初始化失败。\b\n");
-			exit(0);
-		}
 		memcpy(newSu, &Su, sizeof(User_t));
 		insert(userDat, END, newSu);
 	}
@@ -67,9 +63,10 @@ int getChoice()
 void registration()
 {
 	int choice = 0;
-	User_t* account = (User_t*)malloc(sizeof(User_t));
 	char firstPassword[LEN_PWD];
 	char secondPassword[LEN_PWD];
+	User_t* account = (User_t*)malloc(sizeof(User_t));
+	assert_null(account);
 
 	/* 账号显示 */
 	printf("你的账号是 %d\n", ++configDat.maxId_User);

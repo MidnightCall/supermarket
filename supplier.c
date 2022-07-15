@@ -1,4 +1,5 @@
 #include "supplier.h"
+#include "typeCollection.h"
 
 
 extern Config_t configDat;
@@ -63,21 +64,25 @@ void querySupplier()
 void addSupplier()
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
-	if (NULL == newSupplier)
-	{
-		printf("供货商节点初始化失败。");
-		system("pause");
-		exit(0);
-	}
+	assert_null(newSupplier);
 
 	printf("新供货商 ID 是 %d\n", ++configDat.maxId_Supplier);
 	newSupplier->id = configDat.maxId_Supplier;
 	flush();
 	printf("请输入供货商名称: ");
 	stringGet(newSupplier->name, 21);
+
+	Supplier_t* tSupplier = NULL; 
+	if (findIndexByName_d(supplierDat, newSupplier->name, OFFSET_SUPPLIER, &tSupplier)) /* 判断是否有重复供应商 */
+	{
+		printf("此供应商已存在，ID 为 %u.\n添加失败。", tSupplier->id);
+		PAUSE;
+		return;
+	}
+
 	insert(supplierDat, END, newSupplier);
 	printf("添加完成。");
-	system("pause");
+	PAUSE;
 	return;
 }
 

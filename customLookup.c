@@ -12,7 +12,7 @@ const int OFFSET_SUPPLIER = 4;
 void printUserInfo(User_t* node)
 {
 	static char* pmsConv[] = { "普通用户", "管理员", "超级管理员" };
-	printf("%5u| %12s| %20s|\n", node->id, node->password, pmsConv[node->permission]);
+	printf("| %7u| %12s| %22s|\n", node->id, node->password, pmsConv[node->permission]);
 	return;
 }
 

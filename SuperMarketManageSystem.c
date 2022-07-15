@@ -30,7 +30,7 @@ void logInStart()
 		switch (currentUser.permission)
 		{
 		case COMMON:
-			PASS;
+			runNormalUserOrderSystem();
 			break;
 		case ADMIN:
 			runAdminSystem();

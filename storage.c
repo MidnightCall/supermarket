@@ -215,6 +215,7 @@ static int getChoice()
 	do
 	{
 		showStorageBusinessMenu();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 
