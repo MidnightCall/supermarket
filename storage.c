@@ -1,5 +1,7 @@
 #include "storage.h"
 
+
+extern User_t currentUser;
 /* 局部函数模型 */
 static int getChoice();
 
@@ -9,65 +11,68 @@ static int getChoice();
 */
 void runStorageSystem()
 {
-	int choice = getChoice();
-	switch (choice)
+	while (1)
 	{
-	default:
-		break;
-	case 1:
-		displayStorage();
-		break;
-	case 2:
-		queryProduct();
-		break;
-	case 3:
-		addProduct();
-		break;
-	case 4:
-		delProduct();
-		break;
-	}
+		int choice = getChoice();
 
+		switch (choice)
+		{
+		default:
+			return;
+		case 1:
+			displayStorage();
+			break;
+		case 2:
+			queryStorage();
+			break;
+		case 3:
+			inStorage();
+			break;
+		case 4:
+			outStorage();
+			break;
+		}
+	}
 }
 
 /**
 *  @brief: 查询在售商品
 *
 */
-void queryStroage()
+void queryStorage()
 {
-	int id;
-	Storage_t* storage;
-	printf("请输入待查询的商品id:");
-	scanf("%d", &id);
+	unsigned int id;
+	Storage_t* storage = NULL;
+	printf("请输入待查询的商品 ID: ");
+	scanf("%u", &id);
 	if (findIndexByID_d(storageDat, id, &storage) != 0) {
-		printProductInfo(storage);
+		printProductInfo(&storage);
 	}
 	else {
-		printf("不存在%d号商品\n", id);
+		printf("不存在 %d 号商品。\n", id);
 	}
 }
 
 /**
-*  @brief: 添加代售商品
+*  @brief: 入库
 *
 */
 void inStorage()
 {
-	int id;
-	Supplier_t* supplier;
-	Storage_t storage;
+	unsigned int id = 0;
+	Supplier_t supplier;
+	Storage_t* storage = NULL;
 	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t));
 
 	/* 重复商品，提示用户添加库存 */
-	printf("请输入商品id:");
-	scanf("%d", &id);
-	if (0 != findIndexByID_d(storageDat, id, &storage, sizeof(Storage_t)/* 此处替换为查询库存的函数 */)) {
-		int inStorageNumber;
-		printf("请填写入库数量:");
-		scanf("%d", &inStorageNumber);
-		storage.allowance += inStorageNumber;
-		printf("入库完毕\n");
+	printf("请输入商品 ID: ");
+	scanf("%u", &id);
+	if (0 != findProduct_d(storageDat, id, &storage)) {
+		unsigned int inStorageNumber;
+		printf("仓库内已存在该商品。请填写入库数量: ");
+		scanf("%u", &inStorageNumber);
+		storage->allowance += inStorageNumber;
+		printf("入库完毕。");
 	}
 	else {
 		flush();
@@ -80,7 +85,7 @@ void inStorage()
 			newStorage->product.id = ++configDat.maxId_Product;
 			strcpy(supplier->name, newStorage->product.supplier);
 		}
-		printf("请输入价格($/件):");
+		printf("请输入价格(￥/件):");
 		scanf("%f", &(newStorage->product.price));
 		insert(storageDat, END, newStorage);
 		printf("添加完成\n");
@@ -99,7 +104,7 @@ void outStorage()
 	int pos;
 	Storage_t storage;
 
-	printf("请输入待出库商品id:");
+	printf("请输入待出库商品 ID: ");
 	scanf("%d", &id);
 	if ((0 != (pos = findIndexByID_d(storageDat, id, &storage, sizeof(Storage_t))))/* 此处替换为查询库存的函数 */) 
 	{
@@ -107,7 +112,7 @@ void outStorage()
 		// 补充取得对应的上架商品地址操作
 		if (storage.allowance > 0) {
 			int outStorageNumber;
-			printf("请填写出库数量:");
+			printf("请填写出库数量: ");
 			scanf("%d", &outStorageNumber);
 			if (storage.allowance - outStorageNumber >= 0) {
 				storage.allowance -= outStorageNumber;
@@ -125,19 +130,20 @@ void outStorage()
 }
 
 /**
-*  @brief: 显示所有代售商品信息
+*  @brief: 显示所有待售商品信息
 *
 */
 void displayStorage()
 {
 	// 打印库存商品信息
+	PASS;
 }
 
 /* 局部函数实现 */
 static int getChoice()
 {
 	int choice;
-
+	showTitle(currentUser);
 	do
 	{
 		showStorageBusinessMenu();

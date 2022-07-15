@@ -69,4 +69,33 @@ int findIndexByName(Node_t* head, char* name, const int offset);
 */
 int findIndexByName_d(Node_t* head, char* name, const int offset, void** dest);
 
+/**
+* @brief 获取货架或库存中的商品信息
+*
+* @param src 货架 (OnSale_t) 或库存 (Storage_t) 的节点地址
+* 
+* @return 查找到的商品信息所在的实际地址
+*/
+Product_t* getProduct(void* src);
+
+/**
+* @brief 获取商品所在节点的位置
+*
+* @param head 要查找的链表头
+* @param id 查找条件 (ID)
+* 
+* @return 节点在链表中的位置。若不存在，则返回 0.
+*/
+int findProduct(Node_t* head, unsigned int id);
+
+/**
+* @brief 获取商品所在节点的位置
+*
+* @param head 要查找的链表头
+* @param id 查找条件 (ID)
+* @param dest 回传查找到的商品所在库存或货架节点的实际地址
+*
+* @return 节点在链表中的位置。若不存在，则返回 0.
+*/
+int findProduct_d(Node_t* head, unsigned int id, void** dest);
 #endif
