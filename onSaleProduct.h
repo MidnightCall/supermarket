@@ -28,7 +28,7 @@ void queryOnSaleProduct();
 *  @brief: 添加代售商品
 *
 */
-void addOnSaleProduct();
+void addOnSaleProduct(Product_t product, int allowance);
 
 /**
 *  @brief: 删除代售商品
@@ -41,7 +41,5 @@ void delOnSaleProduct();
 *
 */
 void displayOnSaleProduct();
-
-
 
 #endif // !__ONSALEPRODUCT_H_

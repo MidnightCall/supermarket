@@ -3,10 +3,6 @@
 /* 局部函数模型 */
 static int getChoice();
 
-/**
-*  @brief: 运行在售商品操作
-*
-*/
 void runOnSaleSystem()
 {
 	int choice = getChoice();
@@ -24,10 +20,6 @@ void runOnSaleSystem()
 	
 }
 
-/**
-*  @brief: 查询在售商品
-*
-*/
 void queryOnSaleProduct()
 {
 	int id;
@@ -41,12 +33,6 @@ void queryOnSaleProduct()
 	}
 }
 
-/**
-*  @brief: 添加新的商品
-*  @param product 添加的商品信息
-*  @param allowance 添加的库存数量
-*
-*/
 void addOnSaleProduct(Product_t product, int allowance)
 {
 	OnSale_t onSaleProduct;
@@ -57,10 +43,6 @@ void addOnSaleProduct(Product_t product, int allowance)
 	// 插入到onSale链表操作
 }
 
-/**
-*  @brief: 删除代售商品
-*
-*/
 void delOnSaleProduct()
 {
 	int id;
@@ -75,10 +57,6 @@ void delOnSaleProduct()
 	}
 }
 
-/**
-*  @brief: 显示所有代售商品信息
-*
-*/
 void displayOnSaleProduct()
 {
 	// 打印所有待售商品信息

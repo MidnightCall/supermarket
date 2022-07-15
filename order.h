@@ -10,13 +10,21 @@
 #include "customLookup.h"
 #include "typeCollection.h"
 
-extern Node_t* orderDat;
+extern Node_t* orderDat, *productDat;
+Order_t currentOrder;
+int currentIndex = 0;
 
 /**
-*  @brief: 运行订单审核模块
+*  @brief: 运行订单审核模块(供管理员使用)
 *
 */
 void runOrderSystem();
+
+/**
+*  @brief: 运行当前订单管理模块(供收银员使用)
+*
+*/
+void runNormalUserOrderSystem();
 
 /**
 *  @brief: 显示所有订单信息
@@ -35,5 +43,35 @@ void queryOrder();
 *
 */
 void calTurnover();
+
+/**
+*  @brief: 向当前订单添加商品
+*
+*/
+void addProductToCurrentOrder();
+
+/**
+*  @brief: 删除当前订单的商品
+*
+*/
+void delProductFromCurrentOrder();
+
+/**
+*  @brief: 更改当前订单的商品数量
+*
+*/
+void modifyProductFromCurrentOrder();
+
+/**
+*  @brief: 计算总价
+*
+*/
+void calTurnOverInCurrentOrder();
+
+/**
+*  @brief: 交付订单
+*
+*/
+void submitCurrentOrder();
 
 #endif // !__ORDER_H_

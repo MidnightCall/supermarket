@@ -37,11 +37,11 @@ void runStorageSystem()
 void queryStroage()
 {
 	int id;
-	Storage_t storage;
+	Storage_t* storage;
 	printf("请输入待查询的商品id:");
 	scanf("%d", &id);
-	if (findIndexByID_d(storageDat, id, &storage, sizeof(Storage_t)) != 0) {
-		printProductInfo(&storage);
+	if (findIndexByID_d(storageDat, id, &storage) != 0) {
+		printProductInfo(storage);
 	}
 	else {
 		printf("不存在%d号商品\n", id);
@@ -55,7 +55,7 @@ void queryStroage()
 void inStorage()
 {
 	int id;
-	Supplier_t supplier;
+	Supplier_t* supplier;
 	Storage_t storage;
 	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t));
 
@@ -75,10 +75,10 @@ void inStorage()
 		stringGet(newStorage->product.name, 48);
 		printf("请输入供应商名称:");
 		stringGet(newStorage->product.supplier, 24);
-		if (findIndexByName_d(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER, &supplier, sizeof(Supplier_t)))
+		if (findIndexByName_d(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER, &supplier))
 		{
 			newStorage->product.id = ++configDat.maxId_Product;
-			strcpy(supplier.name, newStorage->product.supplier);
+			strcpy(supplier->name, newStorage->product.supplier);
 		}
 		printf("请输入价格($/件):");
 		scanf("%f", &(newStorage->product.price));

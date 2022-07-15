@@ -37,11 +37,11 @@ void runSupplierSystem()
 void querySupplier()
 {
 	int id;
-	Supplier_t supplier;
+	Supplier_t* supplier = NULL;
 	printf("请输入待查询的供货商id:");
 	scanf("%d", &id);
-	if (0 != findIndexByID_d(supplierDat, id, &supplier, sizeof(Supplier_t))) {
-		printSupplierInfo(&supplier);
+	if (0 != findIndexByID_d(supplierDat, id, &supplier)) {
+		printSupplierInfo(supplier);
 	}else {
 		printf("不存在编号为%d的供货商\n", id);
 	}
@@ -112,7 +112,7 @@ void delSupplier()
 */
 void displaySupplier()
 {
-	printList(supplierDat, printProductInfo, false);
+	printList(supplierDat, printSupplierInfo, false);
 }
 
 /* 局部函数实现 */

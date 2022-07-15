@@ -37,11 +37,11 @@ void runProductSystem()
 void queryProduct()
 {
 	int id;
-	Product_t product;
+	Product_t* product;
 	printf("请输入待查询的商品id:");
 	scanf("%d", &id);
-	if (findIndexByID_d(productDat, id, &product, sizeof(Product_t)) != 0) {
-		printProductInfo(&product);
+	if (findIndexByID_d(productDat, id, &product) != 0) {
+		printProductInfo(product);
 	}
 	else {
 		printf("不存在%d号商品\n", id);

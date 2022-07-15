@@ -57,13 +57,13 @@ void showAdminMenu()
 void showUserMenu()
 {
     printf("┌------------------------------------------------┐\n");
-    printf("|                                                |\n");
-    printf("|                 1. 在售商品查询                |\n");
-    printf("|                  2. 营业额查询                 |\n");
-    printf("|                  3. 购物车管理                 |\n");
-    printf("|                     4. 退出                    |\n");
-    printf("|                                                |\n");
-    printf("|                                                |\n");
+    printf("|                                                 |\n");
+    printf("|                                                 |\n");
+    printf("|                 1. 在售商品查询                 |\n");
+    printf("|                 2. 当前订单管理                 |\n");
+    printf("|                     3. 退出                     |\n");
+    printf("|                                                 |\n");
+    printf("|                                                 |\n");
     printf("└------------------------------------------------┘\n");
 }
 
@@ -112,9 +112,9 @@ void showCurrentOrderMenu()
     printf("|                                                |\n");
     printf("|                 1. 添加商品                    |\n");
     printf("|                 2. 删除商品                    |\n");
-    printf("|                3. 交付订单商品                 |\n");
-    printf("|                    4. 退出                     |\n");
-    printf("|                                                |\n");
+    printf("|                 3. 计算金额                    |\n");
+    printf("|                 4. 交付订单                    |\n");
+    printf("|                    5.退出                      |\n");
     printf("|                                                |\n");
     printf("└------------------------------------------------┘\n");
 }
