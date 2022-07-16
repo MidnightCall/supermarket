@@ -1,13 +1,19 @@
 #include "typeCollection.h"
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
 #include "customLookup.h"
 #include "helpfulFunction.h"
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 const int OFFSET_PRODUCT = 4;
 const int OFFSET_EMPLOYEE = 12;
 const int OFFSET_SUPPLIER = 4;
+
+static char* sexConv[] = { "女", "男" };
+static char* typeConv[] = { "果蔬","日用品","文具","食品","酒水","家用电器" };
+static char* timeConv(time_t time);
 
 void printUserInfo(User_t* node)
 {
@@ -18,13 +24,13 @@ void printUserInfo(User_t* node)
 
 void printProductInfo(Product_t* node)
 {
-	printf("%d, %s, %s, %f\n",node->id, node->name, node->supplier, node->price);
+	printf("%d, %s, %s, %f\n",node->id, node->name, typeConv[node->type], node->price);
 	return;
 }
 
 void printOnSaleInfo(OnSale_t* node)
 {
-	printf("%d, %s, %s, %f, %u\n", node->product.id, node->product.name, node->product.supplier, node->product.price, node->allowance);
+	printf("%d, %s, %s, %f, %u\n", node->product.id, node->product.name, typeConv[node->product.type], node->product.price, node->allowance);
 	return;
 }
 
@@ -36,26 +42,32 @@ void printStorageInfo(Storage_t* node)
 
 void printEmployeeInfo(Employee_t* node)
 {
-	static char* sexConv[] = { "女", "男" };
 	printf("%5u| %8s| %4s| %5u| %11s|\n", node->id, node->name, sexConv[node->sex], node->age, node->position);
 	return;
 }
 
 void printSupplierInfo(Supplier_t* node)
 {
-	printf("%u, %s\n", node->id, node->name);
+	printf("│ %5u│ %40s│\n", node->id, node->name);
 	return;
 }
 
 void printOrderInfo(Order_t* node)
 {
-	printf("%u, %.2f", node->id, node->total);
+	printf("│ %7u│ %20s│ %6u│ %10.2f\n", node->id, timeConv(node->time), node->operatorId, node->total);
 	return;
 }
 
 void printOrderDetail(Order_t* node)
 {
-	
+	int i = 0;
+	while (node->items->product.id != 0)
+	{
+		printf("%d\t%s\t%.2f\t%d\t%.2f\n", node->items[i].product.id,
+			node->items[i].product.name, node->items[i].product.price,
+			node->items[i].quantity, node->items[i].quantity * node->items[i].product.price);
+	}
+	PAUSE;
 	return;
 }
 
@@ -229,4 +241,71 @@ int findProduct_d(Node_t* head, unsigned int id, void** dest)
 		return count;
 	else
 		return 0;
+}
+
+int findProductByName(Node_t* head, char* name)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (0 == strcmp((char*)tHead->data + OFFSET_PRODUCT, name))
+		{
+			flag = true;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+int findProductByName_d(Node_t* head, char* name, void** dest)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (0 == strcmp((char*)tHead->data + OFFSET_PRODUCT, name))
+		{
+			flag = true;
+			*dest = tHead->data;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+static char* timeConv(time_t time)
+{
+	char* nowTime = (char*)malloc(24);
+	assert(nowTime != NULL);
+
+	struct tm *stm = NULL;
+	stm = localtime(&time);
+	
+	strftime(nowTime, 24, "%Y-%m-%d %H:%M:%S", stm);
+	return nowTime;
 }

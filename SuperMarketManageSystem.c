@@ -39,7 +39,7 @@ void logInStart()
 			runSuperAdminSystem();
 			break;
 		default:
-			return;
+			continue;
 		}
 	}
 }

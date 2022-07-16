@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <assert.h>
 
 /* 功能占位符 */
 #define PASS printf("To be continued... [%s, %s(), LINE %d]", __FILE__, __FUNCTION__, __LINE__)
@@ -33,9 +34,4 @@ char* stringGet(char* st, int n);
 * @return 如果含非数字字符，返回 false；如果不含，返回 true.
 */
 bool hasNonNumerical(char* str);
-
-/**
-* @brief 判断指针是否为空
-*/
-void assert_null(void* ptr);
 #endif 

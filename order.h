@@ -72,7 +72,7 @@ void showCurrentOrderInfo();
 *  @brief: 计算总价
 *
 */
-void calTurnOverInCurrentOrder();
+float calTurnOverInCurrentOrder();
 
 /**
 *  @brief: 交付订单

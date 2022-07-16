@@ -8,7 +8,7 @@
  *
  */
 
-#include "typeCollection.h";
+#include "typeCollection.h"
 #include <stdio.h>
 
  /**

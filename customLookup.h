@@ -102,4 +102,25 @@ int findProduct(Node_t* head, unsigned int id);
 * @return 节点在链表中的位置。若不存在，则返回 0.
 */
 int findProduct_d(Node_t* head, unsigned int id, void** dest);
+
+/**
+* @brief 获取商品所在节点的位置
+*
+* @param head 要查找的链表头
+* @param id 查找条件 (商品名)
+*
+* @return 节点在链表中的位置。若不存在，则返回 0.
+*/
+int findProductByName(Node_t* head, char* name);
+
+/**
+* @brief 获取商品所在节点的位置
+*
+* @param head 要查找的链表头
+* @param id 查找条件 (商品名)
+* @param dest 回传查找到的商品所在库存或货架节点的实际地址
+*
+* @return 节点在链表中的位置。若不存在，则返回 0.
+*/
+int findProductByName_d(Node_t* head, char* name, void** dest);
 #endif

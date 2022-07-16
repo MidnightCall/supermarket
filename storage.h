@@ -29,7 +29,7 @@ void queryStorage();
 *  @brief: Èë¿â
 *
 */
-void inStorage();
+void inStorage(void);
 
 /**
 *  @brief: ³ö¿â

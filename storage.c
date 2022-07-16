@@ -1,8 +1,9 @@
 #include "storage.h"
 #include "typeCollection.h"
+#include "helpfulFunction.h"
 
 extern User_t currentUser;
-extern Node_t* productDat;
+extern Node_t* productDat, * storageDat;
 /* 局部函数模型 */
 static int getChoice();
 
@@ -46,8 +47,9 @@ void queryStorage(void)
 	Storage_t* storage = NULL;
 	printf("请输入待查询的商品 ID: ");
 	scanf("%u", &id);
+
 	if (findProduct_d(storageDat, id, &storage) != 0) {
-		printProductInfo(storage);
+		printStorageInfo(storage);
 	}
 	else {
 		printf("不存在 %d 号商品。\n", id);
@@ -58,22 +60,26 @@ void queryStorage(void)
 
 /**
 *  @brief: 入库
-*
 */
 void inStorage(void)
 {
 	unsigned int id = 0;
 	unsigned int inStorageNumber; /* 入库数量 */
+	unsigned int type = 0; /* 商品种类 */
 	Storage_t* storage = NULL;
 	Supplier_t* supplier = NULL;
 	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t));
 
 	if (NULL == newStorage)
 	{
-		printf("新库存节点初始化失败。");
-		system("pause");
+		printf("内存分配失败。");
+		PAUSE;
 		exit(0);
 	}
+
+	//printf("%p\n", storageDat->data); // ??????? 感觉像被污染了一样
+	//assert_null(newStorage); // 加上这句会导致后续程序崩溃，不知道为什么。
+	//printf("%p\n", storageDat->data); // ??????? 感觉像被污染了一样
 
 	while (1)
 	{
@@ -87,13 +93,15 @@ void inStorage(void)
 		break;
 	}
 	
-	if (0 != findProduct_d(storageDat, id, &storage)) { /* 如果库存内已记载了该商品的信息 */
+	if (findProduct_d(storageDat, id, &storage) != 0) /* 如果库存内已记载了该商品的信息 */
+	{ 
 		printf("仓库内已存在该商品。请填写入库数量: ");
 		scanf("%u", &inStorageNumber);
 		storage->allowance += inStorageNumber;
 		printf("入库完毕。");
-	}
-	else { /* 新商品入库 */
+	} 
+	else /* 新商品入库 */
+	{ 
 		flush();
 		printf("仓库内无该商品。新商品 ID 为 %u.\n请输入新商品名称: ", configDat.maxId_Product + 1);
 		stringGet(newStorage->product.name, 48);
@@ -107,16 +115,42 @@ void inStorage(void)
 			strcpy(newSupplier->name, newStorage->product.supplier);
 			insert(supplierDat, END, newSupplier);
 		}
-		newStorage->product.id = ++configDat.maxId_Product; /* 自动生成 ID */
 
-		printf("请输入价格(￥/件): ");
-		scanf("%f", &(newStorage->product.price));
-		printf("请输入入库数量: ");
-		scanf("%u", &(newStorage->allowance));
-		insert(storageDat, END, newStorage);
-		printf("添加完成。");
+		if (findProductByName_d(storageDat, newStorage->product.name, &storage)) /* 判断仓库内是否有名字相同，供应商也相同的商品记录 */
+		{
+			if (0 == strcmp(storage->product.supplier, newStorage->product.supplier))
+			{
+				printf("仓库内已存在该商品。请填写入库数量: ");
+				scanf("%u", &inStorageNumber);
+				storage->allowance += inStorageNumber;
+				printf("入库完毕。");
+			}
+		}
+		else
+		{
+			newStorage->product.id = ++configDat.maxId_Product; /* 自动生成 ID */
+
+			printf("请输入价格(￥/件): ");
+			scanf("%f", &(newStorage->product.price));
+			while (1)
+			{
+				printf("请输入商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
+				scanf("%u", &type);
+				if (type < 0 || type > 5)
+				{
+					printf("你输入的类型有误，请重新输入。");
+					continue;
+				}
+				break;
+			}
+			newStorage->product.type = type;
+			printf("请输入入库数量: ");
+			scanf("%u", &(newStorage->allowance));
+			insert(storageDat, END, newStorage);
+			printf("添加完成。");
+		}
 	}
-	system("pause");
+	PAUSE;
 	return;
 }
 

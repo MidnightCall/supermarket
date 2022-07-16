@@ -16,25 +16,23 @@ void runSupplierSystem()
 	while (1)
 	{
 		int choice = getChoice();
-		while (true)
+
+		switch (choice)
 		{
-			switch (choice)
-			{
-			default:
-				return;
-			case 1:
-				displaySupplier();
-				break;
-			case 2:
-				querySupplier();
-				break;
-			case 3:
-				addSupplier();
-				break;
-			case 4:
-				delSupplier();
-				break;
-			}
+		default:
+			return;
+		case 1:
+			displaySupplier();
+			break;
+		case 2:
+			querySupplier();
+			break;
+		case 3:
+			addSupplier();
+			break;
+		case 4:
+			delSupplier();
+			break;
 		}
 	}
 }
@@ -45,6 +43,13 @@ void runSupplierSystem()
 */
 void querySupplier()
 {
+	if (0 == *(int*)supplierDat->data)
+	{
+		printf("目前没有供应商。");
+		PAUSE;
+		return;
+	}
+
 	unsigned int id;
 	Supplier_t* supplier = NULL;;
 	printf("请输入待查询的供货商 ID:");
@@ -55,7 +60,8 @@ void querySupplier()
 	} else {
 		printf("不存在编号为 %d 的供货商。", id);
 	}
-	system("pause");
+
+	PAUSE;
 	return;
 }
 
@@ -66,7 +72,7 @@ void querySupplier()
 void addSupplier()
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
-	assert_null(newSupplier);
+	//assert_null(newSupplier);
 
 	printf("新供货商 ID 是 %d\n", ++configDat.maxId_Supplier);
 	newSupplier->id = configDat.maxId_Supplier;
@@ -94,17 +100,25 @@ void addSupplier()
 */
 void delSupplier(void)
 {
+	if (0 == *(int*)supplierDat->data)
+	{
+		printf("目前没有供应商。");
+		PAUSE;
+		return;
+	}
+
 	unsigned int id, pos;
-	printf("请输入待删除供应商 ID:");
+	printf("请输入待删除供应商 ID: ");
 	scanf("%u", &id);
 	if ((pos = findIndexByID(supplierDat, id)) != 0) {
 		del(supplierDat, pos);
-		printf("删除成功\n");
+		printf("删除成功。\n");
 	}
 	else {
 		printf("不存在 ID %d 的供应商。", id);
 	}
-	system("pause");
+
+	PAUSE;
 	return;
 }
 
@@ -114,8 +128,20 @@ void delSupplier(void)
 */
 void displaySupplier(void)
 {
+	if (0 == *(int*)supplierDat->data)
+	{
+		printf("目前没有供应商。");
+		PAUSE;
+		return;
+	}
+
+	printf("┌──────┬────────────供应商信息───────────────────┐\n");
+	printf("│ %5s│ %40s│\n", "ID", "名称");
+	printf("├──────┼─────────────────────────────────────────┤\n");
 	printList(supplierDat, printSupplierInfo, false);
-	system("pause");
+	printf("└──────┴─────────────────────────────────────────┘\n");
+
+	PAUSE;
 	return;
 }
 

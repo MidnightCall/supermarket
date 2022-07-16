@@ -8,13 +8,13 @@ extern Config_t configDat;
 /*
 * @brief：运行登录/注册系统
 */
-void runLogIn()
+void runLogIn(void)
 {
 	if (0 == *(int*)userDat->data) /* 如果文件里一个账户都没有，则自动创建一个超管 (SU) */ /* passed */
 	{
 		User_t Su = { 10000, "admin", SU }; /* 超管默认属性 */
 		User_t* newSu = (User_t*)malloc(sizeof(User_t));
-		assert_null(newSu);
+		//assert_null(newSu);
 
 		memcpy(newSu, &Su, sizeof(User_t));
 		insert(userDat, END, newSu);
@@ -28,6 +28,7 @@ void runLogIn()
 		system("cls");
 		showExitMessage();
 		PAUSE;
+		saveData();
 		exit(0);
 		return;
 	case 1:
@@ -35,6 +36,7 @@ void runLogIn()
 		return;
 	case 2:
 		registration();
+		currentUser.permission = -1; /* 回到初始界面 */
 		return;
 	}
 }
@@ -43,7 +45,7 @@ void runLogIn()
 * @brief：显示操作菜单、读取用户的选择的操作
 *
 */
-int getChoice()
+int getChoice(void)
 {
 	int choice = 0;
 	do
@@ -60,13 +62,13 @@ int getChoice()
 /*
 * @brief：注册账号
 */
-void registration()
+void registration(void)
 {
 	int choice = 0;
 	char firstPassword[LEN_PWD];
 	char secondPassword[LEN_PWD];
 	User_t* account = (User_t*)malloc(sizeof(User_t));
-	assert_null(account);
+	//assert_null(account);
 
 	/* 账号显示 */
 	printf("你的账号是 %d\n", ++configDat.maxId_User);
@@ -93,6 +95,8 @@ void registration()
 		}
 	}
 	printf("注册成功，请重新登录。\n");
+	PAUSE;
+	return;
 }
 
 /*

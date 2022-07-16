@@ -12,6 +12,8 @@
 
 #define END 2147483647
 
+#include <time.h>
+
 /* 用户权限枚举 */
 typedef enum tagPermissionEnum
 {
@@ -23,6 +25,16 @@ typedef enum tagSexEnum
 {
     FEMALE = 0, MALE = 1
 } SexEnum;
+
+typedef enum tagProductTypeEnum
+{
+    FRUIT, /* 果蔬 */
+    DAILY, /* 日用品 */
+    STATIONERY, /* 办公用品 */
+    FOOD, /* 食品 */
+    BEVERAGE, /* 酒水饮料 */
+    APPLIANCE /* 家用电器 */
+} ProductTypeEnum;
 
 /* 通用链表节点 */
 typedef struct tagNode_t
@@ -56,6 +68,7 @@ typedef struct tagProduct_t
     char name[48]; /* 商品名 */
     char supplier[24]; /* 商品供货商 */
     float price; /* 商品价格 */
+    ProductTypeEnum type; /* 商品类别 */
 } Product_t;
 
 
@@ -100,9 +113,11 @@ typedef struct tagOrderItem_t
 /* 订单信息节点 */ /* size: 8412 */
 typedef struct tagOrder_t
 {
-    unsigned int id;
-    OrderItem_t items[100];
-    float total;
+    unsigned int id; /* 订单编号 */
+    OrderItem_t items[100]; /* 订单*/
+    float total;  /* 订单总额 */
+    time_t time;  /* 交付时间 */
+    unsigned int operatorId; /* 操作员 ID */
 } Order_t;
 
 #endif

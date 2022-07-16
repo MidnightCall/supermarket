@@ -1,5 +1,6 @@
 #include "Admin.h"
 #include "helpfulFunction.h"
+#include <Windows.h>
 
 extern User_t currentUser;
 /* 局部函数模型 */
@@ -7,10 +8,11 @@ static int getChoice();
 
 void runAdminSystem()
 {
-	int choice = getChoice();
-
-	switch (choice)
+	while (1)
 	{
+		int choice = getChoice();
+		switch (choice)
+		{
 		default:
 			return;
 		case 1:
@@ -25,6 +27,7 @@ void runAdminSystem()
 		case 4:
 			runStorageSystem();
 			break;
+		}
 	}
 }
 
@@ -36,6 +39,7 @@ static int getChoice()
 	do
 	{
 		showAdminMenu();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 

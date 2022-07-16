@@ -1,5 +1,6 @@
 #include "order.h"
 #include "helpfulFunction.h"
+#include <time.h>
 
 
 extern Node_t* orderDat, * productDat;
@@ -10,6 +11,7 @@ Order_t currentOrder;
 
 /* 局部函数模型 */
 static int getChoice();
+static int getNormalChoice();
 
 /**
 *  @brief: 运行订单系统
@@ -75,9 +77,14 @@ void runNormalUserOrderSystem()
 *  @brief: 显示所有订单信息
 *
 */
-void displayOrder() 
+void displayOrder() //!!!
 {
-	// 打印所有订单信息的操作
+	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
+	printf("│ %7s│ %20s│ %6s│%10s│\n", "订单号", "交付时间", "操作人", "总金额");
+	printList(orderDat, printOrderInfo, false);
+	printf("└────────────────────────────────────────────────┘\n");
+	PAUSE;
+	return;
 }
 
 /**
@@ -86,14 +93,14 @@ void displayOrder()
 */
 void queryOrder()
 {
-	int id;
-	Order_t order;
+	unsigned int id;
+	Order_t* order = NULL;
 	printf("请输入待查询的订单 ID: ");
-	scanf("%d", &id);
-	if (0 != findIndexByID_d(orderDat, id, &order, sizeof(Order_t))) {
-		printOrderInfo(&order);
+	scanf("%u", &id);
+	if (0 != findIndexByID_d(orderDat, id, &order)) {
+		printOrderInfo(order);
 	}else {
-		printf("不存在id为%d号的订单\n", id);
+		printf("不存在 ID 为 %u 号的订单\n", id);
 	}
 }
 
@@ -108,27 +115,26 @@ void calTurnover()
 
 void addProductToCurrentOrder(void)
 {
-	int id;
-	int quantity;
+	unsigned int id;
+	unsigned int quantity;
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
-	currentIndex = 0;
 
 	printf("请输入商品 ID: ");
-	scanf("%d", &id);
+	scanf("%u", &id);
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
 		printf("不存在的商品 ID.\n");
 	} else {
 		printf("请输入添加数量: ");
-		scanf("%d", &quantity);
+		scanf("%u", &quantity);
 
 		if (quantity > onSaleProduct->allowance) {
 			if (onSaleProduct->allowance > 0) {
-				printf("余量不足，已将商品全部添加，共添加%d件商品\n", onSaleProduct->allowance);
+				printf("余量不足，已将商品全部添加，共添加 %d 件商品\n", onSaleProduct->allowance);
 				quantity = onSaleProduct->allowance;
 				onSaleProduct->allowance = 0;
 			}else{
-				printf("该商品已售罄\n");
+				printf("该商品已售罄.\n");
 			}
 		}else{
 			onSaleProduct->allowance -= quantity;
@@ -145,6 +151,7 @@ void addProductToCurrentOrder(void)
 			currentOrder.items[currentIndex].quantity = quantity;
 			currentOrder.items[currentIndex].product.id = id;
 			currentOrder.items[currentIndex].product.price = onSaleProduct->product.price;
+			//currentOrder.items[currentIndex].product.type = 
 			strcpy(currentOrder.items[currentIndex].product.name, onSaleProduct->product.name);
 			strcpy(currentOrder.items[currentIndex++].product.supplier, onSaleProduct->product.supplier);
 		}
@@ -173,14 +180,14 @@ void delProductFromCurrentOrder()
 	return;
 }
 
-void modifyProductFromCurrentOrder()
+void modifyProductFromCurrentOrder(void)
 {
 	int id;
 	int quantity;
 	bool flag = false;
-	OnSale_t* onSaleProduct;
+	OnSale_t* onSaleProduct = NULL;
 
-	printf("请输入需要更改的商品id:");
+	printf("请输入需要更改的商品 ID: ");
 	scanf("%d", &id);
 	for (int i = 0; i < currentIndex; i++) {
 		if (currentOrder.items[i].product.id == id) {
@@ -188,13 +195,15 @@ void modifyProductFromCurrentOrder()
 			scanf("%d", &quantity);
 			currentOrder.items[i].quantity = quantity;
 			flag = true;
-			printf("更改完成\n");
+			printf("更改完成。");
 			break;
 		}
 	}
 	if (flag == false) {
 		printf("当前订单中没有 ID 为 %d 的商品。", id);
 	}
+	PAUSE;
+	return;
 }
 
 void showCurrentOrderInfo()
@@ -207,9 +216,10 @@ void showCurrentOrderInfo()
 			currentOrder.items[i].quantity, currentOrder.items[i].quantity * currentOrder.items[i].product.price);
 	}
 	calTurnOverInCurrentOrder();
+	return;
 }
 
-void calTurnOverInCurrentOrder()
+float calTurnOverInCurrentOrder(void)
 {
 	float sum = 0;
 
@@ -217,25 +227,35 @@ void calTurnOverInCurrentOrder()
 		sum += currentOrder.items[i].quantity * currentOrder.items[i].product.price;
 	}
 
-	printf("总价为%.2f\n", sum);
+	printf("总价为 ￥%.2f.\n", sum);
+	PAUSE;
+	return sum;
 }
 
 void submitCurrentOrder()
 {
 	Order_t* tempOrder = (Order_t*)malloc(sizeof(Order_t));
-	Order_t* endOrder = (Order_t*)malloc(sizeof(Order_t));
+	//assert_null(tempOrder); 这里也有问题
+
 	tempOrder->id = ++configDat.maxId_Order;
-	endOrder->id = 0;
 	for (int i = 0; i < currentIndex; i++) {
 		tempOrder->items[i].quantity = currentOrder.items[i].quantity;
 		tempOrder->items[i].product.id = currentOrder.items[i].product.id;
 		tempOrder->items[i].product.price = currentOrder.items[i].product.price;
+		tempOrder->items[i].product.type = currentOrder.items[i].product.type;
 		strcpy(tempOrder->items[i].product.name, tempOrder->items->product.name);
 		strcpy(tempOrder->items[i].product.supplier, tempOrder->items->product.supplier);
 	}
+
+	tempOrder->total = calTurnOverInCurrentOrder();
+	tempOrder->time = time(NULL);
+	tempOrder->operatorId = currentUser.id;
+	tempOrder->items[currentIndex].product.id = 0; /* 用来给遍历指示 */
 	insert(orderDat, END, tempOrder);
-	insert(orderDat, END, endOrder);/* 用于末尾判断 */
-	printf("已成功提交.\n");
+	currentIndex = 0;
+	printf("已成功提交。\n");
+	PAUSE;
+	return;
 }
 
 /* 局部函数实现 */

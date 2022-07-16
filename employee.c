@@ -47,14 +47,11 @@ void runEmployeeManage(void)
 
 void addEmployee(void)
 {
+	getchar();
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 	Employee_t* e = (Employee_t*)malloc(sizeof(Employee_t));
-	if (NULL == e)
-	{
-		printf("初始化节点失败。\b\n");
-		exit(0);
-	}
+	assert(e != NULL);
 
 	e->id = ++configDat.maxId_Employee; /* 自动赋予 ID */
 	printf("================添加员工==================\n");
@@ -80,7 +77,7 @@ void addEmployee(void)
 		scanf("%u", &tAge);
 		if (tAge < 0 || tAge > 70)
 		{
-			printf("你输入的年龄无效，请重新输入。\b\n");
+			printf("你输入的年龄无效，请重新输入。\n");
 			continue;
 		}
 		e->age = tAge;
@@ -94,7 +91,7 @@ void addEmployee(void)
 		scanf("%u", &tSex);
 		if (tSex != 0 && tSex != 1)
 		{
-			printf("你输入的性别无效，请重新输入。\b\n");
+			printf("你输入的性别无效，请重新输入。\n");
 			continue;
 		}
 		e->sex = tSex;
@@ -108,7 +105,7 @@ void addEmployee(void)
 		scanf_s("%[^\n]", &buffer, LEN_POS);
 		if (strlen(buffer) > LEN_POS - 1)
 		{
-			printf("你输入的职位过长，请重新输入。\b\n");
+			printf("你输入的职位过长，请重新输入。\n");
 			continue;
 		}
 		memset(e->position, '\0', sizeof(e->position));
@@ -279,7 +276,7 @@ void findEmployee(void)
 			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee);
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。按 Enter 键继续。\b");
+				printf("没有符合条件的员工。\b");
 				return;
 			}
 			showSingleEmployee(*tEmployee);
@@ -384,7 +381,7 @@ void modifyEmployee(void)
 	}
 	printf("员工信息修改成功！\n");
 
-	system("pause");
+	PAUSE;
 	return;
 }
 
@@ -401,7 +398,8 @@ void showAllEmployees(void)
 {
 	if (0 == *(int*)employeeDat->data)
 	{
-		printf("没有员工信息。\b\n");
+		printf("没有员工信息。");
+		PAUSE;
 		return;
 	}
 	printf("================员工信息==================\n");
@@ -409,7 +407,7 @@ void showAllEmployees(void)
 	printf("-----+---------+-----+------+------------+\n");
 	printList(employeeDat, printEmployeeInfo, false);
 	printf("==========================================\n");
-	system("pause");
+	PAUSE;
 	return;
 }
 
