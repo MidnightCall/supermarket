@@ -12,6 +12,7 @@ Order_t currentOrder;
 /* 局部函数模型 */
 static int getChoice();
 static int getNormalChoice();
+static float calTurnOverInCurrentOrder(void);
 
 /**
 *  @brief: 运行订单系统
@@ -60,7 +61,7 @@ void runNormalUserOrderSystem()
 			modifyProductFromCurrentOrder();
 			break;
 		case 4:
-			calTurnOverInCurrentOrder();
+			showTurnOverInCurrentOrder();
 			break;
 		case 5:
 			submitCurrentOrder();
@@ -116,17 +117,16 @@ void calTurnover()
 void addProductToCurrentOrder(void)
 {
 	unsigned int id;
-	unsigned int quantity;
+	int quantity;
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	printf("请输入商品 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("商品id");
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
 		printf("不存在的商品 ID.\n");
+		
 	} else {
-		printf("请输入添加数量: ");
-		scanf("%u", &quantity);
+		quantity = getAnNonNegativeDigit("添加数量");
 
 		if (quantity > onSaleProduct->allowance) {
 			if (onSaleProduct->allowance > 0) {
@@ -167,8 +167,7 @@ void delProductFromCurrentOrder()
 	int pos;
 	OnSale_t* onSaleProduct = NULL;
 
-	printf("请输入待删除的商品 ID: ");
-	scanf("%d", &id);
+	id = getAnNonNegativeDigit("待删除的商品id");
 	if (0 != (pos = findProduct_d(productDat, id, &onSaleProduct))) {
 		onSaleProduct->allowance += currentOrder.items[currentIndex - 1].quantity;
 		printf("删除成功\n");
@@ -187,12 +186,10 @@ void modifyProductFromCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	printf("请输入需要更改的商品 ID: ");
-	scanf("%d", &id);
+	id = getAnNonNegativeDigit("需要更改的商品id");
 	for (int i = 0; i < currentIndex; i++) {
 		if (currentOrder.items[i].product.id == id) {
-			printf("请重新输入需要购买的数量: ");
-			scanf("%d", &quantity);
+			quantity = getAnNonNegativeDigit("需要购买的数量");
 			currentOrder.items[i].quantity = quantity;
 			flag = true;
 			printf("更改完成。");
@@ -215,21 +212,14 @@ void showCurrentOrderInfo()
 			currentOrder.items[i].product.name, currentOrder.items[i].product.price,
 			currentOrder.items[i].quantity, currentOrder.items[i].quantity * currentOrder.items[i].product.price);
 	}
-	calTurnOverInCurrentOrder();
+	showTurnOverInCurrentOrder();
 	return;
 }
 
-float calTurnOverInCurrentOrder(void)
+void showTurnOverInCurrentOrder(void)
 {
-	float sum = 0;
-
-	for (int i = 0; i < currentIndex; i++) {
-		sum += currentOrder.items[i].quantity * currentOrder.items[i].product.price;
-	}
-
-	printf("总价为 ￥%.2f.\n", sum);
+	printf("总价为 ￥%.2f.\n", calTurnOverInCurrentOrder());
 	PAUSE;
-	return sum;
 }
 
 void submitCurrentOrder()
@@ -269,6 +259,7 @@ static int getChoice()
 		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
+	flush();
 
 	return choice;
 }
@@ -283,6 +274,18 @@ static int getNormalChoice()
 		HINT;
 		scanf("%d", &choice);
 	} while (choice > 7 || choice < 1);
+	flush();
 
 	return choice;
+}
+
+static float calTurnOverInCurrentOrder(void)
+{
+	float sum = 0;
+
+	for (int i = 0; i < currentIndex; i++) {
+		sum += currentOrder.items[i].quantity * currentOrder.items[i].product.price;
+	}
+
+	return sum;
 }

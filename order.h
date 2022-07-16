@@ -69,10 +69,10 @@ void modifyProductFromCurrentOrder();
 void showCurrentOrderInfo();
 
 /**
-*  @brief: 计算总价
+*  @brief: 显示总价
 *
 */
-float calTurnOverInCurrentOrder();
+void showTurnOverInCurrentOrder();
 
 /**
 *  @brief: 交付订单

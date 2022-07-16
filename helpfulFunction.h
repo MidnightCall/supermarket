@@ -34,4 +34,14 @@ char* stringGet(char* st, int n);
 * @return 如果含非数字字符，返回 false；如果不含，返回 true.
 */
 bool hasNonNumerical(char* str);
+
+/**
+* @brief 读取一个非负整数
+*
+* @param hint 提示信息
+*
+* @return 返回读取到的结果
+*/
+int getAnNonNegativeDigit(char hint[21]);
+
 #endif 

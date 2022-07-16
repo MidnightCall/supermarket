@@ -41,3 +41,18 @@ bool hasNonNumerical(char* str)
 	}
 	return false;
 }
+
+int getAnNonNegativeDigit(char hint[21])
+{
+	char temp[10];
+
+	printf("请输入%s: ", hint);
+	stringGet(temp, 10);
+	while (hasNonNumerical(temp))
+	{
+		printf("非法输入，请重新输入\n");
+		printf("请输入%s: ", hint);
+		stringGet(temp, 10);
+	}
+	return atoi(temp);
+}

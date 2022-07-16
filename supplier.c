@@ -156,6 +156,7 @@ static int getChoice(void)
 		printf(">>> ");
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
+	flush();
 
 	return choice;
 }

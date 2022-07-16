@@ -42,6 +42,7 @@ static int getChoice()
 		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
+	flush();
 
 	return choice;
 }

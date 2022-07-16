@@ -36,6 +36,7 @@ static int getChoice()
 		printf(">>> ");
 		scanf("%d", &choice);
 	} while (choice > 3 || choice < 1);
+	flush();
 	
 	return choice;
 }
