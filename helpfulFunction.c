@@ -42,6 +42,19 @@ bool hasNonNumerical(char* str)
 	return false;
 }
 
+char* timeConv(time_t time)
+{
+	char* nowTime = (char*)malloc(24);
+	assert(nowTime != NULL);
+
+	struct tm* stm = NULL;
+	stm = localtime(&time);
+
+	strftime(nowTime, 24, "%Y-%m-%d %H:%M:%S", stm);
+	return nowTime;
+}
+}
+
 int getAnNonNegativeDigit(char hint[21])
 {
 	char temp[10];

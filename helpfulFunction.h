@@ -36,6 +36,15 @@ char* stringGet(char* st, int n);
 bool hasNonNumerical(char* str);
 
 /**
+* @brief 把时间戳转换成标准格式时间
+*
+* @param time 时间戳
+*
+* @return 格式为 YY-MM-DD HH:MM:SS 的字符串
+*/
+char* timeConv(time_t time);
+
+/**
 * @brief 读取一个非负整数
 *
 * @param hint 提示信息
