@@ -23,9 +23,10 @@ void runEmployeeManage(void)
 		switch (choice)
 		{
 		default:
-			break;
+			return;
 		case 1:
 			showAllEmployees();
+			PAUSE;
 			break;
 		case 2:
 			findEmployee();
@@ -39,22 +40,20 @@ void runEmployeeManage(void)
 		case 5:
 			modifyEmployee();
 			break;
-		case 6:
-			return;
 		}
 	}
 }
 
 void addEmployee(void)
 {
-	getchar();
+	//getchar();
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 	Employee_t* e = (Employee_t*)malloc(sizeof(Employee_t));
 	assert(e != NULL);
 
 	e->id = ++configDat.maxId_Employee; /* 自动赋予 ID */
-	printf("================添加员工==================\n");
+	printf("═════════════════════添加员工═════════════════════\n");
 	while (true)
 	{
 		printf("请输入员工姓名: ");
@@ -127,7 +126,7 @@ void deleteEmployee(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================删除员工==================\n");
+	printf("═════════════════════删除员工═════════════════════\n");
 	unsigned int op = 0;
 	while (true)
 	{
@@ -222,7 +221,7 @@ void findEmployee(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("================查找员工==================\n");
+	printf("═════════════════════查找员工═════════════════════\n");
 	unsigned int op = 0;
 	while (true)
 	{
@@ -387,11 +386,11 @@ void modifyEmployee(void)
 
 void showSingleEmployee(Employee_t e)
 {
-	printf("================员工信息==================\n");
-	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
-	printf("-----+---------+-----+------+------------+\n");
+	printf("┌──────┬─────────┬──员工信息────┬────────────────┐\n");
+	printf("│ %5s│ %8s│ %6s│ %5s│ %15s│\n", "ID", "姓名", "性别", "年龄", "职位");
+	printf("├──────┼─────────┼───────┼──────┼────────────────┤\n");
 	printEmployeeInfo(&e);
-	printf("==========================================\n");
+	printf("└──────┴─────────┴───────┴──────┴────────────────┘\n");
 }
 
 void showAllEmployees(void)
@@ -399,15 +398,14 @@ void showAllEmployees(void)
 	if (0 == *(int*)employeeDat->data)
 	{
 		printf("没有员工信息。");
-		PAUSE;
 		return;
 	}
-	printf("================员工信息==================\n");
-	printf("%5s| %8s| %4s| %5s| %11s|\n", "ID", "姓名", "性别", "年龄", "职位");
-	printf("-----+---------+-----+------+------------+\n");
+
+	printf("┌──────┬─────────┬──员工信息────┬────────────────┐\n");
+	printf("│ %5s│ %8s│ %6s│ %5s│ %15s│\n", "ID", "姓名", "性别", "年龄", "职位");
+	printf("├──────┼─────────┼───────┼──────┼────────────────┤\n");
 	printList(employeeDat, printEmployeeInfo, false);
-	printf("==========================================\n");
-	PAUSE;
+	printf("└──────┴─────────┴───────┴──────┴────────────────┘\n");
 	return;
 }
 

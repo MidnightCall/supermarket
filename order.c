@@ -30,7 +30,7 @@ void runOrderSystem()
 		default:
 			return;
 		case 1:
-			displayOrder();
+			displayOrder(true);
 			PAUSE;
 			break;
 		case 2:
@@ -83,13 +83,20 @@ void runNormalUserOrderSystem()
 *  @brief: 显示所有订单信息
 *
 */
-void displayOrder()
+void displayOrder(bool showSum)
 {
 	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
 	printf("│ %7s│ %20s│ %6s│ %12s│\n", "订单号", "交付时间", "操作人", "总金额");
 	printf("├────────┼─────────────────────┼───────┼─────────────┤\n");
 	printList(orderDat, printOrderInfo, false);
-	printf("└────────┴─────────────────────┴───────┴─────────────┘\n");
+	if (!showSum)
+		printf("└────────┴─────────────────────┴───────┴─────────────┘\n");
+	else
+	{
+		printf("├────────┼─────────────────────┴───────┴─────────────┤\n");
+		printf("│  合计  │ %42.2f│\n", calTurnover());
+		printf("└────────┴───────────────────────────────────────────┘\n");
+	}
 	return;
 }
 
@@ -99,7 +106,7 @@ void displayOrder()
 */
 void queryOrder(void)
 {
-	displayOrder();
+	displayOrder(false);
 
 	unsigned int id;
 	Order_t* order = NULL;
@@ -115,7 +122,7 @@ void queryOrder(void)
 		printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────┼─────────────┤\n");
 		printOrderDetail(order);
 		printf("├────────┴───┬─────────────────────────────────────────────┴───────────┴───────┴─────────────┤\n");
-		printf("│    总价    │ %78.2f│\n", order->total);
+		printf("│    合计    │ %78.2f│\n", order->total);
 		printf("└────────────┴───────────────────────────────────────────────────────────────────────────────┘\n");
 		free(timeStr); /* timeConv 返回的是申请的一块临时内存空间，用完了就释放 */
 	}
@@ -131,17 +138,23 @@ void queryOrder(void)
 *  @brief: 计算总营业额
 *
 */
-float calTurnover() // TODO (计算总营业额)
+float calTurnover()
 {
 	float sum = 0.0f;
-	Order_t* allOrder = orderDat;
+	Node_t* allOrder = orderDat;
 	
 	if (NULL == orderDat->next)
 	{
 		return 0.0f;
 	}
 
-
+	allOrder = orderDat->next;
+	while (allOrder != NULL)
+	{
+		sum += *(float*)((char*)allOrder->data + 8804);
+		allOrder = allOrder->next;
+	}
+	return sum;
 }
 
 void addProductToCurrentOrder(void)

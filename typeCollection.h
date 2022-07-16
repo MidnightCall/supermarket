@@ -8,7 +8,7 @@
 
 #define LEN_PWD 12  /* 账户密码最大长度 */
 #define LEN_NAME 9  /* 职工名字最大长度 */
-#define LEN_POS 11  /* 职工职位最大长度 */
+#define LEN_POS 15  /* 职工职位最大长度 */
 
 #define END 2147483647
 
@@ -72,14 +72,14 @@ typedef struct tagProduct_t // TODO (进价属性)
 } Product_t;
 
 
-/* 职工信息节点 */ /* size: 32 */
+/* 职工信息节点 */ /* size: 32? */
 typedef struct tagEmployee_t
 {
     unsigned int id;
     unsigned int age;
     SexEnum sex;
     char name[LEN_NAME];
-    char position[LEN_POS];
+    char position[LEN_POS]; /* 11 -> 15 */
 } Employee_t;
 
 /* 供应商信息节点 */ /* size: 28 */
@@ -89,32 +89,32 @@ typedef struct tagSupplier_t
     char name[21];
 } Supplier_t;
 
-/* 上架的商品信息节点 */ /* size: 84 */
+/* 上架的商品信息节点 */ /* size: 88 */
 typedef struct tagOnSale_t 
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } OnSale_t;
 
-/* 库存信息节点 */ /* size: 84 */
+/* 库存信息节点 */ /* size: 88 */
 typedef struct tagStorage_t
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } Storage_t;
 
-/* 订单商品信息节点 */ /* size: 84 */
+/* 订单商品信息节点 */ /* size: 88 */
 typedef struct tagOrderItem_t
 {
     Product_t product;
     unsigned int quantity;
 } OrderItem_t;
 
-/* 订单信息节点 */ /* size: 8412 */
+/* 订单信息节点 */ /* size: 8824 */
 typedef struct tagOrder_t
 {
     unsigned int id; /* 订单编号 */
-    OrderItem_t items[100]; /* 订单*/
+    OrderItem_t items[100]; /* 订单 */
     float total;  /* 订单总额 */
     time_t time;  /* 交付时间 */
     unsigned int operatorId; /* 操作员 ID */

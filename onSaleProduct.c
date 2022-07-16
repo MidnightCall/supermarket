@@ -20,6 +20,7 @@ void runOnSaleProductSystem()
 			return;
 		case 1:
 			displayOnSaleProduct();
+			PAUSE;
 			break;
 		case 2:
 			queryOnSaleProduct();
@@ -30,6 +31,8 @@ void runOnSaleProductSystem()
 
 void queryOnSaleProduct(void)
 {
+	displayOnSaleProduct();
+
 	unsigned int id;
 	OnSale_t* onSale = NULL;
 	printf("请输入待查询的商品 ID: ");
@@ -58,7 +61,7 @@ void displayOnSaleProduct(void)
 	printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────────┼───────┤\n");
 	printList(productDat, printOnSaleInfo, false);
 	printf("└────────┴─────────────────────────────────────────────────┴───────────┴───────────┴───────┘\n");
-	PAUSE;
+	
 	return;
 }
 

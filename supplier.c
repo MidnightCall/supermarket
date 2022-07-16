@@ -1,7 +1,7 @@
 #include "supplier.h"
 #include "typeCollection.h"
 
-
+extern Node_t* storageDat;
 extern Config_t configDat;
 extern User_t currentUser;
 /* 局部函数模型 */
@@ -58,9 +58,39 @@ void querySupplier()
 	printf("请输入待查询的供货商 ID: ");
 	scanf("%u", &id);
 
-	if (0 != findIndexByID_d(supplierDat, id, &supplier)) {
-		printSupplierInfo(supplier);
-	} else {
+	if (0 != findIndexByID_d(supplierDat, id, &supplier))
+	{ /* 打印与这个供货商有关的所有商品 */
+		int count = 0;
+		Node_t* tHead = storageDat;
+		if (NULL == storageDat->next)
+		{
+			printf("仓库内还没有商品，无法查询该供货商供应的商品。");
+		}
+		else
+		{
+			printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬─────────────────────────┬─────────┐\n");
+			printf("│ %7s│ %48s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "供应商", "库存余量");
+			printf("├────────┼─────────────────────────────────────────────────┼───────────┼─────────────────────────┼─────────┤\n");
+
+			tHead = storageDat->next;
+			while (tHead != NULL)
+			{
+				if (0 == strcmp((char*)tHead->data + 52, supplier->name))
+				{
+					printStorageInfo(tHead->data);
+					++count;
+				}
+				tHead = tHead->next;
+			}
+		}
+		if (!count)
+		{
+			printf("│                                              一件也没有。                                                │\n");
+		}
+		printf("└────────┴─────────────────────────────────────────────────┴───────────┴─────────────────────────┴─────────┘\n");
+	} 
+	else 
+	{
 		printf("不存在编号为 %d 的供货商。", id);
 	}
 
@@ -157,7 +187,7 @@ static int getChoice(void)
 	do
 	{
 		showSupplierBusinessMenu();
-		printf(">>> ");
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 	flush();
