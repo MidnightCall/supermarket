@@ -32,8 +32,7 @@ void queryOnSaleProduct(void)
 {
 	unsigned int id;
 	OnSale_t* onSale = NULL;
-	printf("请输入待查询的商品 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("待查询的商品 ID");
 	if (findProduct_d(productDat, id, &onSale)) {
 		printf("┌────────┬──────────────────────────────商品详细信息───────┬───────────┬───────────┬───────┐\n");
 		printf("│ %7s│ %48s│ %10s│ %10s│ %6s│\n", "商品 ID", "商品名", "单价", "种类", "余量");

@@ -101,8 +101,7 @@ void queryOrder(void)
 {
 	unsigned int id;
 	Order_t* order = NULL;
-	printf("请输入待查询的订单 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("待查询的订单 ID");
 	if (0 != findIndexByID_d(orderDat, id, &order)) 
 	{
 		char* timeStr = timeConv(order->time);

@@ -45,9 +45,8 @@ void queryStorage(void)
 {
 	unsigned int id;
 	Storage_t* storage = NULL;
-	printf("请输入待查询的商品 ID: ");
-	scanf("%u", &id);
 
+	id = getAnNonNegativeDigit("待查询的商品id");
 	if (findProduct_d(storageDat, id, &storage) != 0) {
 		printStorageInfo(storage);
 	}
@@ -83,8 +82,7 @@ void inStorage(void)
 
 	while (1)
 	{
-		printf("请输入商品 ID: ");
-		scanf("%u", &id);
+		id = getAnNonNegativeDigit("商品id");
 		if (id > 1000000 || id < 100000)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -95,8 +93,8 @@ void inStorage(void)
 	
 	if (findProduct_d(storageDat, id, &storage) != 0) /* 如果库存内已记载了该商品的信息 */
 	{ 
-		printf("仓库内已存在该商品。请填写入库数量: ");
-		scanf("%u", &inStorageNumber);
+		printf("仓库内已存在该商品。");
+		inStorageNumber = getAnNonNegativeDigit("入库数量");
 		storage->allowance += inStorageNumber;
 		printf("入库完毕。");
 	} 
@@ -120,8 +118,8 @@ void inStorage(void)
 		{
 			if (0 == strcmp(storage->product.supplier, newStorage->product.supplier))
 			{
-				printf("仓库内已存在该商品。请填写入库数量: ");
-				scanf("%u", &inStorageNumber);
+				printf("仓库内已存在该商品。");
+				inStorageNumber = getAnNonNegativeDigit("入库数量");
 				storage->allowance += inStorageNumber;
 				printf("入库完毕。");
 			}
@@ -134,8 +132,7 @@ void inStorage(void)
 			scanf("%f", &(newStorage->product.price));
 			while (1)
 			{
-				printf("请输入商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
-				scanf("%u", &type);
+				type = getAnNonNegativeDigit("商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
 				if (type < 0 || type > 5)
 				{
 					printf("你输入的类型有误，请重新输入。");
@@ -144,8 +141,7 @@ void inStorage(void)
 				break;
 			}
 			newStorage->product.type = type;
-			printf("请输入入库数量: ");
-			scanf("%u", &(newStorage->allowance));
+			newStorage->allowance = getAnNonNegativeDigit("入库数量");
 			insert(storageDat, END, newStorage);
 			printf("添加完成。");
 		}
@@ -163,8 +159,7 @@ void outStorage(void)
 	unsigned int outStorageNumber = 0;
 	Storage_t* storage = NULL;
 
-	printf("请输入待出库商品 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("待出库商品 ID");
 	if (findProduct_d(storageDat, id, &storage) != 0) /* 如果要出库的商品在库存中 */
 	{
 		if (storage->allowance == 0) /* 但是这件商品已经没有了 */
@@ -177,8 +172,7 @@ void outStorage(void)
 		OnSale_t* tOnSale = NULL;
 		if (findProduct_d(productDat, id, &tOnSale)) /* 要出库的商品已经在货架上了 */
 		{
-			printf("请填写出库数量: ");
-			scanf("%u", &outStorageNumber);
+			outStorageNumber = getAnNonNegativeDigit("出库数量: ");
 			if (storage->allowance - outStorageNumber >= 0)
 			{
 				storage->allowance -= outStorageNumber;
@@ -203,9 +197,7 @@ void outStorage(void)
 			}
 
 			newOnSale->product = storage->product;
-			printf("请填写出库数量: ");
-			scanf("%u", &outStorageNumber);
-
+			outStorageNumber = getAnNonNegativeDigit("出库数量");
 			if (storage->allowance >= outStorageNumber) /* 注意，两个 unsigned 变量相减出现负数时会溢出变成超大的正数 */
 			{
 				storage->allowance -= outStorageNumber;
