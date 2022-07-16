@@ -21,16 +21,18 @@
 void runOrderSystem();
 
 /**
-*  @brief: 运行当前订单管理模块(供收银员使用)
+*  @brief: 运行当前订单管理模块 (供收银员使用)
 *
 */
 void runNormalUserOrderSystem();
 
 /**
 *  @brief: 显示所有订单信息
+* 
+*  @param: 是否显示总金额
 *
 */
-void displayOrder();
+void displayOrder(bool showSum);
 
 /**
 *  @brief: 查询订单信息

@@ -19,7 +19,7 @@ static char* typeConv[] = { "果蔬", "日用品", "文具", "食品", "酒水", "家用电器"
 void printUserInfo(User_t* node)
 {
 	static char* pmsConv[] = { "普通用户", "管理员", "超级管理员" };
-	printf("| %7u| %12s| %22s|\n", node->id, node->password, pmsConv[node->permission]);
+	printf("│ %7u│ %12s│ %24s│\n", node->id, node->password, pmsConv[node->permission]);
 	return;
 }
 
@@ -43,7 +43,7 @@ void printStorageInfo(Storage_t* node)
 
 void printEmployeeInfo(Employee_t* node)
 {
-	printf("%5u| %8s| %4s| %5u| %11s|\n", node->id, node->name, sexConv[node->sex], node->age, node->position);
+	printf("│ %5u│ %8s│ %6s│ %5u│ %15s│\n", node->id, node->name, sexConv[node->sex], node->age, node->position);
 	return;
 }
 
