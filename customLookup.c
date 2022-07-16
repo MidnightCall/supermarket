@@ -13,7 +13,6 @@ const int OFFSET_SUPPLIER = 4;
 
 static char* sexConv[] = { "女", "男" };
 static char* typeConv[] = { "果蔬","日用品","文具","食品","酒水","家用电器" };
-static char* timeConv(time_t time);
 
 void printUserInfo(User_t* node)
 {
@@ -30,7 +29,7 @@ void printProductInfo(Product_t* node)
 
 void printOnSaleInfo(OnSale_t* node)
 {
-	printf("%d, %s, %s, %f, %u\n", node->product.id, node->product.name, typeConv[node->product.type], node->product.price, node->allowance);
+	printf("│ %7u│ %48s│ %10.2f│ %10s│ %6u│\n", node->product.id, node->product.name, node->product.price, typeConv[node->product.type], node->allowance);
 	return;
 }
 
@@ -54,20 +53,20 @@ void printSupplierInfo(Supplier_t* node)
 
 void printOrderInfo(Order_t* node)
 {
-	printf("│ %7u│ %20s│ %6u│ %10.2f\n", node->id, timeConv(node->time), node->operatorId, node->total);
+	printf("│ %7u│ %20s│ %6u│ %12.2f│\n", node->id, timeConv(node->time), node->operatorId, node->total);
 	return;
 }
 
 void printOrderDetail(Order_t* node)
 {
 	int i = 0;
-	while (node->items->product.id != 0)
+	while (node->items[i].product.id != 0)
 	{
-		printf("%d\t%s\t%.2f\t%d\t%.2f\n", node->items[i].product.id,
+		printf("│ %7u│ %48s│ %10.2f│ %6d│ %12.2f│\n", node->items[i].product.id,
 			node->items[i].product.name, node->items[i].product.price,
 			node->items[i].quantity, node->items[i].quantity * node->items[i].product.price);
+		++i;
 	}
-	PAUSE;
 	return;
 }
 
@@ -296,16 +295,4 @@ int findProductByName_d(Node_t* head, char* name, void** dest)
 		return count;
 	else
 		return 0;
-}
-
-static char* timeConv(time_t time)
-{
-	char* nowTime = (char*)malloc(24);
-	assert(nowTime != NULL);
-
-	struct tm *stm = NULL;
-	stm = localtime(&time);
-	
-	strftime(nowTime, 24, "%Y-%m-%d %H:%M:%S", stm);
-	return nowTime;
 }
