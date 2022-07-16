@@ -3,7 +3,7 @@
 #include "SupermarketManageSystem.h"
 
 #ifndef __DEBUG
-
+/* Ö÷º¯Êý */
 int main(void)
 {
 	systemStart();
