@@ -31,6 +31,7 @@ void runOrderSystem()
 			return;
 		case 1:
 			displayOrder();
+			PAUSE;
 			break;
 		case 2:
 			queryOrder();
@@ -82,14 +83,13 @@ void runNormalUserOrderSystem()
 *  @brief: 显示所有订单信息
 *
 */
-void displayOrder() //!!!
+void displayOrder()
 {
 	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
 	printf("│ %7s│ %20s│ %6s│ %12s│\n", "订单号", "交付时间", "操作人", "总金额");
 	printf("├────────┼─────────────────────┼───────┼─────────────┤\n");
 	printList(orderDat, printOrderInfo, false);
 	printf("└────────┴─────────────────────┴───────┴─────────────┘\n");
-	PAUSE;
 	return;
 }
 
@@ -99,6 +99,8 @@ void displayOrder() //!!!
 */
 void queryOrder(void)
 {
+	displayOrder();
+
 	unsigned int id;
 	Order_t* order = NULL;
 	printf("请输入待查询的订单 ID: ");
@@ -129,8 +131,16 @@ void queryOrder(void)
 *  @brief: 计算总营业额
 *
 */
-void calTurnover()
+float calTurnover() // TODO (计算总营业额)
 {
+	float sum = 0.0f;
+	Order_t* allOrder = orderDat;
+	
+	if (NULL == orderDat->next)
+	{
+		return 0.0f;
+	}
+
 
 }
 
@@ -141,19 +151,24 @@ void addProductToCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getAnNonNegativeDigit("商品id");
+	id = getAnNonNegativeDigit("商品 ID");
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
 		printf("不存在的商品 ID.\n");
 		
 	} else {
 		quantity = getAnNonNegativeDigit("添加数量");
-
+		if (0 == quantity)
+		{
+			printf("非法输入，请重新输入。");
+			PAUSE;
+			return;
+		}
 		if (quantity > onSaleProduct->allowance) {
 			if (onSaleProduct->allowance > 0) {
 				printf("余量不足，已将商品全部添加，共添加 %d 件商品\n", onSaleProduct->allowance);
 				quantity = onSaleProduct->allowance;
 				onSaleProduct->allowance = 0;
-			}else{
+			} else {
 				printf("该商品已售罄.\n");
 			}
 		}else{

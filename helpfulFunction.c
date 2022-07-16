@@ -53,7 +53,6 @@ char* timeConv(time_t time)
 	strftime(nowTime, 24, "%Y-%m-%d %H:%M:%S", stm);
 	return nowTime;
 }
-}
 
 int getAnNonNegativeDigit(char hint[21])
 {

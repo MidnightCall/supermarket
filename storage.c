@@ -23,6 +23,7 @@ void runStorageSystem()
 			return;
 		case 1:
 			displayStorage();
+			PAUSE;
 			break;
 		case 2:
 			queryStorage();
@@ -43,13 +44,18 @@ void runStorageSystem()
 */
 void queryStorage(void)
 {
+	displayStorage();
 	unsigned int id;
 	Storage_t* storage = NULL;
 	printf("请输入待查询的商品 ID: ");
 	scanf("%u", &id);
 
 	if (findProduct_d(storageDat, id, &storage) != 0) {
+		printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬─────────────────────────┬─────────┐\n");
+		printf("│ %7s│ %48s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "供应商", "库存余量");
+		printf("├────────┼─────────────────────────────────────────────────┼───────────┼─────────────────────────┼─────────┤\n");
 		printStorageInfo(storage);
+		printf("└────────┴─────────────────────────────────────────────────┴───────────┴─────────────────────────┴─────────┘\n");
 	}
 	else {
 		printf("不存在 %d 号商品。\n", id);
@@ -63,6 +69,7 @@ void queryStorage(void)
 */
 void inStorage(void)
 {
+	displayStorage();
 	unsigned int id = 0;
 	unsigned int inStorageNumber; /* 入库数量 */
 	unsigned int type = 0; /* 商品种类 */
@@ -83,7 +90,7 @@ void inStorage(void)
 
 	while (1)
 	{
-		printf("请输入商品 ID: ");
+		printf("请输入待入库商品 ID: ");
 		scanf("%u", &id);
 		if (id > 1000000 || id < 100000)
 		{
@@ -159,6 +166,7 @@ void inStorage(void)
 */
 void outStorage(void)
 {
+	displayStorage();
 	unsigned int id;
 	unsigned int outStorageNumber = 0;
 	Storage_t* storage = NULL;
@@ -169,7 +177,7 @@ void outStorage(void)
 	{
 		if (storage->allowance == 0) /* 但是这件商品已经没有了 */
 		{
-			printf("出库失败，仓库中已没有剩余的商品 %d", id);
+			printf("出库失败，仓库中已没有剩余的商品 %d.\n", id);
 			system("pause");
 			return;
 		}
@@ -188,7 +196,7 @@ void outStorage(void)
 			else
 			{
 				tOnSale->allowance += storage->allowance;
-				printf("库存不足，已全部出库，共出库 %u 件商品\n", storage->allowance);
+				printf("库存不足，已全部出库，共出库 %u 件商品。\n", storage->allowance);
 				storage->allowance = 0;
 			}
 		}
@@ -235,9 +243,11 @@ void outStorage(void)
 */
 void displayStorage(void)
 {
-	// 打印库存商品信息
-	printList(storageDat, printStorageInfo, true);
-	system("pause");
+	printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬─────────────────────────┬─────────┐\n");
+	printf("│ %7s│ %48s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "供应商", "库存余量");
+	printf("├────────┼─────────────────────────────────────────────────┼───────────┼─────────────────────────┼─────────┤\n");
+	printList(storageDat, printStorageInfo, false);
+	printf("└────────┴─────────────────────────────────────────────────┴───────────┴─────────────────────────┴─────────┘\n");
 	return;
 }
 

@@ -10,9 +10,11 @@
 const int OFFSET_PRODUCT = 4;
 const int OFFSET_EMPLOYEE = 12;
 const int OFFSET_SUPPLIER = 4;
+const int OFFSET_PRODUCT_TYPE = 80;
+const int OFFSET_PRODUCT_SUPPLIER = 52;
 
 static char* sexConv[] = { "女", "男" };
-static char* typeConv[] = { "果蔬","日用品","文具","食品","酒水","家用电器" };
+static char* typeConv[] = { "果蔬", "日用品", "文具", "食品", "酒水", "家用电器" };
 
 void printUserInfo(User_t* node)
 {
@@ -35,7 +37,7 @@ void printOnSaleInfo(OnSale_t* node)
 
 void printStorageInfo(Storage_t* node)
 {
-	printf("%u, %s, %s, %f, %u\n", node->product.id, node->product.name, node->product.supplier, node->product.price, node->allowance);
+	printf("│ %7u│ %48s│ %10.2f│ %24s│ %8u│\n", node->product.id, node->product.name, node->product.price, node->product.supplier, node->allowance);
 	return;
 }
 
@@ -282,6 +284,62 @@ int findProductByName_d(Node_t* head, char* name, void** dest)
 	while (tHead != NULL)
 	{
 		if (0 == strcmp((char*)tHead->data + OFFSET_PRODUCT, name))
+		{
+			flag = true;
+			*dest = tHead->data;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+int findProductByType(Node_t* head, ProductTypeEnum type, void** dest)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (*(ProductTypeEnum*)((char*)tHead->data + OFFSET_PRODUCT_TYPE) == type)
+		{
+			flag = true;
+			*dest = tHead->data;
+			break;
+		}
+		tHead = tHead->next;
+		++count;
+	}
+
+	if (flag)
+		return count;
+	else
+		return 0;
+}
+
+int findProductBySupplier(Node_t* head, const char* supplier, void** dest)
+{
+	int count = 1;
+	bool flag = false;
+
+	if (NULL == head->next)
+		return 0;
+
+	Node_t* tHead = head->next;
+
+	while (tHead != NULL)
+	{
+		if (0 == strcmp((char*)tHead->data + OFFSET_PRODUCT_SUPPLIER, supplier))
 		{
 			flag = true;
 			*dest = tHead->data;

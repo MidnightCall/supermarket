@@ -11,8 +11,9 @@ void systemStart()
 {
 	initData();
 	system("title 超市管理系统 v1.0");
+	logInStart();
 	//showWelcomeMessage();
-	runNormalUserOrderSystem();
+	//runNormalUserOrderSystem();
 	saveData();
 }
 
@@ -82,40 +83,4 @@ void saveData(void)
 	freeList(supplierDat);
 	freeList(orderDat);
 	return;
-}
-
-/**
- * @brief 启动员工管理模块
- *
- */
-void employeeModuleStart()
-{
-	PASS;
-}
-
-/**
- * @brief 启动供应商管理模块
- *
- */
-void supplierModuleStart()
-{
-	PASS;
-}
-
-/**
- * @brief 启动库存管理模块
- *
- */
-void storageModuleStart()
-{
-	PASS;
-}
-
-/**
- * @brief 启动订单管理模块
- *
- */
-void orderModuleStart()
-{
-	PASS;
 }

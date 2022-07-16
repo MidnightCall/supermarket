@@ -61,8 +61,8 @@ typedef struct tagUser_t
     PermissionEnum permission;
 } User_t;
 
-/* 商品信息节点 */ /* size: 80 */
-typedef struct tagProduct_t
+/* 商品信息节点 */ /* size: 84 */
+typedef struct tagProduct_t // TODO (进价属性)
 {
     unsigned int id;
     char name[48]; /* 商品名 */

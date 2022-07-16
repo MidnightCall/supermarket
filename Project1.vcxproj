@@ -41,6 +41,7 @@
     <ClCompile Include="accountManage.c" />
     <ClCompile Include="Admin.c" />
     <ClCompile Include="customLookup.c" />
+    <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="helpfulFunction.c" />
     <ClCompile Include="employee.c" />
     <ClCompile Include="main.c" />

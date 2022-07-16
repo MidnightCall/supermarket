@@ -14,7 +14,7 @@ void runLogIn(void)
 	{
 		User_t Su = { 10000, "admin", SU }; /* ≥¨π‹ƒ¨»œ Ù–‘ */
 		User_t* newSu = (User_t*)malloc(sizeof(User_t));
-		//assert_null(newSu);
+		assert(newSu != NULL);
 
 		memcpy(newSu, &Su, sizeof(User_t));
 		insert(userDat, END, newSu);

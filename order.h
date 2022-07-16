@@ -42,7 +42,7 @@ void queryOrder();
 *  @brief: 计算总营业额
 *
 */
-void calTurnover();
+float calTurnover();
 
 /**
 *  @brief: 向当前订单添加商品
