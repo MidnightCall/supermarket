@@ -135,9 +135,10 @@ void showStorageBusinessMenu()
     printf("│                                                │\n");
     printf("│              1. 显示所有库存商品信息           │\n");
     printf("│              2. 查找库存商品信息               │\n");
-    printf("│              3. 入库                           │\n");
-    printf("│              4. 出库                           │\n");
-    printf("│              5. 返回上一级                     │\n");
+    printf("│              3. 修改商品属性                   │\n");
+    printf("│              4. 入库                           │\n");
+    printf("│              5. 出库 (上架)                    │\n");
+    printf("│              6. 返回上一级                     │\n");
     printf("│                                                │\n");
     printf("│                                                │\n");
     printf("└────────────────────────────────────────────────┘\n");

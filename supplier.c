@@ -173,12 +173,12 @@ void modifySupplier()
 
 	unsigned int id, pos;
 	Supplier_t* tSupplier = NULL;
-	char newName[24];
+	char newName[21];
 	id = getNonNegativeNumber("待修改供应商 ID");
 	if ((pos = findIndexByID_d(supplierDat, id, &tSupplier)) != 0)
 	{
 		printf("请输入供货商新名称: ");
-		stringGet(newName, 24);
+		stringGet(newName, 21);
 
 		if (findIndexByName(supplierDat, newName, OFFSET_SUPPLIER)) /* 查找修改的新名字是否有与现有供应商撞名的 */
 		{
@@ -186,8 +186,6 @@ void modifySupplier()
 			PAUSE;
 			return;
 		}
-
-		strncpy(tSupplier->name, newName, 24);
 
 		Node_t* tHead_storage = storageDat;  /* 将该供应商在库存和货架上的商品进行修改 */
 		Node_t* tHead_onSale = productDat;
@@ -199,7 +197,7 @@ void modifySupplier()
 			{
 				if (0 == strcmp((char*)tHead_storage->data + 52, tSupplier->name))
 				{
-					strncpy((char*)tHead_storage->data + 52, newName, 24);
+					strncpy((char*)tHead_storage->data + 52, newName, 21);
 				}
 				tHead_storage = tHead_storage->next;
 			}
@@ -212,11 +210,14 @@ void modifySupplier()
 			{
 				if (0 == strcmp((char*)tHead_onSale->data + 52, tSupplier->name))
 				{
-					strncpy((char*)tHead_onSale->data + 52, newName, 24);
+					strncpy((char*)tHead_onSale->data + 52, newName, 21);
 				}
 				tHead_onSale = tHead_onSale->next;
 			}
 		}
+
+		strncpy(tSupplier->name, newName, 21);
+
 		printf("供货商信息修改成功。\n");
 	}
 	else {

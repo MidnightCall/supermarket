@@ -35,9 +35,12 @@ void runStorageSystem()
 			queryStorage();
 			break;
 		case 3:
-			inStorage();
+			modifyProductInfo();
 			break;
 		case 4:
+			inStorage();
+			break;
+		case 5:
 			outStorage();
 			break;
 		}
@@ -76,6 +79,100 @@ void queryStorage(void)
 	return;
 }
 
+void modifyProductInfo()
+{
+	if (0 == *(int*)storageDat->data)
+	{
+		printf("目前没有任何库存。");
+		PAUSE;
+		return;
+	}
+
+	displayStorage();
+	unsigned int id;
+	Storage_t* storage = NULL;
+	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t)); /* 用来装新信息的临时载体。记得 free */
+	assert(newStorage != NULL);
+
+	id = getNonNegativeNumber("待修改的商品 ID");
+
+	if (id > 1000000 || id < 100000)
+	{
+		printf("你输入的 ID 无效。");
+		PAUSE;
+		return;
+	}
+
+	if (findProduct_d(storageDat, id, &storage) != 0) /* 在库存中找商品。因为库存中的记录删不掉 */
+	{
+		memcpy(newStorage, storage, sizeof(Storage_t)); /* 先把原商品的信息复制到临时载体中 */
+
+		/* 下边的流程与入库类似，只是是在现有记录基础上修改 */
+		printf("请输入新商品名：");
+		stringGet(newStorage->product.name, 48);
+
+		printf("请输入供应商名称: ");
+		stringGet(newStorage->product.supplier, 24);
+
+		if (!findIndexByName(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER)) /* 若新商品的供应商不存在，则把新供应商加入供应商目录 */ // UNDONE(CHECK)
+		{
+			Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
+			assert(newSupplier != NULL);
+
+			newSupplier->id = ++configDat.maxId_Supplier;
+			strcpy(newSupplier->name, newStorage->product.supplier);
+			insert(supplierDat, END, newSupplier);
+		}
+
+		if (findProductByName_d(storageDat, newStorage->product.name, &newStorage)) /* 判断仓库内是否有名字相同，供应商也相同的商品记录 */
+		{
+			if (0 == strcmp(newStorage->product.supplier, newStorage->product.supplier))
+			{
+				printf("仓库内已存在该商品。信息修改失败。");
+				free(newStorage); /* free ok */
+				PAUSE;
+				return;
+			}
+		}
+
+		printf("请输入进价 (￥/件): "); // UNDONE (大小检查)
+		scanf("%f", &(newStorage->product.purchase));
+
+		printf("请输入价格 (￥/件): ");
+		scanf("%f", &(newStorage->product.price));
+		getchar();
+
+		int type = 0;
+		while (1)
+		{
+			type = getNonNegativeNumber("商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
+			if (type < 0 || type > 5)
+			{
+				printf("你输入的类型有误，请重新输入。");
+				continue;
+			}
+			break;
+		}
+		newStorage->product.type = type;
+
+		OnSale_t* targetOnSale = NULL;
+		if (findProduct_d(productDat, storage->product.id, &targetOnSale))
+		{
+			memcpy(&targetOnSale->product, &newStorage->product, sizeof(Product_t)); /* 把货架上对应的商品信息也进行修改 (如果有的话) */
+		}
+
+		memcpy(storage, newStorage, sizeof(Storage_t)); /* 把新信息复制到原商品中。这个过程中，余量是没有变化的。 */
+	}
+	else
+	{
+		printf("你输入的商品不存在。");
+	}
+
+	free(newStorage); /* free ok */
+	PAUSE;
+	return;
+}
+
 /**
 *  @brief: 入库
 */
@@ -86,20 +183,17 @@ void inStorage(void)
 	unsigned int inStorageNumber; /* 入库数量 */
 	unsigned int type = 0; /* 商品种类 */
 	Storage_t* storage = NULL;
-	Supplier_t* supplier = NULL;
+	Supplier_t* tsupplier = NULL;
 	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t));
 
 	assert(NULL != newStorage);
 
-	while (1)
+	id = getNonNegativeNumber("商品 ID");
+	if (id > 1000000 || id < 100000)
 	{
-		id = getNonNegativeNumber("商品 ID");
-		if (id > 1000000 || id < 100000)
-		{
-			printf("你输入的 ID 无效，请重新输入。\b\n");
-			continue;
-		}
-		break;
+		printf("你输入的 ID 无效。");
+		PAUSE;
+		return;
 	}
 	
 	if (findProduct_d(storageDat, id, &storage) != 0) /* 如果库存内已记载了该商品的信息 */
@@ -117,7 +211,7 @@ void inStorage(void)
 		printf("请输入供应商名称: ");
 		stringGet(newStorage->product.supplier, 24);
 
-		if (!findIndexByName_d(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER, &supplier)) /* 若新商品的供应商不存在，则把新供应商加入供应商目录 */
+		if (!findIndexByName(supplierDat, newStorage->product.supplier, OFFSET_SUPPLIER)) /* 若新商品的供应商不存在，则把新供应商加入供应商目录 */ // UNDONE (CHANGED)
 		{
 			Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
 			newSupplier->id = ++configDat.maxId_Supplier;
@@ -261,13 +355,13 @@ void displayStorage(void)
 static int getChoice()
 {
 	int choice;
-	showTitle(currentUser);
 	do
 	{
+		showTitle(currentUser);
 		showStorageBusinessMenu();
 		HINT;
 		scanf("%d", &choice);
-	} while (choice > 5 || choice < 1);
+	} while (choice > 6 || choice < 1);
 	flush();
 
 	return choice;

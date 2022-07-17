@@ -20,10 +20,15 @@ extern Config_t configDat;
 void runStorageSystem();
 
 /**
-*  @brief: 查询库存商品
+*  @brief 查询库存商品
 *
 */
 void queryStorage();
+
+/**
+ * @brief 修改商品属性
+ */
+void modifyProductInfo();
 
 /**
 *  @brief: 入库
