@@ -93,7 +93,7 @@ void inStorage(void)
 
 	while (1)
 	{
-		id = getNonNegativeNumber("商品id");
+		id = getNonNegativeNumber("商品 ID");
 		if (id > 1000000 || id < 100000)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -111,7 +111,7 @@ void inStorage(void)
 	} 
 	else /* 新商品入库 */
 	{ 
-		flush();
+		//flush();
 		printf("仓库内无该商品。新商品 ID 为 %u.\n请输入新商品名称: ", configDat.maxId_Product + 1);
 		stringGet(newStorage->product.name, 48);
 		printf("请输入供应商名称: ");
@@ -143,6 +143,7 @@ void inStorage(void)
 			scanf("%f", &(newStorage->product.purchase));
 			printf("请输入价格 (￥/件): ");
 			scanf("%f", &(newStorage->product.price));
+			getchar();
 			while (1)
 			{
 				type = getNonNegativeNumber("商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");

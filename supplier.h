@@ -12,31 +12,37 @@
 extern Node_t* supplierDat,* productDat;
 
 /**
-*  @brief: 运行供应商操作
+*  @brief 运行供应商操作
 *
 */
 void runSupplierSystem();
 
 /**
-*  @brief: 查找供应商信息
+*  @brief 查找供应商信息
 *
 */
 void querySupplier();
 
 /**
-*  @brief: 添加供应商信息
+*  @brief 添加供应商信息
 *
 */
 void addSupplier();
 
 /**
-*  @brief: 删除供应商信息
+*  @brief 删除供应商信息
 *
 */
 void delSupplier();
 
+
 /**
-*  @brief: 显示所有供应商信息
+ * @brief 修改供应商信息
+ */
+void modifySupplier();
+
+/**
+*  @brief 显示所有供应商信息
 *
 */
 void displaySupplier();

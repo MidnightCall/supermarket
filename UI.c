@@ -85,9 +85,10 @@ void showSupplierBusinessMenu()
     printf("│                                                │\n");
     printf("│              1. 显示所有供应商信息             │\n");
     printf("│              2. 查找供应商信息                 │\n");
-    printf("│              3. 添加供应商信息                 │\n");
-    printf("│              4. 删除供应商信息                 │\n");
-    printf("│              5. 返回上一级                     │\n");
+    printf("│              3. 修改供应商信息                 │\n");
+    printf("│              4. 添加供应商信息                 │\n");
+    printf("│              5. 删除供应商信息                 │\n");
+    printf("│              6. 返回上一级                     │\n");
     printf("│                                                │\n");
     printf("└────────────────────────────────────────────────┘\n");
 }
