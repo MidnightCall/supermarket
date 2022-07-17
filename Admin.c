@@ -1,6 +1,5 @@
-#include "Admin.h"
+#include "admin.h"
 #include "helpfulFunction.h"
-#include <Windows.h>
 
 extern User_t currentUser;
 /* 局部函数模型 */

@@ -61,7 +61,7 @@ void queryStorage(void)
 	unsigned int id;
 	Storage_t* storage = NULL;
 
-	id = getNonNegativeNumber("待查询的商品id");
+	id = getNonNegativeNumber("待查询的商品 ID");
 	if (findProduct_d(storageDat, id, &storage) != 0) {
 		printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬───────────┬─────────────────────────┬─────────┐\n");
 		printf("│ %7s│ %48s│ %10s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "进价", "供应商", "库存余量");
@@ -193,7 +193,7 @@ void outStorage(void)
 		OnSale_t* tOnSale = NULL;
 		if (findProduct_d(productDat, id, &tOnSale)) /* 要出库的商品已经在货架上了 */
 		{
-			outStorageNumber = getNonNegativeNumber("出库数量: ");
+			outStorageNumber = getNonNegativeNumber("出库数量");
 			if (storage->allowance - outStorageNumber >= 0)
 			{
 				storage->allowance -= outStorageNumber;

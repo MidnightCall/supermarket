@@ -1,5 +1,5 @@
-#ifndef __FILES_C_
-#define __FILES_C_
+#ifndef __FILES_H_
+#define __FILES_H_
 
 #include "typeCollection.h"
 
