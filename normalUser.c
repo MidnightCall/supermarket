@@ -15,7 +15,7 @@ void runNormalUserSystem()
 		queryOnSaleProduct();
 		break;
 	case 2:
-		runSupplierSystem();
+		runOrderSystem();
 		break;
 	}
 }

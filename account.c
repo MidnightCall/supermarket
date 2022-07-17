@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   account.c
+ * \brief  
+ * 
+ * \author praist
+ * \date   July 2022
+ *********************************************************************/
+
 #include "account.h"
 #include "helpfulFunction.h"
 #include <stdbool.h>
@@ -5,9 +13,11 @@
 extern Node_t* userDat;
 extern User_t currentUser;
 extern Config_t configDat;
-/*
-* @brief：运行登录/注册系统
-*/
+
+/**
+ * .
+ * 
+ */
 void runLogIn(void)
 {
 	if (0 == *(int*)userDat->data) /* 如果文件里一个账户都没有，则自动创建一个超管 (SU) */ /* passed */

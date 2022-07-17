@@ -55,8 +55,7 @@ void querySupplier()
 
 	unsigned int id;
 	Supplier_t* supplier = NULL;;
-	printf("请输入待查询的供货商 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("待查询供货商 ID");
 
 	if (0 != findIndexByID_d(supplierDat, id, &supplier)) /* 查询该供货商是否存在 */
 	{ /* 打印与这个供货商有关的所有商品 */
@@ -143,8 +142,7 @@ void delSupplier(void)
 	displaySupplier();
 	
 	unsigned int id, pos;
-	printf("请输入待删除供应商 ID: ");
-	scanf("%u", &id);
+	id = getAnNonNegativeDigit("待删除供应商 ID");
 	if ((pos = findIndexByID(supplierDat, id)) != 0) {
 		del(supplierDat, pos);
 		printf("删除成功。\n");

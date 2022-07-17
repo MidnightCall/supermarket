@@ -49,8 +49,7 @@ void queryUser(void)
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
-		printf("输入账号 ID: ");
-		scanf("%u", &tId);
+		tId = getAnNonNegativeDigit("账号 ID: ");
 		if (tId < 10000 || tId > 99999)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -79,8 +78,7 @@ void modifyUserPermission(void)
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
-		printf("输入账号 ID: ");
-		scanf("%u", &tId);
+		tId = getAnNonNegativeDigit("账号 ID");
 
 		if (tId < 10000 || tId > 99999)
 		{
@@ -109,8 +107,7 @@ void modifyUserPermission(void)
 	unsigned int op = 0;
 	while (true)
 	{
-		printf("输入你要更改到的目标权限\n[0. 普通用户, 1. 管理员]: ");
-		scanf("%u", &op);
+		op = getAnNonNegativeDigit("你要更改到的目标权限\n[0. 普通用户, 1. 管理员]");
 		if (op < 0 || op > 1)
 		{
 			printf("你输入的权限等级无效，请重新输入。\b\n");
@@ -140,9 +137,8 @@ void deleteUser(void)
 	unsigned int index = 0;
 	while (true)
 	{
-		printf("请输入账户 ID: ");
 		unsigned int tId = 0;
-		scanf("%u", &tId);
+		tId = getAnNonNegativeDigit("账户 ID:");
 		if (tId < 10000 || tId > 99999)
 		{
 			printf("你输入的 ID 无效，请重新输入。\n");
