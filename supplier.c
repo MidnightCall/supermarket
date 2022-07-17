@@ -23,6 +23,7 @@ void runSupplierSystem()
 			return;
 		case 1:
 			displaySupplier();
+			PAUSE;
 			break;
 		case 2:
 			querySupplier();
@@ -50,6 +51,8 @@ void querySupplier()
 		return;
 	}
 
+	displaySupplier();
+
 	unsigned int id;
 	Supplier_t* supplier = NULL;;
 	id = getAnNonNegativeDigit("待查询供货商 ID");
@@ -71,11 +74,11 @@ void querySupplier()
 void addSupplier()
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
-	//assert_null(newSupplier);
+	assert(newSupplier);
 
 	printf("新供货商 ID 是 %d\n", ++configDat.maxId_Supplier);
 	newSupplier->id = configDat.maxId_Supplier;
-	flush();
+	//getchar();
 	printf("请输入供货商名称: ");
 	stringGet(newSupplier->name, 21);
 
@@ -106,6 +109,8 @@ void delSupplier(void)
 		return;
 	}
 
+	displaySupplier();
+	
 	unsigned int id, pos;
 	id = getAnNonNegativeDigit("待删除供应商 ID");
 	if ((pos = findIndexByID(supplierDat, id)) != 0) {
@@ -139,7 +144,6 @@ void displaySupplier(void)
 	printList(supplierDat, printSupplierInfo, false);
 	printf("└──────┴─────────────────────────────────────────┘\n");
 
-	PAUSE;
 	return;
 }
 

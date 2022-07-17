@@ -14,9 +14,9 @@
 #include "superAdminSystem.h"
 #include "Admin.h"
 
- /**
-  * @brief 启动超市管理系统
-  */
+/**
+ * @brief 启动超市管理系统
+ */
 void systemStart(void);
 
 /**
@@ -33,29 +33,4 @@ void initData(void);
 * @brief 将数据保存到文件中并释放链表使用的内存
 */
 void saveData(void);
-
-/**
- * @brief 启动员工管理模块
- *
- */
-void employeeModuleStart();
-
-/**
- * @brief 启动供应商管理模块
- *
- */
-void supplierModuleStart();
-
-/**
- * @brief 启动库存管理模块
- *
- */
-void storageModuleStart();
-
-/**
- * @brief 启动订单管理模块
- *
- */
-void orderModuleStart();
-
 #endif 
