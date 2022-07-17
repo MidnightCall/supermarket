@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   account.h
+ * \brief  
+ * 
+ * \author praist
+ * \date   July 2022
+ *********************************************************************/
+
 #ifndef __ACCOUNT_H_
 #define __ACCOUNT_H_
 
@@ -15,15 +23,9 @@
 extern Node_t* userDat;
 extern User_t currentUser;
 
-/*
-* 操作：运行登录/注册系统
-*/
+
 void runLogIn();
 
-/*
-* 操作：显示操作菜单、读取用户的选择的操作
-* 后置条件：显示操作菜单
-*/
 int getChoice();
 
 /*
