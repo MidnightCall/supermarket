@@ -45,7 +45,7 @@ void queryUser(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("═════════════════════查询账户═════════════════════\n");
+	printf("═════════════════════查询用户═════════════════════\n");
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
@@ -59,7 +59,7 @@ void queryUser(void)
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的员工。\b");
+			printf("没有符合条件的用户。\b");
 			system("pause");
 			return;
 		}
@@ -98,8 +98,8 @@ void modifyUserPermission(void)
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的员工。\b");
-			system("pause");
+			printf("没有符合条件的用户。\b");
+			PAUSE;
 			return;
 		}
 		showSingleUser(*tUser);
@@ -122,7 +122,7 @@ void modifyUserPermission(void)
 	}
 	showSingleUser(*tUser);
 	printf("权限修改成功！");
-	system("pause");
+	PAUSE;
 	return;
 
 }
@@ -136,7 +136,7 @@ void deleteUser(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("═════════════════════删除账户═════════════════════\n");
+	printf("═════════════════════删除用户═════════════════════\n");
 	unsigned int index = 0;
 	while (true)
 	{
@@ -153,15 +153,15 @@ void deleteUser(void)
 		if (tId == 10000)
 		{
 			printf("你无法删除超级管理员 [10000]。\n");
-			system("pause");
+			PAUSE;
 			return;
 		}
 
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的账户。");
-			system("pause");
+			printf("没有符合条件的用户。");
+			PAUSE;
 			return;
 		}
 		showSingleUser(*tUser);
@@ -182,7 +182,7 @@ void deleteUser(void)
 		if (deleteOp == 'y' || deleteOp == 'Y')
 		{
 			del(userDat, index);
-			printf("员工删除成功！\n");
+			printf("用户删除成功！\n");
 			showAllUsers(userDat);
 			break;
 		}
@@ -198,11 +198,11 @@ void deleteUser(void)
 static int getChoice()
 {
 	int choice = 0;
-	showTitle(currentUser);
 	do
 	{
+		showTitle(currentUser);
 		showAccountBusinessMenu();
-		printf(">>> ");
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 	flush();

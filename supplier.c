@@ -58,9 +58,9 @@ void querySupplier()
 	printf("请输入待查询的供货商 ID: ");
 	scanf("%u", &id);
 
-	if (0 != findIndexByID_d(supplierDat, id, &supplier))
+	if (0 != findIndexByID_d(supplierDat, id, &supplier)) /* 查询该供货商是否存在 */
 	{ /* 打印与这个供货商有关的所有商品 */
-		int count = 0;
+		bool flag = false;
 		Node_t* tHead = storageDat;
 		if (NULL == storageDat->next)
 		{
@@ -78,12 +78,12 @@ void querySupplier()
 				if (0 == strcmp((char*)tHead->data + 52, supplier->name))
 				{
 					printStorageInfo(tHead->data);
-					++count;
+					flag = true;
 				}
 				tHead = tHead->next;
 			}
 		}
-		if (!count)
+		if (!flag)
 		{
 			printf("│                                              一件也没有。                                                │\n");
 		}
@@ -166,7 +166,6 @@ void displaySupplier(void)
 	if (0 == *(int*)supplierDat->data)
 	{
 		printf("目前没有供应商。");
-		PAUSE;
 		return;
 	}
 

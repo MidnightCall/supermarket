@@ -47,6 +47,12 @@ void queryOrder();
 float calTurnover();
 
 /**
+*  @brief: 计算总利润
+*
+*/
+float calProfit();
+
+/**
 *  @brief: 向当前订单添加商品
 *
 */
@@ -59,19 +65,18 @@ void addProductToCurrentOrder();
 void delProductFromCurrentOrder();
 
 /**
-*  @brief: 更改当前订单的商品数量
-*
+*  @brief 更改当前订单的商品数量
 */
-void modifyProductFromCurrentOrder();
+void modifyProductFromCurrentOrder(); // UNDONE (测试)
 
 /**
-*  @brief: 打印当前订单信息
+*  @brief 打印当前订单信息
 *
 */
 void showCurrentOrderInfo();
 
 /**
-*  @brief: 显示总价
+*  @brief 显示总价
 *
 */
 void showTurnOverInCurrentOrder();

@@ -37,7 +37,7 @@ void printOnSaleInfo(OnSale_t* node)
 
 void printStorageInfo(Storage_t* node)
 {
-	printf("©¦ %7u©¦ %48s©¦ %10.2f©¦ %24s©¦ %8u©¦\n", node->product.id, node->product.name, node->product.price, node->product.supplier, node->allowance);
+	printf("©¦ %7u©¦ %48s©¦ %10.2f©¦ %10.2f©¦ %24s©¦ %8u©¦\n", node->product.id, node->product.name, node->product.price, node->product.purchase, node->product.supplier, node->allowance);
 	return;
 }
 

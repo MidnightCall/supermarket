@@ -61,18 +61,19 @@ typedef struct tagUser_t
     PermissionEnum permission;
 } User_t;
 
-/* 商品信息节点 */ /* size: 84 */
-typedef struct tagProduct_t // TODO (进价属性)
+/* 商品信息节点 */ /* size: 88 */
+typedef struct tagProduct_t
 {
     unsigned int id;
     char name[48]; /* 商品名 */
     char supplier[24]; /* 商品供货商 */
-    float price; /* 商品价格 */
+    float price; /* 商品售价 */
+    float purchase; /* 商品进价 */
     ProductTypeEnum type; /* 商品类别 */
 } Product_t;
 
 
-/* 职工信息节点 */ /* size: 32? */
+/* 职工信息节点 */ /* size: 36 */
 typedef struct tagEmployee_t
 {
     unsigned int id;
@@ -89,33 +90,34 @@ typedef struct tagSupplier_t
     char name[21];
 } Supplier_t;
 
-/* 上架的商品信息节点 */ /* size: 88 */
+/* 上架的商品信息节点 */ /* size: 92 */
 typedef struct tagOnSale_t 
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } OnSale_t;
 
-/* 库存信息节点 */ /* size: 88 */
+/* 库存信息节点 */ /* size: 92 */
 typedef struct tagStorage_t
 {
     Product_t product;
     unsigned int allowance; /* 余量 */
 } Storage_t;
 
-/* 订单商品信息节点 */ /* size: 88 */
+/* 订单商品信息节点 */ /* size: 92 */
 typedef struct tagOrderItem_t
 {
     Product_t product;
     unsigned int quantity;
 } OrderItem_t;
 
-/* 订单信息节点 */ /* size: 8824 */
+/* 订单信息节点 */ /* size: 4624 */
 typedef struct tagOrder_t
 {
     unsigned int id; /* 订单编号 */
-    OrderItem_t items[100]; /* 订单 */
+    OrderItem_t items[50]; /* 订单 */
     float total;  /* 订单总额 */
+    float profit; /* 订单利润 */
     time_t time;  /* 交付时间 */
     unsigned int operatorId; /* 操作员 ID */
 } Order_t;

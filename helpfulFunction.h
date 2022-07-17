@@ -51,6 +51,6 @@ char* timeConv(time_t time);
 *
 * @return 返回读取到的结果
 */
-int getAnNonNegativeDigit(char hint[21]);
+int getANonNegativeNumber(char* hint);
 
 #endif 
