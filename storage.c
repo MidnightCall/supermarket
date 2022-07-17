@@ -22,6 +22,12 @@ void runStorageSystem()
 		default:
 			return;
 		case 1:
+			if (0 == *(int*)storageDat->data)
+			{
+				printf("目前没有任何库存。");
+				PAUSE;
+				return;
+			}
 			displayStorage();
 			PAUSE;
 			break;
@@ -44,6 +50,13 @@ void runStorageSystem()
 */
 void queryStorage(void)
 {
+	if (0 == *(int*)storageDat->data)
+	{
+		printf("目前没有任何库存。");
+		PAUSE;
+		return;
+	}
+
 	displayStorage();
 	unsigned int id;
 	Storage_t* storage = NULL;
@@ -51,16 +64,16 @@ void queryStorage(void)
 	scanf("%u", &id);
 
 	if (findProduct_d(storageDat, id, &storage) != 0) {
-		printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬─────────────────────────┬─────────┐\n");
-		printf("│ %7s│ %48s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "供应商", "库存余量");
-		printf("├────────┼─────────────────────────────────────────────────┼───────────┼─────────────────────────┼─────────┤\n");
+		printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬───────────┬─────────────────────────┬─────────┐\n");
+		printf("│ %7s│ %48s│ %10s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "进价", "供应商", "库存余量");
+		printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────────┼─────────────────────────┼─────────┤\n");
 		printStorageInfo(storage);
-		printf("└────────┴─────────────────────────────────────────────────┴───────────┴─────────────────────────┴─────────┘\n");
+		printf("└────────┴─────────────────────────────────────────────────┴───────────┴───────────┴─────────────────────────┴─────────┘\n");
 	}
 	else {
 		printf("不存在 %d 号商品。\n", id);
 	}
-	system("pause");
+	PAUSE;
 	return;
 }
 
@@ -77,16 +90,7 @@ void inStorage(void)
 	Supplier_t* supplier = NULL;
 	Storage_t* newStorage = (Storage_t*)malloc(sizeof(Storage_t));
 
-	if (NULL == newStorage)
-	{
-		printf("内存分配失败。");
-		PAUSE;
-		exit(0);
-	}
-
-	//printf("%p\n", storageDat->data); // ??????? 感觉像被污染了一样
-	//assert_null(newStorage); // 加上这句会导致后续程序崩溃，不知道为什么。
-	//printf("%p\n", storageDat->data); // ??????? 感觉像被污染了一样
+	assert(NULL != newStorage);
 
 	while (1)
 	{
@@ -137,7 +141,9 @@ void inStorage(void)
 		{
 			newStorage->product.id = ++configDat.maxId_Product; /* 自动生成 ID */
 
-			printf("请输入价格(￥/件): ");
+			printf("请输入进价 (￥/件): "); // UNDONE (大小检查)
+			scanf("%f", &(newStorage->product.purchase));
+			printf("请输入价格 (￥/件): ");
 			scanf("%f", &(newStorage->product.price));
 			while (1)
 			{
@@ -166,6 +172,13 @@ void inStorage(void)
 */
 void outStorage(void)
 {
+	if (0 == *(int*)storageDat->data)
+	{
+		printf("目前没有任何库存。");
+		PAUSE;
+		return;
+	}
+
 	displayStorage();
 	unsigned int id;
 	unsigned int outStorageNumber = 0;
@@ -243,11 +256,11 @@ void outStorage(void)
 */
 void displayStorage(void)
 {
-	printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬─────────────────────────┬─────────┐\n");
-	printf("│ %7s│ %48s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "供应商", "库存余量");
-	printf("├────────┼─────────────────────────────────────────────────┼───────────┼─────────────────────────┼─────────┤\n");
+	printf("┌────────┬──────────────────────────────────────库存详细信息───────────┬───────────┬─────────────────────────┬─────────┐\n");
+	printf("│ %7s│ %48s│ %10s│ %10s│ %24s│ %8s│\n", "商品 ID", "商品名", "单价", "进价", "供应商", "库存余量");
+	printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────────┼─────────────────────────┼─────────┤\n");
 	printList(storageDat, printStorageInfo, false);
-	printf("└────────┴─────────────────────────────────────────────────┴───────────┴─────────────────────────┴─────────┘\n");
+	printf("└────────┴─────────────────────────────────────────────────┴───────────┴───────────┴─────────────────────────┴─────────┘\n");
 	return;
 }
 

@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   order.c
+ * \brief  
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 #include "order.h"
 #include "helpfulFunction.h"
 #include "typeCollection.h"
@@ -14,6 +21,7 @@ Order_t currentOrder;
 static int getChoice();
 static int getNormalChoice();
 static float calTurnOverInCurrentOrder(void);
+static float calProfitInCurrentOrder(void);
 
 /**
 *  @brief: 运行订单系统
@@ -35,9 +43,6 @@ void runOrderSystem()
 			break;
 		case 2:
 			queryOrder();
-			break;
-		case 3:
-			calTurnover();
 			break;
 		}
 	}
@@ -80,10 +85,10 @@ void runNormalUserOrderSystem()
 }
 
 /**
-*  @brief: 显示所有订单信息
+*  @brief 显示所有订单信息
 *
 */
-void displayOrder(bool showSum)
+void displayOrder(bool showSum) // UNDONE (按类别查询商品, 更改商品信息)
 {
 	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
 	printf("│ %7s│ %20s│ %6s│ %12s│\n", "订单号", "交付时间", "操作人", "总金额");
@@ -95,6 +100,8 @@ void displayOrder(bool showSum)
 	{
 		printf("├────────┼─────────────────────┴───────┴─────────────┤\n");
 		printf("│  合计  │ %42.2f│\n", calTurnover());
+		printf("├────────┼───────────────────────────────────────────┤\n");
+		printf("│ 总利润 │ %42.2f│\n", calProfit());
 		printf("└────────┴───────────────────────────────────────────┘\n");
 	}
 	return;
@@ -151,9 +158,29 @@ float calTurnover()
 	allOrder = orderDat->next;
 	while (allOrder != NULL)
 	{
-		sum += *(float*)((char*)allOrder->data + 8804);
+		sum += *(float*)((char*)allOrder->data + 4604); /* 一百个商品和一个 ID 占的字节数 */
 		allOrder = allOrder->next;
 	}
+	return sum;
+}
+
+float calProfit()
+{
+	float sum = 0.0f;
+	Node_t* allOrder = orderDat;
+
+	if (NULL == orderDat->next)
+	{
+		return 0.0f;
+	}
+
+	allOrder = orderDat->next;
+	while (allOrder != NULL)
+	{
+		sum += *(float*)((char*)allOrder->data + 4608); /* 一百个商品和一个 uint 一个 float 占的字节数 */
+		allOrder = allOrder->next;
+	}
+
 	return sum;
 }
 
@@ -164,12 +191,12 @@ void addProductToCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getAnNonNegativeDigit("商品 ID");
+	id = getANonNegativeNumber("商品 ID");
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
 		printf("不存在的商品 ID.\n");
 		
 	} else {
-		quantity = getAnNonNegativeDigit("添加数量");
+		quantity = getANonNegativeNumber("添加数量");
 		if (0 == quantity)
 		{
 			printf("非法输入，请重新输入。");
@@ -180,14 +207,15 @@ void addProductToCurrentOrder(void)
 			if (onSaleProduct->allowance > 0) {
 				printf("余量不足，已将商品全部添加，共添加 %d 件商品\n", onSaleProduct->allowance);
 				quantity = onSaleProduct->allowance;
-				onSaleProduct->allowance = 0;
+				onSaleProduct->allowance = 0; 
 			} else {
 				printf("该商品已售罄.\n");
 			}
-		}else{
-			onSaleProduct->allowance -= quantity;
+		} else {
+			onSaleProduct->allowance -= quantity; /* 这里商品就已经从货架上拿下来了 */
 			printf("添加成功\n");
 		}
+
 		for (int i = 0; i < currentIndex; i++) {
 			if (id == currentOrder.items[i].product.id) {
 				currentOrder.items[i].quantity += quantity;
@@ -195,9 +223,11 @@ void addProductToCurrentOrder(void)
 				break;
 			}
 		}
+
 		if (flag == false) {
 			currentOrder.items[currentIndex].quantity = quantity;
 			currentOrder.items[currentIndex].product.id = id;
+			currentOrder.items[currentIndex].product.purchase = onSaleProduct->product.purchase;
 			currentOrder.items[currentIndex].product.price = onSaleProduct->product.price;
 			currentOrder.items[currentIndex].product.type = onSaleProduct->product.type;
 			strcpy(currentOrder.items[currentIndex].product.name, onSaleProduct->product.name);
@@ -212,17 +242,48 @@ void addProductToCurrentOrder(void)
 void delProductFromCurrentOrder()
 {
 	int id;
-	int pos;
+	int pos = 0;
+	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getAnNonNegativeDigit("待删除的商品id");
-	if (0 != (pos = findProduct_d(productDat, id, &onSaleProduct))) {
-		onSaleProduct->allowance += currentOrder.items[currentIndex - 1].quantity;
-		printf("删除成功\n");
-		currentIndex--;
-	}else {
-		printf("不存在 ID 为 %d 的商品。\n", id);
+	/* 策略：把要删除的商品信息移到数组尾，然后让 currentIndex-- */
+	/* 权宜之计 ... */
+
+	id = getANonNegativeNumber("待删除的商品 ID");
+	for (int i = 0; i < currentIndex; ++i)
+	{
+		if (currentOrder.items[i].product.id == id) /* 订单内存在这个物品 */
+		{
+			flag = true;
+			findProduct_d(productDat, id, &onSaleProduct);
+			onSaleProduct->allowance += currentOrder.items[i].quantity; /* 更新货架数量信息 */
+			pos = i;
+			OrderItem_t tempOrderItem;
+			memcpy(&tempOrderItem, &currentOrder.items[pos], sizeof(OrderItem_t)); /* 把要删除的信息放到临时变量里 */
+			for (int j = pos; j < currentIndex - 1; ++j) /* 剩下的依次前移 */
+			{
+				memcpy(&currentOrder.items[j], &currentOrder.items[j + 1], sizeof(OrderItem_t));
+			}
+			memcpy(&currentOrder.items[currentIndex - 1], &tempOrderItem, sizeof(OrderItem_t)); /* 把要删除的节点放到末尾 */
+			--currentIndex; /* 把末尾节点屏蔽掉 */
+		}
 	}
+	if (!flag)
+	{
+		printf("当前订单中没有 ID 为 %d 的商品。\n", id);
+	}
+	/*if (0 != (pos = findProduct_d(productDat, id, &onSaleProduct)))
+	{
+
+		// 这个做法直接把末尾的删掉 (屏蔽掉) 了
+		onSaleProduct->allowance += currentOrder.items[currentIndex - 1].quantity;
+		printf("删除成功。");
+		currentIndex--;
+	}*/
+	/*else
+	{
+		printf("当前订单中没有 ID 为 %d 的商品。\n", id);
+	}*/
 	PAUSE;
 	return;
 }
@@ -234,29 +295,52 @@ void modifyProductFromCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getAnNonNegativeDigit("需要更改的商品id");
+	id = getANonNegativeNumber("需要更改的商品 ID");
 	for (int i = 0; i < currentIndex; i++) {
-		if (currentOrder.items[i].product.id == id) {
-			quantity = getAnNonNegativeDigit("需要购买的数量");
+		if (currentOrder.items[i].product.id == id) 
+		{
+			findProduct_d(productDat, id, &onSaleProduct); /* 找到对应的商品 */
+			quantity = getANonNegativeNumber("需要购买的数量");
+			if (0 == quantity)
+			{
+				printf("非法输入，请重新输入。");
+				PAUSE;
+				return;
+			}
+			if (quantity <= currentOrder.items[i].quantity) /* 新数量比原数量小 */
+				onSaleProduct->allowance += (currentOrder.items[i].quantity - quantity); /* 把多出来的部分加回到货架上去 */
+			else /* 新数量比原数量大 */
+			{
+				if (quantity > currentOrder.items[i].quantity + onSaleProduct->allowance) /* 新数量比已经加入订单的和货架上剩下的都多 */
+				{
+					printf("余量不足，已将商品全部添加，共添加 %d 件商品。\n", currentOrder.items[i].quantity + onSaleProduct->allowance);
+					quantity = onSaleProduct->allowance + currentOrder.items[i].quantity;
+					onSaleProduct->allowance = 0;
+				}
+				else
+				{
+					onSaleProduct->allowance -= (quantity - currentOrder.items[i].quantity); /* 多了几件就从货架上拿几件 */
+				}
+			}
 			currentOrder.items[i].quantity = quantity;
 			flag = true;
 			printf("更改完成。");
 			break;
 		}
 	}
-	if (flag == false) {
+	if (flag == false)
+	{
 		printf("当前订单中没有 ID 为 %d 的商品。", id);
 	}
 	PAUSE;
 	return;
 }
 
-void showCurrentOrderInfo()
+void showCurrentOrderInfo() // TODO (改格式)
 {
-	printf("商品清单: \n");
-	printf("商品id\t商品名\t单价\t数量\t总价\n");
+	printf("商品ID \t商品名 \t单价 \t数量 \t总价\n");
 	for (int i = 0; i < currentIndex; i++) {
-		printf("%d\t%s\t%.2f\t%d\t%.2f\n", currentOrder.items[i].product.id,
+		printf("%d \t%s \t%.2f \t%d \t%.2f\n", currentOrder.items[i].product.id,
 			currentOrder.items[i].product.name, currentOrder.items[i].product.price,
 			currentOrder.items[i].quantity, currentOrder.items[i].quantity * currentOrder.items[i].product.price);
 	}
@@ -276,15 +360,18 @@ void submitCurrentOrder()
 	assert(tempOrder != NULL);
 
 	tempOrder->id = ++configDat.maxId_Order;
+
 	for (int i = 0; i < currentIndex; i++) {
 		tempOrder->items[i].quantity = currentOrder.items[i].quantity;
 		tempOrder->items[i].product.id = currentOrder.items[i].product.id;
 		tempOrder->items[i].product.price = currentOrder.items[i].product.price;
+		tempOrder->items[i].product.purchase = currentOrder.items[i].product.purchase;
 		tempOrder->items[i].product.type = currentOrder.items[i].product.type;
 		strcpy(tempOrder->items[i].product.name, currentOrder.items[i].product.name);
 		strcpy(tempOrder->items[i].product.supplier, currentOrder.items[i].product.supplier);
 	}
 
+	tempOrder->profit = calProfitInCurrentOrder();
 	tempOrder->total = calTurnOverInCurrentOrder();
 	tempOrder->time = time(NULL);
 	tempOrder->operatorId = currentUser.id;
@@ -300,13 +387,13 @@ void submitCurrentOrder()
 static int getChoice()
 {
 	int choice = 0;
-	showTitle(currentUser);
 	do
 	{
+		showTitle(currentUser);
 		showOrderBusinessMenu();
 		HINT;
 		scanf("%d", &choice);
-	} while (choice > 5 || choice < 1);
+	} while (choice > 3 || choice < 1);
 	flush();
 
 	return choice;
@@ -333,6 +420,19 @@ static float calTurnOverInCurrentOrder(void)
 
 	for (int i = 0; i < currentIndex; i++) {
 		sum += currentOrder.items[i].quantity * currentOrder.items[i].product.price;
+	}
+
+	return sum;
+}
+
+static float calProfitInCurrentOrder(void)
+{
+	float sum = 0;
+
+	for (int i = 0; i < currentIndex; ++i)
+	{
+		sum += ((currentOrder.items[i].product.price
+			- currentOrder.items[i].product.purchase)) * currentOrder.items[i].quantity;
 	}
 
 	return sum;

@@ -54,7 +54,7 @@ char* timeConv(time_t time)
 	return nowTime;
 }
 
-int getAnNonNegativeDigit(char hint[21])
+int getANonNegativeNumber(char* hint)
 {
 	char temp[10];
 
