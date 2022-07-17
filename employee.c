@@ -72,7 +72,7 @@ void addEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		tAge = getAnNonNegativeDigit("员工年龄:");
+		tAge = getNonNegativeNumber("员工年龄:");
 		if (tAge < 0 || tAge > 70)
 		{
 			printf("你输入的年龄无效，请重新输入。\n");
@@ -147,7 +147,7 @@ void deleteEmployee(void)
 		while (true)
 		{
 			unsigned int tId = 0;
-			tId = getAnNonNegativeDigit("员工 ID");
+			tId = getNonNegativeNumber("员工 ID");
 			if (tId < 1000 || tId > 9999)
 			{
 				printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -242,7 +242,7 @@ void findEmployee(void)
 		{
 			unsigned int tId = 0;
 			printf("请输入员工 ID: ");
-			tId = getAnNonNegativeDigit("员工 ID:");
+			tId = getNonNegativeNumber("员工 ID:");
 			if (tId < 1000 || tId > 9999)
 			{
 				printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -299,7 +299,7 @@ void modifyEmployee(void)
 	while (true)
 	{
 		unsigned int tId = 0;
-		tId = getAnNonNegativeDigit("员工 ID:");
+		tId = getNonNegativeNumber("员工 ID:");
 		if (tId < 1000 || tId > 9999)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -336,7 +336,7 @@ void modifyEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		tAge = getAnNonNegativeDigit("员工年龄:");
+		tAge = getNonNegativeNumber("员工年龄:");
 		if (tAge < 0 || tAge > 70)
 		{
 			printf("你输入的年龄无效，请重新输入。\b\n");

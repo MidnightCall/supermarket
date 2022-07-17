@@ -117,7 +117,7 @@ void queryOrder(void)
 
 	unsigned int id;
 	Order_t* order = NULL;
-	id = getAnNonNegativeDigit("待查询的订单 ID");
+	id = getNonNegativeNumber("待查询的订单 ID");
 	if (0 != findIndexByID_d(orderDat, id, &order)) 
 	{
 		char* timeStr = timeConv(order->time);
@@ -190,12 +190,12 @@ void addProductToCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getANonNegativeNumber("商品 ID");
+	id = getNonNegativeNumber("商品 ID");
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) {
 		printf("不存在的商品 ID.\n");
 		
 	} else {
-		quantity = getANonNegativeNumber("添加数量");
+		quantity = getNonNegativeNumber("添加数量");
 		if (0 == quantity)
 		{
 			printf("非法输入，请重新输入。");
@@ -248,7 +248,7 @@ void delProductFromCurrentOrder()
 	/* 策略：把要删除的商品信息移到数组尾，然后让 currentIndex-- */
 	/* 权宜之计 ... */
 
-	id = getANonNegativeNumber("待删除的商品 ID");
+	id = getNonNegativeNumber("待删除的商品 ID");
 	for (int i = 0; i < currentIndex; ++i)
 	{
 		if (currentOrder.items[i].product.id == id) /* 订单内存在这个物品 */
@@ -294,12 +294,12 @@ void modifyProductFromCurrentOrder(void)
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getANonNegativeNumber("需要更改的商品 ID");
+	id = getNonNegativeNumber("需要更改的商品 ID");
 	for (int i = 0; i < currentIndex; i++) {
 		if (currentOrder.items[i].product.id == id) 
 		{
 			findProduct_d(productDat, id, &onSaleProduct); /* 找到对应的商品 */
-			quantity = getANonNegativeNumber("需要购买的数量");
+			quantity = getNonNegativeNumber("需要购买的数量");
 			if (0 == quantity)
 			{
 				printf("非法输入，请重新输入。");

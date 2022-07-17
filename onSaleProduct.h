@@ -28,7 +28,7 @@ void queryOnSaleProduct();
 *  @brief: 显示所有代售商品信息
 *
 */
-void ();
+void displayOnSaleProduct(void);
 
 
 

@@ -62,7 +62,7 @@ void queryOnSaleProduct(void)
 	switch (op)
 	{
 	case 0:
-		id = getANonNegativeNumber("商品 ID");
+		id = getNonNegativeNumber("商品 ID");
 
 		if (findProduct_d(productDat, id, &onSale))
 			showSingleOnSale(onSale);
@@ -83,7 +83,7 @@ void queryOnSaleProduct(void)
 	case 2:
 		while (1)
 		{
-			onSaleType = getANonNegativeNumber("商品种类\n[0. 果蔬    , 1. 日用品  ]\n[2. 办公用品, 3. 食品    ]\n[4. 酒水饮料, 5. 家用电器]");
+			onSaleType = getNonNegativeNumber("商品种类\n[0. 果蔬    , 1. 日用品  ]\n[2. 办公用品, 3. 食品    ]\n[4. 酒水饮料, 5. 家用电器]");
 			if (onSaleType > 5)
 			{
 				printf("输入的操作格式不正确，请重新输入。");
