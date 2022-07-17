@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="accountManage.h" />
-    <ClInclude Include="Admin.h" />
+    <ClInclude Include="admin.h" />
     <ClInclude Include="customLookup.h" />
     <ClInclude Include="employee.h" />
     <ClInclude Include="linkList.h" />
@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="accountManage.c" />
-    <ClCompile Include="Admin.c" />
+    <ClCompile Include="admin.c" />
     <ClCompile Include="customLookup.c" />
     <ClCompile Include="eastmonsterTest.c" />
     <ClCompile Include="helpfulFunction.c" />

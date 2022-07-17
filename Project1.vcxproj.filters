@@ -57,7 +57,7 @@
     <ClInclude Include="customLookup.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Admin.h">
+    <ClInclude Include="admin.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="order.h">
@@ -101,7 +101,7 @@
     <ClCompile Include="superAdminSystem.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Admin.c">
+    <ClCompile Include="admin.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="normalUser.c">

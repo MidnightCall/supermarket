@@ -67,7 +67,7 @@ void delProductFromCurrentOrder();
 /**
 *  @brief 更改当前订单的商品数量
 */
-void modifyProductFromCurrentOrder(); // UNDONE (测试)
+void modifyProductFromCurrentOrder();
 
 /**
 *  @brief 打印当前订单信息

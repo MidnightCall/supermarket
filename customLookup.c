@@ -31,6 +31,8 @@ void printProductInfo(Product_t* node)
 
 void printOnSaleInfo(OnSale_t* node)
 {
+	if (0 == node->allowance)
+		return;
 	printf("│ %7u│ %48s│ %10.2f│ %10s│ %6u│\n", node->product.id, node->product.name, node->product.price, typeConv[node->product.type], node->allowance);
 	return;
 }
@@ -55,7 +57,9 @@ void printSupplierInfo(Supplier_t* node)
 
 void printOrderInfo(Order_t* node)
 {
-	printf("│ %7u│ %20s│ %6u│ %12.2f│\n", node->id, timeConv(node->time), node->operatorId, node->total);
+	char* timeStr = timeConv(node->time);
+	printf("│ %7u│ %20s│ %6u│ %12.2f│\n", node->id, timeStr, node->operatorId, node->total);
+	free(timeStr); /* timeConv 返回的是申请的一块临时内存空间，用完了就释放。经过测试，不这样写的话会导致内存泄露 (占用以每秒 400K 左右的速度增长)。 */
 	return;
 }
 

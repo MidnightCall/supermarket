@@ -5,6 +5,8 @@
 static int getChoice();
 static void showSingleOnSale(OnSale_t* onSale);
 extern User_t currentUser;
+extern Node_t* storageDat, * productDat;
+
 /**
 *  @brief: 运行在售商品操作
 *
@@ -26,6 +28,8 @@ void runOnSaleProductSystem()
 		case 2:
 			queryOnSaleProduct();
 			break;
+		case 3:
+			offshelfOnSaleProduct();
 		}
 	}
 }
@@ -122,6 +126,64 @@ void queryOnSaleProduct(void)
 	return;
 }
 
+void offshelfOnSaleProduct()
+{
+	if (NULL == productDat->next)
+	{
+		printf("货架上还没有商品，无法下架。");
+		PAUSE;
+		return;
+	}
+
+	displayOnSaleProduct();
+
+	unsigned int id = 0;
+	char tempName[48];
+	int op = 0, pos = 0;
+	OnSale_t* onSale = NULL;
+	Storage_t* originStorage = NULL;
+
+	while (true)
+	{
+		printf("请输入下架操作类型条件 [0. 回到库存, 1. 直接撤下]: ");
+		scanf("%d", &op);
+		if (op > 2 || op < 0)
+		{
+			printf("输入的操作格式不正确，请重新输入。");
+			PAUSE;
+			continue;
+		}
+		break;
+	}
+
+	getchar();
+	id = getNonNegativeNumber("商品 ID");
+
+	if (!(pos = findProduct_d(productDat, id, &onSale)))
+	{
+		printf("不存在 %d 号商品。", id);
+		PAUSE;
+		return;
+	}
+	
+	if (op == 0) /* 回到库存 */
+	{
+		findProduct_d(storageDat, id, &originStorage);
+		originStorage->allowance += onSale->allowance;
+		onSale->allowance = 0; /* 其实是假下架。*/
+		printf("商品已回到库存。");
+	}
+	else /* 直接删除 */
+	{
+		del(productDat, pos); /* 这下真下架了 */
+		printf("商品已下架。");
+	}
+
+	PAUSE;
+	return;
+}
+
+
 /**
 *  @brief: 显示所有待售商品信息
 *
@@ -148,7 +210,7 @@ static int getChoice()
 		showOnSaleBusinessMenu();
 		HINT;
 		scanf("%d", &choice);
-	} while (choice > 3 || choice < 1);
+	} while (choice > 4 || choice < 1);
 	flush();
 
 	return choice;

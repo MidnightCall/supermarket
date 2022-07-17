@@ -138,17 +138,17 @@ void deleteUser(void)
 	while (true)
 	{
 		unsigned int tId = 0;
-		tId = getNonNegativeNumber("账户 ID:");
+		tId = getNonNegativeNumber("账户 ID");
 		if (tId < 10000 || tId > 99999)
 		{
-			printf("你输入的 ID 无效，请重新输入。\n");
-			//system("pause");
-			continue;
+			printf("你输入的 ID 无效。");
+			PAUSE;
+			return;
 		}
 
 		if (tId == 10000)
 		{
-			printf("你无法删除超级管理员 [10000]。\n");
+			printf("你无法删除超级管理员 [10000].\n");
 			PAUSE;
 			return;
 		}
@@ -166,7 +166,7 @@ void deleteUser(void)
 
 	while (true)
 	{
-		getchar();
+		//getchar();
 		printf("确定要删除吗？[y/n]: ");
 		char deleteOp = '\0';
 		scanf("%c", &deleteOp);

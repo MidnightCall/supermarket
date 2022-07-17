@@ -70,7 +70,7 @@ void del(Node_t* head, int pos)
 	int* count = head->data, i = 0;
 	if (pos > *count || pos < 1)
 	{
-		printf("错误：无效的索引。\b\n");
+		printf("错误：无效的索引。\n");
 		return;
 	}
 
@@ -89,6 +89,7 @@ void del(Node_t* head, int pos)
 	{
 		prev->next = tHead->next;
 	}
+
 	free(tHead);
 	--(*count);
 	return;

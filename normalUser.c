@@ -1,22 +1,27 @@
 #include "Admin.h"
 
 
+extern User_t currentUser;
+
 /* 局部函数模型 */
 static int getChoice();
 
 void runNormalUserSystem()
 {
-	int choice = getChoice();
-	switch (choice)
+	while (1)
 	{
-	default:
-		break;
-	case 1:
-		queryOnSaleProduct();
-		break;
-	case 2:
-		runOrderSystem();
-		break;
+		int choice = getChoice();
+		switch (choice)
+		{
+		default:
+			return;
+		case 1:
+			queryOnSaleProduct();
+			break;
+		case 2:
+			runNormalUserOrderSystem();
+			break;
+		}
 	}
 }
 
@@ -27,7 +32,9 @@ static int getChoice()
 
 	do
 	{
+		showTitle(currentUser);
 		showUserMenu();
+		HINT;
 		scanf("%d", &choice);
 	} while (choice > 5 || choice < 1);
 	flush();

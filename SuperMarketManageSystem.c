@@ -1,11 +1,12 @@
 #include "SupermarketManageSystem.h"
 #include "linkList.h"
 #include "files.h"
+#include "normalUser.h"
 
 
 Node_t* userDat, * employeeDat, * productDat, * storageDat, * supplierDat, * orderDat;
 Config_t configDat;
-User_t currentUser;
+User_t currentUser = {99999, "DEBUG", -1};
 
 void systemStart()
 {
@@ -31,7 +32,7 @@ void logInStart()
 		switch (currentUser.permission)
 		{
 		case COMMON:
-			runNormalUserOrderSystem();
+			runNormalUserSystem();
 			break;
 		case ADMIN:
 			runAdminSystem();
@@ -61,8 +62,6 @@ void initData(void)
 	loadFile(FILE_SUPPLIER, supplierDat, sizeof(Supplier_t), &configDat.maxId_Supplier);
 	loadFile(FILE_ORDER, orderDat, sizeof(Order_t), &configDat.maxId_Order);
 	loadConfig();
-
-	//printConfig(); /* Debug */
 	return;
 }
 

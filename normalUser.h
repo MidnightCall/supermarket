@@ -1,5 +1,5 @@
-#ifndef __NORMAL_USER_
-#define __NORMAL_USER_
+#ifndef __NORMALUSER_H_
+#define __NORMALUSER_H_
 
 #include <stdio.h>
 #include <stdlib.h>

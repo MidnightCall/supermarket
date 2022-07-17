@@ -78,10 +78,11 @@ void registration(void)
 	char firstPassword[LEN_PWD];
 	char secondPassword[LEN_PWD];
 	User_t* account = (User_t*)malloc(sizeof(User_t));
-	//assert_null(account);
+	assert(account != NULL);
 
+	printf("¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨TÓÃ»§×¢²á¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T\n");
 	/* ÕËºÅÏÔÊ¾ */
-	printf("ÄãµÄÕËºÅÊÇ %d\n", ++configDat.maxId_User);
+	printf("ÄãµÄÕËºÅÊÇ %d.\n", ++configDat.maxId_User);
 	account->id = configDat.maxId_User;
 	/* È·ÈÏÃÜÂë */
 	while (1)
@@ -118,6 +119,7 @@ void logIn()
 	char rawId[10]; /* ID Ô­Ê¼×Ö·û´® */
 	char password[LEN_PWD];
 
+	printf("¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨TÓÃ»§µÇÂ¼¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T\n");
 	while (true)
 	{
 		printf("ÇëÊäÈëÕËºÅ: ");
@@ -142,7 +144,7 @@ void logIn()
 			printf("ÇëÊäÈëÃÜÂë: ");
 			stringGet(password, LEN_PWD);
 			if (strcmp(password, account->password) == 0) {
-				printf("µÇÂ½³É¹¦£¡");
+				printf("µÇÂ¼³É¹¦£¡");
 				currentUser.id = account->id;
 				currentUser.permission = account->permission;
 				strcpy(currentUser.password, account->password);
