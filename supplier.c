@@ -8,8 +8,7 @@ extern User_t currentUser;
 static int getChoice();
 
 /**
-*  @brief: 运行供应商
-*
+*  @brief 运行供应商
 */
 void runSupplierSystem()
 {

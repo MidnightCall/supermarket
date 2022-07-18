@@ -27,39 +27,46 @@ void runOrderSystem();
 void runNormalUserOrderSystem();
 
 /**
-*  @brief: 显示所有订单信息
+*  @brief 显示所有订单信息
 * 
-*  @param: 是否显示总金额
+*  @param shouSum 是否显示总金额
+*  
 *
 */
 void displayOrder(bool showSum);
 
 /**
-*  @brief: 查询订单信息
+*  @brief 查询订单信息
 *
 */
 void queryOrder();
 
 /**
-*  @brief: 计算总营业额
+*  @brief 根据时间查询订单信息
+*
+*/
+void queryOrderByTime();
+
+/**
+*  @brief 计算总营业额
 *
 */
 float calTurnover();
 
 /**
-*  @brief: 计算总利润
+*  @brief 计算总利润
 *
 */
 float calProfit();
 
 /**
-*  @brief: 向当前订单添加商品
+*  @brief 向当前订单添加商品
 *
 */
 void addProductToCurrentOrder();
 
 /**
-*  @brief: 删除当前订单的商品
+*  @brief 删除当前订单的商品
 *
 */
 void delProductFromCurrentOrder();

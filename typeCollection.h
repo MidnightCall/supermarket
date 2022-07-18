@@ -111,7 +111,7 @@ typedef struct tagOrderItem_t
     unsigned int quantity;
 } OrderItem_t;
 
-/* 订单信息节点 */ /* size: 4624 */
+/* 订单信息节点 */ /* size: 4632 */
 typedef struct tagOrder_t
 {
     unsigned int id; /* 订单编号 */

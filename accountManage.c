@@ -49,7 +49,7 @@ void queryUser(void)
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
-		tId = getNonNegativeNumber("账号 ID: ");
+		tId = getNonNegativeNumber("账号 ID");
 		if (tId < 10000 || tId > 99999)
 		{
 			printf("你输入的 ID 无效，请重新输入。\b\n");

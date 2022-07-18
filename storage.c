@@ -145,7 +145,7 @@ void modifyProductInfo()
 		int type = 0;
 		while (1)
 		{
-			type = getNonNegativeNumber("商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
+			type = getNonNegativeNumber("商品种类\n[0. 果蔬, 1. 日用品]\n[2. getNonNegativeNumber, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
 			if (type < 0 || type > 5)
 			{
 				printf("你输入的类型有误，请重新输入。");
@@ -240,10 +240,10 @@ void inStorage(void)
 			getchar();
 			while (1)
 			{
-				type = getNonNegativeNumber("商品种类\n[0. 果蔬, 1. 日用品]\n[2. 办公用品, 3. 食品]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
+				type = getNonNegativeNumber("商品种类\n[0. 果蔬    , 1. 日用品  ]\n[2. 办公用品, 3. 食品    ]\n[4. 酒水饮料, 5. 家用电器]\n>>> ");
 				if (type < 0 || type > 5)
 				{
-					printf("你输入的类型有误，请重新输入。");
+					printf("你输入的类型有误，请重新输入。\n");
 					continue;
 				}
 				break;
@@ -289,7 +289,7 @@ void outStorage(void)
 		if (findProduct_d(productDat, id, &tOnSale)) /* 要出库的商品已经在货架上了 */
 		{
 			outStorageNumber = getNonNegativeNumber("出库数量");
-			if (storage->allowance - outStorageNumber >= 0)
+			if (storage->allowance >= outStorageNumber)
 			{
 				storage->allowance -= outStorageNumber;
 				tOnSale->allowance += outStorageNumber;

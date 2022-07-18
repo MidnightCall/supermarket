@@ -10,6 +10,8 @@
 #include "onSaleProduct.h"
 #include "typeCollection.h"
 #include <time.h>
+#include <ctype.h>
+#include <stdio.h>
 
 
 extern Node_t* orderDat, * productDat;
@@ -25,8 +27,7 @@ static float calTurnOverInCurrentOrder(void);
 static float calProfitInCurrentOrder(void);
 
 /**
-*  @brief: 运行订单系统
-*
+*  @brief 运行订单系统
 */
 void runOrderSystem()
 {
@@ -45,12 +46,15 @@ void runOrderSystem()
 		case 2:
 			queryOrder();
 			break;
+		case 3:
+			queryOrderByTime();
+			break;
 		}
 	}
 }
 
 /**
-*  @brief: 运行当前订单管理模块 (供收银员使用)
+*  @brief 运行当前订单管理模块 (供收银员使用)
 *
 */
 void runNormalUserOrderSystem()
@@ -87,8 +91,15 @@ void runNormalUserOrderSystem()
 *  @brief 显示所有订单信息
 *
 */
-void displayOrder(bool showSum) // UNDONE (更改商品信息)
+void displayOrder(bool showSum)
 {
+	if (NULL == orderDat->next)
+	{
+		printf("当前没有已交付的订单。");
+		PAUSE;
+		return;
+	}
+
 	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
 	printf("│ %7s│ %20s│ %6s│ %12s│\n", "订单号", "交付时间", "操作人", "总金额");
 	printf("├────────┼─────────────────────┼───────┼─────────────┤\n");
@@ -112,6 +123,13 @@ void displayOrder(bool showSum) // UNDONE (更改商品信息)
 */
 void queryOrder(void)
 {
+	if (NULL == orderDat->next)
+	{
+		printf("当前没有已交付的订单。");
+		PAUSE;
+		return;
+	}
+
 	displayOrder(false);
 
 	unsigned int id;
@@ -135,6 +153,93 @@ void queryOrder(void)
 	{
 		printf("不存在 ID 为 %u 号的订单\n", id);
 	}
+	PAUSE;
+	return;
+}
+
+void queryOrderByTime(void) /* 其实只能查询月范围内的 */
+{
+	if (NULL == orderDat->next)
+	{
+		printf("当前没有已交付的订单。");
+		PAUSE;
+		return;
+	}
+
+	char monthInfo[10]; /* 要查询的时间段 */
+	printf("请输入要查询的月份 [格式: 20xx-xx]: ");
+	stringGet(monthInfo, 10);
+
+	if (monthInfo[0] != '2' || monthInfo[1] != '0' || !isdigit(monthInfo[2])
+		|| !isdigit(monthInfo[3]) || monthInfo[4] != '-' || !isdigit(monthInfo[5])
+		|| !isdigit(monthInfo[6]) || monthInfo[5] - '0' > 1 
+		|| (monthInfo[5] == '1' && monthInfo[6] - '0' > 2)
+		|| (monthInfo[5] == '0' && monthInfo[6] == '0')) /* 字符串格式检查 */
+	{
+		printf("输入的月份格式有误。");
+		PAUSE;
+		return;
+	}
+
+	char year[5], month[3];
+	int iYear, iMonth;
+	time_t leftBorder, rightBorder;
+	strncpy(year, monthInfo, 4);
+	year[4] = '\0'; /* strncpy 似乎不会自动加上终止符，这里手动加一下 */
+	strncpy(month, monthInfo + 5, 2);
+	month[2] = '\0';
+
+	iYear = atoi(year);
+	iMonth = atoi(month);
+
+	struct tm targetInfo = { 0, 0, 0, 1, iMonth - 1, iYear - 1900 };
+
+	leftBorder = mktime(&targetInfo); /* 计算下界 */
+
+	++iMonth;
+	if (iMonth == 12) /* 跨年 */
+	{
+		++iYear;
+		iMonth = 1;
+	}
+	targetInfo.tm_year = iYear - 1900;
+	targetInfo.tm_mon = iMonth - 1;
+	rightBorder = mktime(&targetInfo); /* 计算上界 */
+
+	if (-1 == leftBorder || -1 == rightBorder) /* 防不胜防 */
+	{
+		printf("时间转换失败，请确认字符串格式是否正确。");
+		PAUSE;
+		return;
+	}
+	
+	/* 开始遍历 */
+	Node_t* tHead = orderDat->next; /* 函数开头已经检查过是否为空，这里直接指向第一个数据点 */
+	float monthlySum = 0, monthlyProfit = 0; /* 月度的营业额和利润就在这里另算 */
+
+	printf("┌────────┬─────────────订单信息┬───────┬─────────────┐\n");
+	printf("│ %7s│ %20s│ %6s│ %12s│\n", "订单号", "交付时间", "操作人", "总金额");
+	printf("├────────┼─────────────────────┼───────┼─────────────┤\n");
+
+	while (tHead != NULL)
+	{
+		time_t timeData = *(time_t*)((char*)tHead->data + 4616); /* 比预想的多了 4 个字节... */
+		//printf("%lld, %lld, %lld", leftBorder, timeData, rightBorder);
+		if (timeData >= leftBorder && timeData < rightBorder) /* 左闭右开 */
+		{
+			monthlySum += *(float*)((char*)tHead->data + 4604); /* 工作正常 */
+			monthlyProfit += *(float*)((char*)tHead->data + 4608);
+			printOrderInfo(tHead->data);
+		}
+		tHead = tHead->next;
+	}
+
+	printf("├────────┼─────────────────────┴───────┴─────────────┤\n");
+	printf("│  合计  │ %42.2f│\n", monthlySum);
+	printf("├────────┼───────────────────────────────────────────┤\n");
+	printf("│ 总利润 │ %42.2f│\n", monthlyProfit);
+	printf("└────────┴───────────────────────────────────────────┘\n");
+
 	PAUSE;
 	return;
 }
@@ -239,12 +344,6 @@ void addProductToCurrentOrder(void)
 			memcpy(&currentOrder.items[currentIndex], &onSaleProduct->product, sizeof(Product_t));
 			currentOrder.items[currentIndex].quantity = quantity;
 			++currentIndex;
-			/*currentOrder.items[currentIndex].product.id = id;
-			currentOrder.items[currentIndex].product.purchase = onSaleProduct->product.purchase;
-			currentOrder.items[currentIndex].product.price = onSaleProduct->product.price;
-			currentOrder.items[currentIndex].product.type = onSaleProduct->product.type;
-			strcpy(currentOrder.items[currentIndex].product.name, onSaleProduct->product.name);
-			strcpy(currentOrder.items[currentIndex++].product.supplier, onSaleProduct->product.supplier);*/
 		}
 		
 	}
@@ -413,7 +512,7 @@ static int getChoice()
 		showOrderBusinessMenu();
 		HINT;
 		scanf("%d", &choice);
-	} while (choice > 3 || choice < 1);
+	} while (choice > 4 || choice < 1);
 	flush();
 
 	return choice;

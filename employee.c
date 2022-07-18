@@ -57,7 +57,7 @@ void addEmployee(void)
 	while (true)
 	{
 		printf("请输入员工姓名: ");
-		scanf("%[^\n]", &buffer);
+		stringGet(buffer, LEN_NAME);
 		if (strlen(buffer) > LEN_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
 		{
 			printf("你输入的姓名过长，请重新输入。\b\n");
@@ -72,7 +72,7 @@ void addEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		tAge = getNonNegativeNumber("员工年龄:");
+		tAge = getNonNegativeNumber("员工年龄");
 		if (tAge < 0 || tAge > 70)
 		{
 			printf("你输入的年龄无效，请重新输入。\n");
@@ -139,6 +139,7 @@ void deleteEmployee(void)
 		}
 		break;
 	}
+	getchar();
 
 	unsigned int index = 0;
 	switch (op)
@@ -150,7 +151,7 @@ void deleteEmployee(void)
 			tId = getNonNegativeNumber("员工 ID");
 			if (tId < 1000 || tId > 9999)
 			{
-				printf("你输入的 ID 无效，请重新输入。\b\n");
+				printf("你输入的 ID 无效，请重新输入。\n");
 				continue;
 			}
 			index = findIndexByID_d(employeeDat, tId, &tEmployee);
@@ -166,9 +167,8 @@ void deleteEmployee(void)
 	case 1:
 		while (true)
 		{
-			getchar();
 			printf("请输入员工姓名: ");
-			scanf("%[^\n]", &buffer);
+			stringGet(buffer, LEN_NAME);
 			if (strlen(buffer) > LEN_NAME - 1)
 			{
 				printf("你输入的姓名无效，请重新输入。\b\n");
@@ -190,7 +190,6 @@ void deleteEmployee(void)
 
 	while (true)
 	{
-		getchar();
 		printf("确定要删除吗？[y/n]: ");
 		char deleteOp = '\0';
 		scanf("%c", &deleteOp);
@@ -242,7 +241,7 @@ void findEmployee(void)
 		{
 			unsigned int tId = 0;
 			printf("请输入员工 ID: ");
-			tId = getNonNegativeNumber("员工 ID:");
+			tId = getNonNegativeNumber("员工 ID");
 			if (tId < 1000 || tId > 9999)
 			{
 				printf("你输入的 ID 无效，请重新输入。\b\n");
@@ -294,16 +293,17 @@ void modifyEmployee(void)
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
-	printf("==============修改员工信息================\n");
+	printf("═══════════════════修改员工信息═══════════════════\n");
 	unsigned int op = 0, index = 0;
 	while (true)
 	{
 		unsigned int tId = 0;
-		tId = getNonNegativeNumber("员工 ID:");
+		tId = getNonNegativeNumber("员工 ID");
 		if (tId < 1000 || tId > 9999)
 		{
-			printf("你输入的 ID 无效，请重新输入。\b\n");
-			continue;
+			printf("你输入的 ID 无效.");
+			PAUSE;
+			return;
 		}
 		index = findIndexByID_d(employeeDat, tId, &tEmployee);
 		if (0 == index)
@@ -316,8 +316,8 @@ void modifyEmployee(void)
 		break;
 	}
 
-	flush();
-	printf("===============输入新信息=================\n");
+	//flush();
+	printf("════════════════════输入新信息════════════════════\n");
 	while (true)
 	{
 		printf("请输入员工姓名: ");
@@ -336,7 +336,8 @@ void modifyEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		tAge = getNonNegativeNumber("员工年龄:");
+		getchar();
+		tAge = getNonNegativeNumber("员工年龄");
 		if (tAge < 0 || tAge > 70)
 		{
 			printf("你输入的年龄无效，请重新输入。\b\n");
