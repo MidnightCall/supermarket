@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   admin.h
+ * \brief  进入管理员 (ADMIN 权限) 的管理界面
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #ifndef __ADMIN_H_
 #define __ADMIN_H_
 
@@ -11,9 +19,10 @@
 #include "order.h"
 
 /**
-*  @brief: 运行管理员操作
-*
-*/
-void runAdminSystem();
+ * @brief 运行管理员管理模块
+ */
+void runAdminSystem(void);
 
 #endif // !__ADMIN_H_
+
+

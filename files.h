@@ -1,10 +1,16 @@
+/*****************************************************************//**
+ * \file   files.h
+ * \brief  对文件读写功能的实现
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 #ifndef __FILES_H_
 #define __FILES_H_
 
 #include "typeCollection.h"
 
 /* 文件名常量，具体定义在 files.c 中 */
-
 extern const char* FILE_USER;
 extern const char* FILE_EMPLOYEE;
 extern const char* FILE_PRODUCT;
@@ -33,10 +39,21 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 */
 void writeFile(const char* filename, Node_t* head, size_t size);
 
+/**
+ * @brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ */
 void loadConfig(void);
 
+/**
+ * @brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ */
 void saveConfig(void);
 
-/* --! 仅作调试使用 --! */
+/**
+ * @brief 显示配置文件中记录的信息。仅供调试使用。
+ */
 void printConfig(void);
 #endif
+
+
+

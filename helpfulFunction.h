@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   helpfulFunction.h
+ * \brief  一些程序中常用的函数的集中实现
+ * 
+ * \author praist
+ * \date   July 2022
+ *********************************************************************/
+
 #ifndef __HELPFULFUNCTION_H_
 #define __HELPFULFUNCTION_H_
 
@@ -13,14 +21,13 @@
 
 /**
 * @brief 刷新缓冲区
-*
 */
-void flush();
+void flush(void);
 
 /**
 * @brief 读取一个字符串
 * 
-* @param st 字符串读取到的地址
+* @param st 字符串存储到的地址
 * @param n 最大读取字符个数
 * @return 返回字符串地址
 */

@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   account.h
- * \brief  
+ * \brief  对用户登录和注册功能的实现
  * 
  * \author praist
  * \date   July 2022
@@ -24,18 +24,20 @@ extern Node_t* userDat;
 extern User_t currentUser;
 
 
-void runLogIn();
+/**
+ * @brief 进入登录和注册的选择菜单
+ */
+void runLogIn(void);
 
-int getChoice();
+/** 
+ * @brief 注册账号
+ */
+void registration(void);
 
-/*
-* 操作：注册账号
-*/
-void registration();
-
-/*
-* 操作：登录账号
-*/
-void logIn();
+/** 
+ * @brief 登录账号
+ */
+void logIn(void);
 
 #endif // !REGGISTER_H_
+

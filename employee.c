@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   employee.c
+ * \brief  对超级管理员 (SU 权限) 的职工管理功能实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,6 +22,9 @@ extern User_t currentUser;
 /* 局部函数模型 */
 static int getChoice();
 
+/**
+* @brief 运行职工管理模块
+*/
 void runEmployeeManage(void)
 {
 	while (1)
@@ -44,6 +55,9 @@ void runEmployeeManage(void)
 	}
 }
 
+/**
+* @brief 添加新员工
+*/
 void addEmployee(void)
 {
 	//getchar();
@@ -57,8 +71,8 @@ void addEmployee(void)
 	while (true)
 	{
 		printf("请输入员工姓名: ");
-		stringGet(buffer, LEN_NAME);
-		if (strlen(buffer) > LEN_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
+		stringGet(buffer, LEN_EMPLOYEE_NAME);
+		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
 		{
 			printf("你输入的姓名过长，请重新输入。\b\n");
 			flush();
@@ -100,8 +114,8 @@ void addEmployee(void)
 	{
 		printf("请输入员工职位: ");
 		getchar(); /* 读掉空格 */
-		scanf_s("%[^\n]", &buffer, LEN_POS);
-		if (strlen(buffer) > LEN_POS - 1)
+		scanf_s("%[^\n]", &buffer, LEN_EMPLOYEE_POS);
+		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1)
 		{
 			printf("你输入的职位过长，请重新输入。\n");
 			continue;
@@ -119,6 +133,9 @@ void addEmployee(void)
 	return;
 }
 
+/**
+* @brief 删除员工
+*/
 void deleteEmployee(void)
 {
 	Employee_t* tEmployee = NULL;
@@ -168,8 +185,8 @@ void deleteEmployee(void)
 		while (true)
 		{
 			printf("请输入员工姓名: ");
-			stringGet(buffer, LEN_NAME);
-			if (strlen(buffer) > LEN_NAME - 1)
+			stringGet(buffer, LEN_EMPLOYEE_NAME);
+			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1)
 			{
 				printf("你输入的姓名无效，请重新输入。\b\n");
 				continue;
@@ -212,6 +229,9 @@ void deleteEmployee(void)
 	return;
 }
 
+/**
+* @brief 查找员工
+*/
 void findEmployee(void)
 {
 	Employee_t* tEmployee = NULL;
@@ -264,7 +284,7 @@ void findEmployee(void)
 			getchar();
 			printf("请输入员工姓名: ");
 			scanf("%[^\n]", &buffer);
-			if (strlen(buffer) > LEN_NAME - 1)
+			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1)
 			{
 				printf("你输入的姓名无效，请重新输入。\b\n");
 				continue;
@@ -287,6 +307,9 @@ void findEmployee(void)
 	return;
 }
 
+/**
+* @brief 修改员工信息
+*/
 void modifyEmployee(void)
 {
 	Employee_t* tEmployee = NULL;
@@ -322,7 +345,7 @@ void modifyEmployee(void)
 	{
 		printf("请输入员工姓名: ");
 		scanf("%[^\n]", &buffer);
-		if (strlen(buffer) > LEN_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
+		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
 		{
 			printf("你输入的姓名过长，请重新输入。\b\n");
 			flush();
@@ -365,8 +388,8 @@ void modifyEmployee(void)
 	{
 		printf("请输入员工职位: ");
 		getchar(); /* 读掉空格 */
-		scanf_s("%[^\n]", &buffer, LEN_POS);
-		if (strlen(buffer) > LEN_POS - 1)
+		scanf_s("%[^\n]", &buffer, LEN_EMPLOYEE_POS);
+		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1)
 		{
 			printf("你输入的职位过长，请重新输入。\b\n");
 			continue;
@@ -381,6 +404,9 @@ void modifyEmployee(void)
 	return;
 }
 
+/**
+* @brief 显示单条员工信息
+*/
 void showSingleEmployee(Employee_t e)
 {
 	printf("┌──────┬─────────┬──员工信息────┬────────────────┐\n");
@@ -390,6 +416,9 @@ void showSingleEmployee(Employee_t e)
 	printf("└──────┴─────────┴───────┴──────┴────────────────┘\n");
 }
 
+/**
+* @brief 显示所有员工信息
+*/
 void showAllEmployees(void)
 {
 	if (0 == *(int*)employeeDat->data)

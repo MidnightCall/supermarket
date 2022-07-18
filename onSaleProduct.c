@@ -1,3 +1,11 @@
+/*****************************************************************//**
+ * \file   onSaleProduct.c
+ * \brief  对在售商品管理功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include "onSaleProduct.h"
 #include "helpfulFunction.h"
 
@@ -5,7 +13,6 @@
 static int getChoice();
 static void showSingleOnSale(OnSale_t* onSale);
 extern User_t currentUser;
-extern Node_t* storageDat, * productDat;
 
 /**
 *  @brief: 运行在售商品操作
@@ -34,6 +41,9 @@ void runOnSaleProductSystem()
 	}
 }
 
+/**
+*  @brief 查询在售商品
+*/
 void queryOnSaleProduct(void)
 {
 	if (NULL == productDat->next)
@@ -126,6 +136,23 @@ void queryOnSaleProduct(void)
 	return;
 }
 
+/**
+*  @brief 显示所有在售商品信息
+*/
+void displayOnSaleProduct(void)
+{
+	printf("┌────────┬──────────────────────────────商品详细信息───────┬───────────┬───────────┬───────┐\n");
+	printf("│ %7s│ %48s│ %10s│ %10s│ %6s│\n", "商品 ID", "商品名", "单价", "种类", "余量");
+	printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────────┼───────┤\n");
+	printList(productDat, printOnSaleInfo, false);
+	printf("└────────┴─────────────────────────────────────────────────┴───────────┴───────────┴───────┘\n");
+	
+	return;
+}
+
+/**
+ * @brief 将在售商品下架
+ */
 void offshelfOnSaleProduct()
 {
 	if (NULL == productDat->next)
@@ -165,7 +192,7 @@ void offshelfOnSaleProduct()
 		PAUSE;
 		return;
 	}
-	
+
 	if (op == 0) /* 回到库存 */
 	{
 		findProduct_d(storageDat, id, &originStorage);
@@ -180,22 +207,6 @@ void offshelfOnSaleProduct()
 	}
 
 	PAUSE;
-	return;
-}
-
-
-/**
-*  @brief: 显示所有待售商品信息
-*
-*/
-void displayOnSaleProduct(void)
-{
-	printf("┌────────┬──────────────────────────────商品详细信息───────┬───────────┬───────────┬───────┐\n");
-	printf("│ %7s│ %48s│ %10s│ %10s│ %6s│\n", "商品 ID", "商品名", "单价", "种类", "余量");
-	printf("├────────┼─────────────────────────────────────────────────┼───────────┼───────────┼───────┤\n");
-	printList(productDat, printOnSaleInfo, false);
-	printf("└────────┴─────────────────────────────────────────────────┴───────────┴───────────┴───────┘\n");
-	
 	return;
 }
 
@@ -216,6 +227,11 @@ static int getChoice()
 	return choice;
 }
 
+/**
+ * @brief 显示单条在售商品信息
+ * 
+ * @param 要显示的在售商品信息节点
+ */
 static void showSingleOnSale(OnSale_t* onSale)
 {
 	printf("┌────────┬──────────────────────────────商品详细信息───────┬───────────┬───────────┬───────┐\n");

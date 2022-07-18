@@ -1,10 +1,11 @@
-/**
- * @file SupermarketManageSystem.h
- * @brief 超市管理系统相关函数
+/*****************************************************************//**
+ * \file   SuperMarketManageSystem.h
+ * \brief  系统启动和初始化的实现
  *
- * @copyright Copyright (c) 2021
- *
- */
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #ifndef __SUPERMARKETMANAGESYSTEM_H_
 #define __SUPERMARKETMANAGESYSTEM_H_
 

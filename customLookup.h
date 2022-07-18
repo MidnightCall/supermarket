@@ -1,32 +1,75 @@
+/*****************************************************************//**
+ * \file   customLookup.h
+ * \brief  对特定结构体类型信息的打印和按条件查询函数的集中实现
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #ifndef __CUSTOM_LOOKUP_H_
 #define __CUSTOM_LOOKUP_H_
 
-/* 内存偏移值 */
+/* 结构体内部内存偏移值 */
 extern const int OFFSET_PRODUCT;
 extern const int OFFSET_EMPLOYEE;
 extern const int OFFSET_SUPPLIER;
+extern const int OFFSET_PRODUCT_TYPE;
+extern const int OFFSET_PRODUCT_SUPPLIER;
 
 /**
-* @brief 指定用户信息的输入格式
-*
-* @param node 要输出的用户信息节点
-*/
+ * @brief 输出单条用户 (User_t) 信息
+ *
+ * @param node 要输出的用户信息节点
+ */
 void printUserInfo(User_t* node);
 
-/* 以下函数执行相似功能 */
-
+/**
+ * @brief 输出单条商品 (Product_t) 信息
+ *
+ * @param node 要输出的商品信息节点
+ */
 void printProductInfo(Product_t* node);
 
+/**
+ * @brief 输出单条在售商品 (OnSale_t) 信息
+ *
+ * @param node 要输出的在售商品节点
+ */
 void printOnSaleInfo(OnSale_t* node);
 
+/**
+ * @brief 输出单条库存商品 (Storage_t) 信息
+ *
+ * @param node 要输出的库存商品节点
+ */
 void printStorageInfo(Storage_t* node);
 
+/**
+ * @brief 输出单条员工 (Employee_t) 信息
+ *
+ * @param node 要输出的员工信息节点
+ */
 void printEmployeeInfo(Employee_t* node);
 
+/**
+ * @brief 输出单条供货商 (Supplier_t) 信息
+ *
+ * @param node 要输出的供货商信息节点
+ */
 void printSupplierInfo(Supplier_t* node);
 
+/**
+ * @brief 输出单条订单 (Order_t) 的粗略信息
+ *
+ * @param node 要输出的订单信息节点
+ */
 void printOrderInfo(Order_t* node);
 
+/**
+ * @brief 输出单条订单 (Order_t) 的详细信息
+ *
+ * @param node 要输出的订单信息节点
+ */
 void printOrderDetail(Order_t* node);
 
 /**
@@ -74,15 +117,6 @@ int findIndexByName(Node_t* head, char* name, const int offset);
 int findIndexByName_d(Node_t* head, char* name, const int offset, void** dest);
 
 /**
-* @brief 获取货架或库存中的商品信息
-*
-* @param src 货架 (OnSale_t) 或库存 (Storage_t) 的节点地址
-* 
-* @return 查找到的商品信息所在的实际地址
-*/
-Product_t* getProduct(void* src);
-
-/**
 * @brief 获取商品所在节点的位置
 *
 * @param head 要查找的链表头
@@ -124,7 +158,6 @@ int findProductByName(Node_t* head, char* name);
 */
 int findProductByName_d(Node_t* head, char* name, void** dest);
 
-
 /**
 * @brief 获取商品所在节点的位置
 *
@@ -140,7 +173,7 @@ int findProductByType(Node_t* head, ProductTypeEnum type, void** dest);
 * @brief 获取商品所在节点的位置
 *
 * @param head 要查找的链表头
-* @param id 查找条件 (供应商 ID)
+* @param id 查找条件 (供应商名)
 * @param dest 回传查找到的商品所在库存或货架节点的实际地址
 *
 * @return 节点在链表中的位置。若不存在，则返回 0.

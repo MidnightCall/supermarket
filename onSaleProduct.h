@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   onSaleProduct.h
+ * \brief  对在售商品管理功能的实现
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 #ifndef __ONSALEPRODUCT_H_
 #define __ONSALEPRODUCT_H_
 
@@ -10,28 +17,25 @@
 #include "helpfulFunction.h"
 #include "customLookup.h"
 
-extern Node_t* productDat;
+extern Node_t* storageDat, * productDat;
 
 /**
 *  @brief 运行在售商品操作
-*
 */
-void runOnSaleProductSystem();
+void runOnSaleProductSystem(void);
 
 /**
 *  @brief 查询在售商品
-*
 */
 void queryOnSaleProduct();
 
 /**
-*  @brief 显示所有待售商品信息
-*
+*  @brief 显示所有在售商品信息
 */
 void displayOnSaleProduct(void);
 
 /**
- * @brief 将商品下架
+ * @brief 将在售商品下架
  */
 void offshelfOnSaleProduct();
 

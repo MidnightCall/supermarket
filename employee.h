@@ -1,26 +1,19 @@
+/*****************************************************************//**
+ * \file   employee.h
+ * \brief  对超级管理员 (SU 权限) 的职工管理功能实现
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 #ifndef __EMPLOYEE_H_
 #define __EMPLOYEE_H_
 
 #include "typeCollection.h"
 
-
 /**
-* @brief 运行职工处理模块
-*
+* @brief 运行职工管理模块
 */
 void runEmployeeManage(void);
-
-/**
-* @brief 显示单条员工信息
-*
-*/
-void showSingleEmployee(Employee_t e);
-
-/**
-* @brief 显示所有员工信息
-* 
-*/
-void showAllEmployees(void);
 
 /**
 * @brief 添加新员工
@@ -41,5 +34,15 @@ void findEmployee(void);
 * @brief 修改员工信息
 */
 void modifyEmployee(void);
+
+/**
+* @brief 显示单条员工信息
+*/
+void showSingleEmployee(Employee_t e);
+
+/**
+* @brief 显示所有员工信息
+*/
+void showAllEmployees(void);
 
 #endif

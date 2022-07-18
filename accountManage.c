@@ -1,4 +1,10 @@
-/* 超级管理员特权：用户管理 */
+/*****************************************************************//**
+ * \file   accountManage.c
+ * \brief  对超级管理员 (SU 权限) 的用户管理功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 
 #include "accountManage.h"
 #include "helpfulFunction.h"
@@ -12,6 +18,9 @@ extern User_t currentUser;
 /* 局部函数模型 */
 static int getChoice();
 
+/**
+ * @brief 运行用户处理模块
+ */
 void runAccountManage()
 {
 	while (1)
@@ -39,6 +48,9 @@ void runAccountManage()
 	}
 }
 
+/**
+ * @brief 查找用户信息
+ */
 void queryUser(void)
 {
 	User_t* tUser = NULL;
@@ -68,6 +80,9 @@ void queryUser(void)
 	system("pause");
 }
 
+/**
+ * @brief 更改用户权限
+ */
 void modifyUserPermission(void)
 {
 	User_t* tUser;
@@ -124,6 +139,9 @@ void modifyUserPermission(void)
 
 }
 
+/**
+ * @brief 删除用户
+ */
 void deleteUser(void)
 {
 	showAllUsers();
@@ -190,6 +208,31 @@ void deleteUser(void)
 	return;
 }
 
+/**
+ * @brief 显示单条用户信息
+ */
+void showSingleUser(User_t e)
+{
+	printf("┌────────┬───────────账号信息────────────────────┐\n");
+	printf("│ %7s│ %12s│ %24s│\n", "ID", "密码", "权限等级");
+	printf("├────────┼─────────────┼─────────────────────────┤\n");
+	printUserInfo(&e);
+	printf("└────────┴─────────────┴─────────────────────────┘\n");
+}
+
+/**
+ * @brief 显示所有用户信息
+ */
+void showAllUsers(void)
+{
+	printf("┌────────┬───────────账号信息────────────────────┐\n");
+	printf("│ %7s│ %12s│ %24s│\n", "ID", "密码", "权限等级");
+	printf("├────────┼─────────────┼─────────────────────────┤\n");
+	printList(userDat, printUserInfo, false);
+	printf("└────────┴─────────────┴─────────────────────────┘\n");
+	return;
+}
+
 /* 局部函数实现 */
 static int getChoice()
 {
@@ -204,23 +247,4 @@ static int getChoice()
 	flush();
 
 	return choice;
-}
-
-void showSingleUser(User_t e)
-{
-	printf("┌────────┬───────────账号信息────────────────────┐\n");
-	printf("│ %7s│ %12s│ %24s│\n", "ID", "密码", "权限等级");
-	printf("├────────┼─────────────┼─────────────────────────┤\n");
-	printUserInfo(&e);
-	printf("└────────┴─────────────┴─────────────────────────┘\n");
-}
-
-void showAllUsers(void)
-{
-	printf("┌────────┬───────────账号信息────────────────────┐\n");
-	printf("│ %7s│ %12s│ %24s│\n", "ID", "密码", "权限等级");
-	printf("├────────┼─────────────┼─────────────────────────┤\n");
-	printList(userDat, printUserInfo, false);
-	printf("└────────┴─────────────┴─────────────────────────┘\n");
-	return;
 }

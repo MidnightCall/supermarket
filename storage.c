@@ -1,15 +1,20 @@
+/*****************************************************************//**
+ * \file   storage.c
+ * \brief  对库存管理功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include "storage.h"
 #include "typeCollection.h"
 #include "helpfulFunction.h"
 
-extern User_t currentUser;
-extern Node_t* productDat, * storageDat;
 /* 局部函数模型 */
 static int getChoice();
 
 /**
-*  @brief: 运行在售商品操作
-*
+*  @brief 运行库存管理系统
 */
 void runStorageSystem()
 {
@@ -48,8 +53,7 @@ void runStorageSystem()
 }
 
 /**
-*  @brief: 查询在售商品
-*
+*  @brief 查询库存商品
 */
 void queryStorage(void)
 {
@@ -79,6 +83,9 @@ void queryStorage(void)
 	return;
 }
 
+/**
+ * @brief 修改商品属性
+ */
 void modifyProductInfo()
 {
 	if (0 == *(int*)storageDat->data)
@@ -174,7 +181,7 @@ void modifyProductInfo()
 }
 
 /**
-*  @brief: 入库
+*  @brief 商品入库
 */
 void inStorage(void)
 {
@@ -259,7 +266,7 @@ void inStorage(void)
 }
 
 /**
-*  @brief: 出库 / 上架销售
+*  @brief 商品出库 / 上架销售
 */
 void outStorage(void)
 {
@@ -338,8 +345,7 @@ void outStorage(void)
 }
 
 /**
-*  @brief: 显示所有待售商品信息
-*
+*  @brief 显示所有库存商品信息
 */
 void displayStorage(void)
 {

@@ -1,6 +1,6 @@
 /*****************************************************************//**
  * \file   account.c
- * \brief  
+ * \brief  对用户登录和注册功能的实现
  * 
  * \author praist
  * \date   July 2022
@@ -10,13 +10,14 @@
 #include "helpfulFunction.h"
 #include <stdbool.h>
 
+static int getChoice();
+
 extern Node_t* userDat;
 extern User_t currentUser;
 extern Config_t configDat;
 
 /**
- * .
- * 
+ * @brief 进入登录和注册的选择菜单
  */
 void runLogIn(void)
 {
@@ -51,11 +52,11 @@ void runLogIn(void)
 	}
 }
 
-/*
-* @brief：显示操作菜单、读取用户的选择的操作
-*
-*/
-int getChoice(void)
+/**
+ * @brief 注册账号
+ */
+
+static int getChoice(void)
 {
 	int choice = 0;
 	do
@@ -110,10 +111,10 @@ void registration(void)
 	return;
 }
 
-/*
-*  @brief: 登录账号
-*/
-void logIn()
+/**
+ * @brief 登录账号
+ */
+void logIn(void)
 {
 	int id;
 	char rawId[10]; /* ID 原始字符串 */

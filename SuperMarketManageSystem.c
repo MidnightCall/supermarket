@@ -1,20 +1,28 @@
+/*****************************************************************//**
+ * \file   SuperMarketManageSystem.c
+ * \brief  系统启动和初始化的实现
+ * 
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include "SupermarketManageSystem.h"
 #include "linkList.h"
 #include "files.h"
 #include "normalUser.h"
 
-
 Node_t* userDat, * employeeDat, * productDat, * storageDat, * supplierDat, * orderDat;
 Config_t configDat;
 User_t currentUser = {99999, "DEBUG", -1};
 
+/**
+ * @brief 启动超市管理系统
+ */
 void systemStart()
 {
 	initData();
-	system("title 超市管理系统 v1.0");
+	system("title 超市管理系统 v2.0");
 	logInStart();
-	//showWelcomeMessage();
-	//runNormalUserOrderSystem();
 	saveData();
 }
 
@@ -46,6 +54,9 @@ void logInStart()
 	}
 }
 
+/**
+* @brief 从文件中加载数据
+*/
 void initData(void)
 {
 	userDat = newList();
@@ -65,6 +76,9 @@ void initData(void)
 	return;
 }
 
+/**
+* @brief 将数据保存到文件中并释放链表使用的内存
+*/
 void saveData(void)
 {
 	writeFile(FILE_USER, userDat, sizeof(User_t));

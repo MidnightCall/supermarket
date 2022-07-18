@@ -1,7 +1,8 @@
 /*****************************************************************//**
  * \file   order.c
- * \brief  
- * 
+ * \brief  对管理员 (ADMIN 权限) 的查询已交付订单功能和对普通用户 (COMMON 权限)
+ *         的查询商品信息、对订单内商品进行增删操作的实现
+ *
  * \author East Monster
  * \date   July 2022
  *********************************************************************/
@@ -27,9 +28,9 @@ static float calTurnOverInCurrentOrder(void);
 static float calProfitInCurrentOrder(void);
 
 /**
-*  @brief 运行订单系统
+*  @brief 运行订单审核模块(供管理员使用)
 */
-void runOrderSystem()
+void runOrderSystem(void)
 {
 	while (1)
 	{
@@ -54,10 +55,9 @@ void runOrderSystem()
 }
 
 /**
-*  @brief 运行当前订单管理模块 (供收银员使用)
-*
+*  @brief 运行当前订单管理模块 (供普通用户使用)
 */
-void runNormalUserOrderSystem()
+void runNormalUserOrderSystem(void)
 {
 	while (true)
 	{
@@ -90,6 +90,7 @@ void runNormalUserOrderSystem()
 /**
 *  @brief 显示所有订单信息
 *
+*  @param showSum 是否显示总金额
 */
 void displayOrder(bool showSum)
 {
@@ -118,8 +119,7 @@ void displayOrder(bool showSum)
 }
 
 /**
-*  @brief: 查询订单信息
-*
+*  @brief 查询订单信息
 */
 void queryOrder(void)
 {
@@ -157,6 +157,9 @@ void queryOrder(void)
 	return;
 }
 
+/**
+*  @brief 根据时间查询订单信息
+*/
 void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 {
 	if (NULL == orderDat->next)
@@ -245,10 +248,9 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 }
 
 /**
-*  @brief: 计算总营业额
-*
+*  @brief 计算总营业额
 */
-float calTurnover()
+float calTurnover(void)
 {
 	float sum = 0.0f;
 	Node_t* allOrder = orderDat;
@@ -267,7 +269,10 @@ float calTurnover()
 	return sum;
 }
 
-float calProfit()
+/**
+*  @brief 计算总利润
+*/
+float calProfit(void)
 {
 	float sum = 0.0f;
 	Node_t* allOrder = orderDat;
@@ -287,6 +292,9 @@ float calProfit()
 	return sum;
 }
 
+/**
+*  @brief 向当前订单添加商品
+*/
 void addProductToCurrentOrder(void)
 {
 	displayOnSaleProduct();
@@ -351,7 +359,10 @@ void addProductToCurrentOrder(void)
 	return;
 }
 
-void delProductFromCurrentOrder()
+/**
+*  @brief 删除当前订单的商品
+*/
+void delProductFromCurrentOrder(void)
 {
 	showCurrentOrderInfo();
 
@@ -393,6 +404,9 @@ void delProductFromCurrentOrder()
 	return;
 }
 
+/**
+*  @brief 更改当前订单的商品数量
+*/
 void modifyProductFromCurrentOrder(void)
 {
 	showCurrentOrderInfo();
@@ -443,7 +457,10 @@ void modifyProductFromCurrentOrder(void)
 	return;
 }
 
-void showCurrentOrderInfo()
+/**
+*  @brief 打印当前订单信息
+*/
+void showCurrentOrderInfo(void)
 {
 	printf("┌────────┬──────────────────────────────当前订单信息───────┬───────────┬───────┬───────────┐\n");
 	printf("│ %7s│ %48s│ %10s│ %6s│ %10s│\n", "商品 ID", "商品名", "单价", "数量", "总价");
@@ -460,12 +477,18 @@ void showCurrentOrderInfo()
 	return;
 }
 
+/**
+*  @brief 显示当前订单的合计金额
+*/
 void showTurnOverInCurrentOrder(void)
 {
 	printf("合计为 ￥%.2f.\n", calTurnOverInCurrentOrder());
 }
 
-void submitCurrentOrder()
+/**
+*  @brief: 交付订单
+*/
+void submitCurrentOrder(void)
 {
 	if (0 == currentIndex) /* 如果当前订单为空 */
 	{

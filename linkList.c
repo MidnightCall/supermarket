@@ -1,11 +1,24 @@
+/*****************************************************************//**
+ * \file   linkList.c
+ * \brief  对链表的建立、释放、插入等功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "linkList.h"
 #include "typeCollection.h"
 
-/* newList: 已检查 */
+/* 本程序链表的实现：含头节点 (存储节点数)，插入为尾插法 */
 
+ /**
+ * @brief 新建一个链表
+ *
+ * @return 新链表的表头指针
+ */
 Node_t* newList(void)
 {
 	Node_t* head = NULL;
@@ -31,8 +44,13 @@ Node_t* newList(void)
 	return head;
 }
 
-/* insert: 已检查 */
-
+/**
+* @brief 将数据插入到指定链表中
+*
+* @param head 要插入到的链表的头指针
+* @param pos 插入到链表中的位置 (以 1 为起始)
+* @param val 指向插入内容的指针
+*/
 void insert(Node_t* head, int pos, void* data)
 {
 	Node_t* tHead = head, *node;
@@ -62,8 +80,13 @@ void insert(Node_t* head, int pos, void* data)
 	return;
 }
 
-/* del: 已检查 */
-
+/**
+* @brief 链表删除操作
+*
+* @param head 要插入到的链表的头指针
+* @param pos 需要删除的内容位置 (以 1 为起始)
+* @param val 指向插入内容的指针
+*/
 void del(Node_t* head, int pos)
 {
 	Node_t* tHead = head, * prev = NULL;
@@ -95,8 +118,14 @@ void del(Node_t* head, int pos)
 	return;
 }
 
-/* getData: 已检查 */
-
+/**
+* @brief 获取链表中位置在 index 处的数据
+*
+* @param head 内容所在的的链表头指针
+* @param index 内容在链表中的位置 (索引)
+*
+* @return 目标数据的地址。若链表为空，则返回 NULL.
+*/
 void* getData(Node_t* head, int index)
 {
 	Node_t* tHead = head;
@@ -113,8 +142,15 @@ void* getData(Node_t* head, int index)
 	return tHead->data;
 }
 
-/* printList: 已检查 */
-
+/**
+* @brief 打印链表内数据
+*
+* @param head 要遍历的链表头指针
+* @param type 指定内容输出格式
+* @param count 是否显示节点计数 (应使用 false, 仅作调试用途)
+* 
+* @see customLookup.h
+*/
 void printList(Node_t* head, void (*type)(void*), bool count)
 {
 	Node_t* tHead = head;
@@ -131,8 +167,11 @@ void printList(Node_t* head, void (*type)(void*), bool count)
 	}
 }
 
-/* freeList: 已检查 */
-
+/**
+* @brief 链表释放操作
+*
+* @param head 要释放的链表的头指针
+*/
 void freeList(Node_t* head)
 {
 	Node_t* tHead = head, * next;

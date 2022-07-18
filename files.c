@@ -1,10 +1,20 @@
+/*****************************************************************//**
+ * \file   files.c
+ * \brief  对文件读写功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "linkList.h"
+#include "helpfulFunction.h"
 #include "typeCollection.h"
 #include "files.h"
 
+/* 文件名常量 */
 const char* FILE_USER     = "data/user.dat";
 const char* FILE_EMPLOYEE = "data/employee.dat";
 const char* FILE_PRODUCT  = "data/product.dat";
@@ -16,8 +26,14 @@ const char* FILE_CONFIG   = "data/config.dat";
 
 extern Config_t configDat;
 
-/* loadFile: 已完成 */
-
+/**
+* @brief 从文件中加载数据
+*
+* @param filename 文件名
+* @param head 存放数据的链表头
+* @param size 对应数据类型的大小，一般为 sizeof(xxx_t)
+* @param curMaxId 用于回传链表中最大的 ID 值。若为 NULL 则不回传
+*/
 void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* curMaxId)
 {
 	FILE* fp = fopen(filename, "ab+"); /* 如果文件不存在则自动创建 */
@@ -38,7 +54,8 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 		void* node = (void*)malloc(size); /* 创建新节点用于存储数据 */
 		if (NULL == node)
 		{
-			printf("链表节点初始化失败。\b\n");
+			printf("链表节点初始化失败。\n");
+			PAUSE;
 			exit(0);
 		}
 		fread(node, size, 1, fp);
@@ -51,8 +68,13 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 	return;
 }
 
-/* loadFile: 已完成 */
-
+/**
+* @brief 将数据保存到文件中
+*
+* @param filename 文件名
+* @param head 存放数据的链表头
+* @param size 对应数据类型的大小，一般为 sizeof(xxx_t)
+*/
 void writeFile(const char* filename, Node_t* head, size_t size)
 {
 	FILE* fp = fopen(filename, "wb");
@@ -68,7 +90,8 @@ void writeFile(const char* filename, Node_t* head, size_t size)
 
 	if (NULL == fp)
 	{
-		printf("文件 %s 打开失败。\b\n", filename);
+		printf("文件 %s 打开失败。\n", filename);
+		PAUSE;
 		exit(0);
 	}
 	
@@ -82,6 +105,9 @@ void writeFile(const char* filename, Node_t* head, size_t size)
 	return;
 }
 
+/**
+ * @brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ */
 void loadConfig()
 {
 	FILE* fp = fopen(FILE_CONFIG, "ab+"); /* 如果文件不存在则自动创建 */
@@ -108,6 +134,9 @@ void loadConfig()
 	return;
 }
 
+/**
+ * @brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ */
 void saveConfig()
 {
 	FILE* fp = fopen(FILE_CONFIG, "wb");
@@ -121,6 +150,9 @@ void saveConfig()
 	return;
 }
 
+/**
+ * @brief 显示配置文件中记录的信息。仅供调试使用。
+ */
 void printConfig()
 {
 	printf("maxId_User: %u\n", configDat.maxId_User);

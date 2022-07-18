@@ -1,16 +1,26 @@
+/*****************************************************************//**
+ * \file   supplier.c
+ * \brief  对供应商管理功能的实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include "supplier.h"
 #include "typeCollection.h"
+#include "customLookup.h"
 
 extern Node_t* storageDat;
 extern Config_t configDat;
 extern User_t currentUser;
+
 /* 局部函数模型 */
-static int getChoice();
+static int getChoice(void);
 
 /**
-*  @brief 运行供应商
+*  @brief 运行供应商管理模块
 */
-void runSupplierSystem()
+void runSupplierSystem(void)
 {
 	while (1)
 	{
@@ -41,10 +51,9 @@ void runSupplierSystem()
 }
 
 /**
-*  @brief: 查询供应商信息
-*
+*  @brief 查找供应商信息
 */
-void querySupplier()
+void querySupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
@@ -101,10 +110,9 @@ void querySupplier()
 }
 
 /**
-*  @brief: 添加供应商信息
-*
+*  @brief 添加供应商信息
 */
-void addSupplier()
+void addSupplier(void)
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
 	assert(newSupplier);
@@ -130,8 +138,7 @@ void addSupplier()
 }
 
 /**
-*  @brief: 删除供应商信息
-*
+*  @brief 删除供应商信息
 */
 void delSupplier(void)
 {
@@ -158,8 +165,10 @@ void delSupplier(void)
 	return;
 }
 
-
-void modifySupplier()
+/**
+ * @brief 修改供应商信息
+ */
+void modifySupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
@@ -229,7 +238,6 @@ void modifySupplier()
 
 /**
 *  @brief 显示所有供应商信息
-*
 */
 void displaySupplier(void)
 {

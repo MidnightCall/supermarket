@@ -1,5 +1,12 @@
-#include "Admin.h"
+/*****************************************************************//**
+ * \file   normalUser.c
+ * \brief  进入普通用户 (COMMON 权限) 的管理界面
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
 
+#include "admin.h";
 
 extern User_t currentUser;
 

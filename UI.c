@@ -1,7 +1,19 @@
+/*****************************************************************//**
+ * \file   UI.c
+ * \brief  对菜单界面显示的集中实现
+ *
+ * \author East Monster
+ * \date   July 2022
+ *********************************************************************/
+
 #include "UI.h"
 #include <stdlib.h>
 
-void showWelcomeMessage()
+/**
+ * @brief 展示初始界面的欢迎信息
+ *
+ */
+void showWelcomeMessage(void)
 {
     printf("┌────────────────────────────────────────────────┐\n");
     printf("│                                                │\n");
@@ -9,10 +21,13 @@ void showWelcomeMessage()
     printf("│              欢迎使用超市管理系统              │\n");
     printf("│                                                │\n");
     printf("│                                                │\n");
-    //printf("└────────────────────────────────────────────────┘\n");
+    /* 最后一行已删去，和下方菜单的第一行连接 */
 }
 
-void showLoginMessage()
+/**
+ * @brief 展示登录与注册的菜单页面
+ */
+void showLoginMessage(void)
 
 {
     printf("├────────────────────────────────────────────────┤\n");
@@ -26,7 +41,10 @@ void showLoginMessage()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showSuperAdminMenu()
+/**
+ * @brief 展示超级管理员功能选择页面
+ */
+void showSuperAdminMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -39,7 +57,11 @@ void showSuperAdminMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showAdminMenu()
+/**
+ * @brief 展示管理员功能选择页面
+ *
+ */
+void showAdminMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -54,7 +76,11 @@ void showAdminMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showUserMenu()
+/**
+ * @brief 展示普通用户功能选择页面
+ *
+ */
+void showUserMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -67,7 +93,10 @@ void showUserMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showEmployeeBusinessMenu()
+/**
+ * @brief 展示员工管理页面
+ */
+void showEmployeeBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -83,7 +112,11 @@ void showEmployeeBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showSupplierBusinessMenu()
+/**
+ * @brief 展示供应商管理页面
+ *
+ */
+void showSupplierBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -99,7 +132,11 @@ void showSupplierBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showOrderBusinessMenu()
+/**
+ * @brief 展示订单管理页面
+ *
+ */
+void showOrderBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -113,7 +150,11 @@ void showOrderBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showCurrentOrderMenu()
+/**
+ * @brief 展示处理当前订单页面
+ *
+ */
+void showCurrentOrderMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -129,7 +170,11 @@ void showCurrentOrderMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showStorageBusinessMenu()
+/**
+ * @brief 展示库存管理页面
+ *
+ */
+void showStorageBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -145,7 +190,11 @@ void showStorageBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showOnSaleBusinessMenu()
+/**
+ * @brief 展示在售商品处理页面
+ *
+ */
+void showOnSaleBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -159,7 +208,11 @@ void showOnSaleBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showExitMessage()
+/**
+ * @brief 展示结束页面
+ *
+ */
+void showExitMessage(void)
 {
     printf("┌────────────────────────────────────────────────┐\n");
     printf("│                                                │\n");
@@ -170,7 +223,11 @@ void showExitMessage()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showAccountBusinessMenu()
+/**
+ * @brief 展示账户管理界面
+ *
+ */
+void showAccountBusinessMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -185,7 +242,11 @@ void showAccountBusinessMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
-void showProductMenu()
+/**
+ * @brief 展示商品管理界面
+ *
+ */
+void showProductMenu(void)
 {
     printf("├────────────────────────────────────────────────┤\n");
     printf("│                                                │\n");
@@ -200,6 +261,11 @@ void showProductMenu()
     printf("└────────────────────────────────────────────────┘\n");
 }
 
+/**
+ * @brief 显示用户信息表头 (您好, 尊敬的 XXX)
+ *
+ * @param user 要显示对应信息的用户
+ */
 void showTitle(User_t user)
 {
     system("cls");
