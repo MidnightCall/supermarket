@@ -2,7 +2,7 @@
  * \file   account.h
  * \brief  对用户登录和注册功能的实现
  * 
- * \author praist
+ * \author East Monster
  * \date   July 2022
  *********************************************************************/
 

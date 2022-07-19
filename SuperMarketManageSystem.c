@@ -2,7 +2,7 @@
  * \file   SuperMarketManageSystem.c
  * \brief  系统启动和初始化的实现
  * 
- * \author East Monster
+ * \author moonlightvigil
  * \date   July 2022
  *********************************************************************/
 

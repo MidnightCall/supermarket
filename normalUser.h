@@ -2,7 +2,7 @@
  * \file   normalUser.h
  * \brief  进入普通用户 (COMMON 权限) 的管理界面
  *
- * \author East Monster
+ * \author praist
  * \date   July 2022
  *********************************************************************/
 

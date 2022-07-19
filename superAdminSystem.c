@@ -2,7 +2,7 @@
  * \file   superAdminSystem.c
  * \brief  进入超级管理员 (SU 权限) 的管理界面
  *
- * \author East Monster
+ * \author moonlightvigil
  * \date   July 2022
  *********************************************************************/
 

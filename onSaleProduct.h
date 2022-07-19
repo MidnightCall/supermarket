@@ -2,7 +2,7 @@
  * \file   onSaleProduct.h
  * \brief  对在售商品管理功能的实现
  * 
- * \author East Monster
+ * \author praist
  * \date   July 2022
  *********************************************************************/
 #ifndef __ONSALEPRODUCT_H_

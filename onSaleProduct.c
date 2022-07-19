@@ -2,7 +2,7 @@
  * \file   onSaleProduct.c
  * \brief  对在售商品管理功能的实现
  *
- * \author East Monster
+ * \author praist
  * \date   July 2022
  *********************************************************************/
 

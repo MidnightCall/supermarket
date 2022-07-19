@@ -2,7 +2,7 @@
  * \file   employee.h
  * \brief  对超级管理员 (SU 权限) 的职工管理功能实现
  * 
- * \author East Monster
+ * \author praist
  * \date   July 2022
  *********************************************************************/
 #ifndef __EMPLOYEE_H_

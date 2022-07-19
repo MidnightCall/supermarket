@@ -2,7 +2,7 @@
  * \file   UI.c
  * \brief  对菜单界面显示的集中实现
  *
- * \author East Monster
+ * \author moonlightvigil
  * \date   July 2022
  *********************************************************************/
 

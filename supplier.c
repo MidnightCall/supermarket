@@ -2,7 +2,7 @@
  * \file   supplier.c
  * \brief  对供应商管理功能的实现
  *
- * \author East Monster
+ * \author moonlightvigil
  * \date   July 2022
  *********************************************************************/
 

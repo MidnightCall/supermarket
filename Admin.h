@@ -2,7 +2,7 @@
  * \file   admin.h
  * \brief  进入管理员 (ADMIN 权限) 的管理界面
  * 
- * \author East Monster
+ * \author praist
  * \date   July 2022
  *********************************************************************/
 
