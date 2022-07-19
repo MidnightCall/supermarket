@@ -27,19 +27,19 @@ const char* FILE_CONFIG   = "data/config.dat";
 extern Config_t configDat;
 
 /**
-* @brief 从文件中加载数据
+* \brief 从文件中加载数据
 *
-* @param filename 文件名
-* @param head 存放数据的链表头
-* @param size 对应数据类型的大小，一般为 sizeof(xxx_t)
-* @param curMaxId 用于回传链表中最大的 ID 值。若为 NULL 则不回传
+* \param filename 文件名
+* \param head 存放数据的链表头
+* \param size 对应数据类型的大小，一般为 sizeof(xxx_t)
+* \param curMaxId 用于回传链表中最大的 ID 值。若为 NULL 则不回传
 */
 void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* curMaxId)
 {
 	FILE* fp = fopen(filename, "ab+"); /* 如果文件不存在则自动创建 */
 	if (NULL == fp)
 	{
-		printf("文件 %s 打开失败。\b\n", filename);
+		printf("文件 %s 打开失败。\n", filename);
 		exit(0);
 	}
 	Node_t* tHead = head;
@@ -52,12 +52,8 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 	while (length != ftell(fp))
 	{
 		void* node = (void*)malloc(size); /* 创建新节点用于存储数据 */
-		if (NULL == node)
-		{
-			printf("链表节点初始化失败。\n");
-			PAUSE;
-			exit(0);
-		}
+		assert(node != NULL);
+
 		fread(node, size, 1, fp);
 		if (curMaxId != NULL)
 			*curMaxId = *(unsigned int*)node; /* 由于默认插在链表尾，所以最大的 ID 应出现在最后一次插入的地方。故这里每次进行刷新 */
@@ -69,11 +65,11 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 }
 
 /**
-* @brief 将数据保存到文件中
+* \brief 将数据保存到文件中
 *
-* @param filename 文件名
-* @param head 存放数据的链表头
-* @param size 对应数据类型的大小，一般为 sizeof(xxx_t)
+* \param filename 文件名
+* \param head 存放数据的链表头
+* \param size 对应数据类型的大小，一般为 sizeof(xxx_t)
 */
 void writeFile(const char* filename, Node_t* head, size_t size)
 {
@@ -106,14 +102,14 @@ void writeFile(const char* filename, Node_t* head, size_t size)
 }
 
 /**
- * @brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ * \brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
  */
 void loadConfig()
 {
 	FILE* fp = fopen(FILE_CONFIG, "ab+"); /* 如果文件不存在则自动创建 */
 	if (NULL == fp)
 	{
-		printf("文件 %s 打开失败。\b\n", FILE_CONFIG);
+		printf("文件 %s 打开失败。\n", FILE_CONFIG);
 		exit(0);
 	}
 	fread(&configDat, sizeof(Config_t), 1, fp);
@@ -135,14 +131,14 @@ void loadConfig()
 }
 
 /**
- * @brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ * \brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
  */
 void saveConfig()
 {
 	FILE* fp = fopen(FILE_CONFIG, "wb");
 	if (NULL == fp)
 	{
-		printf("文件 %s 打开失败。\b\n", FILE_CONFIG);
+		printf("文件 %s 打开失败。\n", FILE_CONFIG);
 		exit(0);
 	}
 	fwrite(&configDat, sizeof(Config_t), 1, fp);
@@ -151,13 +147,15 @@ void saveConfig()
 }
 
 /**
- * @brief 显示配置文件中记录的信息。仅供调试使用。
+ * \brief 显示配置文件中记录的信息。仅供调试使用。
  */
-void printConfig()
+void printConfig(void)
 {
-	printf("maxId_User: %u\n", configDat.maxId_User);
-	printf("maxId_Product: %u\n", configDat.maxId_Product);
-	printf("maxId_Employee: %u\n", configDat.maxId_Employee);
-	printf("maxId_Supplier: %u\n", configDat.maxId_Supplier);
-	printf("maxId_Order: %u\n", configDat.maxId_Order);
+	printf("---<!!! 你正在调用一个仅供调试用的函数 !!!>---\a\n");
+	printf("maxId_User: %7u\n", configDat.maxId_User);
+	printf("maxId_Product: %7u\n", configDat.maxId_Product);
+	printf("maxId_Employee: %7u\n", configDat.maxId_Employee);
+	printf("maxId_Supplier: %7u\n", configDat.maxId_Supplier);
+	printf("maxId_Order: %7u\n", configDat.maxId_Order);
+	return;
 }

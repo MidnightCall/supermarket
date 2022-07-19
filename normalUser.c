@@ -6,7 +6,7 @@
  * \date   July 2022
  *********************************************************************/
 
-#include "admin.h";
+#include "admin.h"
 
 extern User_t currentUser;
 
@@ -35,16 +35,13 @@ void runNormalUserSystem()
 /* 局部函数实现 */
 static int getChoice()
 {
-	int choice;
-
+	int choice = 0;
 	do
 	{
 		showTitle(currentUser);
 		showUserMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 5 || choice < 1);
-	flush();
 
 	return choice;
 }

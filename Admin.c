@@ -14,7 +14,7 @@ extern User_t currentUser;
 static int getChoice();
 
 /**
- * @brief 运行管理员管理模块
+ * \brief 运行管理员管理模块
  */
 void runAdminSystem(void)
 {
@@ -44,15 +44,13 @@ void runAdminSystem(void)
 /* 局部函数实现 */
 static int getChoice()
 {
-	int choice;
-	showTitle(currentUser);
+	int choice = 0;
 	do
 	{
+		showTitle(currentUser);
 		showAdminMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 5 || choice < 1);
-	flush();
 
 	return choice;
 }

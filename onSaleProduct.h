@@ -20,22 +20,22 @@
 extern Node_t* storageDat, * productDat;
 
 /**
-*  @brief 运行在售商品操作
+*  \brief 运行在售商品操作
 */
 void runOnSaleProductSystem(void);
 
 /**
-*  @brief 查询在售商品
+*  \brief 查询在售商品
 */
 void queryOnSaleProduct();
 
 /**
-*  @brief 显示所有在售商品信息
+*  \brief 显示所有在售商品信息
 */
 void displayOnSaleProduct(void);
 
 /**
- * @brief 将在售商品下架
+ * \brief 将在售商品下架
  */
 void offshelfOnSaleProduct();
 

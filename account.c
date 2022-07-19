@@ -8,20 +8,21 @@
 
 #include "account.h"
 #include "helpfulFunction.h"
+#include "SupermarketManageSystem.h"
 #include <stdbool.h>
 
-static int getChoice();
+static int getChoice(void);
 
 extern Node_t* userDat;
 extern User_t currentUser;
 extern Config_t configDat;
 
 /**
- * @brief 进入登录和注册的选择菜单
+ * \brief 进入登录和注册的选择菜单
  */
 void runLogIn(void)
 {
-	if (0 == *(int*)userDat->data) /* 如果文件里一个账户都没有，则自动创建一个超管 (SU) */ /* passed */
+	if (0 == *(int*)userDat->data) /* 如果文件里一个账户都没有，则自动创建一个超管 (SU) */
 	{
 		User_t Su = { 10000, "admin", SU }; /* 超管默认属性 */
 		User_t* newSu = (User_t*)malloc(sizeof(User_t));
@@ -52,26 +53,8 @@ void runLogIn(void)
 	}
 }
 
-/**
- * @brief 注册账号
- */
-
-static int getChoice(void)
-{
-	int choice = 0;
-	do
-	{
-		showLoginMessage();
-		HINT;
-		scanf("%d", &choice);
-	} while (choice > 3 || choice < 1);
-	flush();
-
-	return choice;
-}
-
 /*
-* @brief：注册账号
+* \brief：注册账号
 */
 void registration(void)
 {
@@ -83,7 +66,7 @@ void registration(void)
 
 	printf("═════════════════════用户注册═════════════════════\n");
 	/* 账号显示 */
-	printf("你的账号是 %d.\n", ++configDat.maxId_User);
+	printf("你的账号是 %d.\n", ++configDat.maxId_User); /* 不注册完不让出去，这里可以直接自增 */
 	account->id = configDat.maxId_User;
 	/* 确认密码 */
 	while (1)
@@ -91,7 +74,7 @@ void registration(void)
 		printf("请输入你的密码: ");
 		stringGet(firstPassword, LEN_PWD);
 		if (strlen(firstPassword) < 6) {
-			printf("密码至少六位，请重新输入。\n");
+			printf("<!> 密码长度至少为六位，请重新输入。\a\n");
 			continue;
 		}
 
@@ -103,7 +86,7 @@ void registration(void)
 			insert(userDat, END, account);
 			break;
 		} else {
-			printf("两次输入不一致，请重新输入。\n");
+			printf("<!> 两次密码输入不一致，请重新输入。\a\n");
 		}
 	}
 	printf("注册成功，请重新登录。\n");
@@ -112,7 +95,7 @@ void registration(void)
 }
 
 /**
- * @brief 登录账号
+ * \brief 登录账号
  */
 void logIn(void)
 {
@@ -127,13 +110,13 @@ void logIn(void)
 		stringGet(rawId, 10);
 		if (strlen(rawId) > 5)
 		{
-			printf("你输入的 ID 过长，请重新输入。\n");
+			printf("<!> 你输入的 ID 过长，请重新输入。\a\n");
 			continue;
 		}
 
-		if (hasNonNumerical(rawId))
+		if (hasNonNumerical(rawId, false))
 		{
-			printf("你输入的 ID 格式有误，请重新输入。\n");
+			printf("<!> 你输入的 ID 格式有误，请重新输入。\a\n");
 			continue;
 		}
 
@@ -146,20 +129,29 @@ void logIn(void)
 			stringGet(password, LEN_PWD);
 			if (strcmp(password, account->password) == 0) {
 				printf("登录成功！");
-				currentUser.id = account->id;
-				currentUser.permission = account->permission;
-				strcpy(currentUser.password, account->password);
-				system("pause");
+				memcpy(&currentUser, account, sizeof(User_t));
+				PAUSE;
 				break;
 			} else {
-				printf("密码错误，请重新输入账号和密码。\n");
-				flush();
+				printf("<!> 密码错误，请重新输入账号和密码。\a\n");
 				continue;
 			}
 		} else {
-			printf("账号不存在，请重新确认后输入。\n");
+			printf("<!> 账号不存在，请确认后重新输入。\a\n");
 			continue;
 		}
 	}
+}
 
+static int getChoice(void)
+{
+	int choice = 0;
+	do
+	{
+		showWelcomeMessage();
+		showLoginMessage();
+		choice = getMenuChoice();
+	} while (choice > 3 || choice < 1);
+
+	return choice;
 }

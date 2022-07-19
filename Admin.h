@@ -19,7 +19,7 @@
 #include "order.h"
 
 /**
- * @brief 运行管理员管理模块
+ * \brief 运行管理员管理模块
  */
 void runAdminSystem(void);
 

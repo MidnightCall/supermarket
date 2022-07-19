@@ -16,7 +16,7 @@ Config_t configDat;
 User_t currentUser = {99999, "DEBUG", -1};
 
 /**
- * @brief 启动超市管理系统
+ * \brief 启动超市管理系统
  */
 void systemStart()
 {
@@ -27,14 +27,12 @@ void systemStart()
 }
 
 /**
- * @brief 登录/注册账号
+ * \brief 登录/注册账号
  */
 void logInStart()
 {
 	while (1)
 	{
-		system("cls");
-		showWelcomeMessage();
 		runLogIn();
 
 		switch (currentUser.permission)
@@ -55,7 +53,7 @@ void logInStart()
 }
 
 /**
-* @brief 从文件中加载数据
+* \brief 从文件中加载数据
 */
 void initData(void)
 {
@@ -77,7 +75,7 @@ void initData(void)
 }
 
 /**
-* @brief 将数据保存到文件中并释放链表使用的内存
+* \brief 将数据保存到文件中并释放链表使用的内存
 */
 void saveData(void)
 {

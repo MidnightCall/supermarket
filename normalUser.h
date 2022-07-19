@@ -18,7 +18,7 @@
 #include "helpfulFunction.h"
 
 /**
-*  @brief: 运行管理员操作
+*  \brief: 运行管理员操作
 *
 */
 void runNormalUserSystem();

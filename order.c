@@ -28,7 +28,7 @@ static float calTurnOverInCurrentOrder(void);
 static float calProfitInCurrentOrder(void);
 
 /**
-*  @brief 运行订单审核模块(供管理员使用)
+*  \brief 运行订单审核模块(供管理员使用)
 */
 void runOrderSystem(void)
 {
@@ -55,7 +55,7 @@ void runOrderSystem(void)
 }
 
 /**
-*  @brief 运行当前订单管理模块 (供普通用户使用)
+*  \brief 运行当前订单管理模块 (供普通用户使用)
 */
 void runNormalUserOrderSystem(void)
 {
@@ -88,15 +88,15 @@ void runNormalUserOrderSystem(void)
 }
 
 /**
-*  @brief 显示所有订单信息
+*  \brief 显示所有订单信息
 *
-*  @param showSum 是否显示总金额
+*  \param showSum 是否显示总金额
 */
 void displayOrder(bool showSum)
 {
 	if (NULL == orderDat->next)
 	{
-		printf("当前没有已交付的订单。");
+		printf("<!> 当前没有已交付的订单。\a");
 		PAUSE;
 		return;
 	}
@@ -119,13 +119,13 @@ void displayOrder(bool showSum)
 }
 
 /**
-*  @brief 查询订单信息
+*  \brief 查询订单信息
 */
 void queryOrder(void)
 {
 	if (NULL == orderDat->next)
 	{
-		printf("当前没有已交付的订单。");
+		printf("<!> 当前没有已交付的订单。\a");
 		PAUSE;
 		return;
 	}
@@ -134,7 +134,7 @@ void queryOrder(void)
 
 	unsigned int id;
 	Order_t* order = NULL;
-	id = getNonNegativeNumber("待查询的订单 ID");
+	id = getNonNegativeNumber("请输入待查询的订单 ID: ");
 	if (0 != findIndexByID_d(orderDat, id, &order)) 
 	{
 		char* timeStr = timeConv(order->time);
@@ -151,20 +151,20 @@ void queryOrder(void)
 	}
 	else 
 	{
-		printf("不存在 ID 为 %u 号的订单\n", id);
+		printf("<!> 不存在 ID 为 %u 号的订单\a\n", id);
 	}
 	PAUSE;
 	return;
 }
 
 /**
-*  @brief 根据时间查询订单信息
+*  \brief 根据时间查询订单信息
 */
 void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 {
 	if (NULL == orderDat->next)
 	{
-		printf("当前没有已交付的订单。");
+		printf("<!> 当前没有已交付的订单。\a");
 		PAUSE;
 		return;
 	}
@@ -179,7 +179,7 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 		|| (monthInfo[5] == '1' && monthInfo[6] - '0' > 2)
 		|| (monthInfo[5] == '0' && monthInfo[6] == '0')) /* 字符串格式检查 */
 	{
-		printf("输入的月份格式有误。");
+		printf("<!> 输入的月份格式有误。\a");
 		PAUSE;
 		return;
 	}
@@ -197,7 +197,7 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 
 	struct tm targetInfo = { 0, 0, 0, 1, iMonth - 1, iYear - 1900 };
 
-	leftBorder = mktime(&targetInfo); /* 计算下界 */
+	leftBorder = mktime(&targetInfo); /* 计算下界 (该月第一天零点) */
 
 	++iMonth;
 	if (iMonth == 12) /* 跨年 */
@@ -207,11 +207,11 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 	}
 	targetInfo.tm_year = iYear - 1900;
 	targetInfo.tm_mon = iMonth - 1;
-	rightBorder = mktime(&targetInfo); /* 计算上界 */
+	rightBorder = mktime(&targetInfo); /* 计算上界 (下个月第一天零点) */
 
 	if (-1 == leftBorder || -1 == rightBorder) /* 防不胜防 */
 	{
-		printf("时间转换失败，请确认字符串格式是否正确。");
+		printf("<!> 时间转换失败，请确认字符串格式是否正确。\a");
 		PAUSE;
 		return;
 	}
@@ -230,8 +230,8 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 		//printf("%lld, %lld, %lld", leftBorder, timeData, rightBorder);
 		if (timeData >= leftBorder && timeData < rightBorder) /* 左闭右开 */
 		{
-			monthlySum += *(float*)((char*)tHead->data + 4604); /* 工作正常 */
-			monthlyProfit += *(float*)((char*)tHead->data + 4608);
+			monthlySum += ((Order_t*)tHead->data)->total;
+			monthlyProfit += ((Order_t*)tHead->data)->profit;
 			printOrderInfo(tHead->data);
 		}
 		tHead = tHead->next;
@@ -248,7 +248,7 @@ void queryOrderByTime(void) /* 其实只能查询月范围内的 */
 }
 
 /**
-*  @brief 计算总营业额
+*  \brief 计算总营业额
 */
 float calTurnover(void)
 {
@@ -263,14 +263,14 @@ float calTurnover(void)
 	allOrder = orderDat->next;
 	while (allOrder != NULL)
 	{
-		sum += *(float*)((char*)allOrder->data + 4604); /* 一百个商品和一个 ID 占的字节数 */
+		sum += ((Order_t*)allOrder->data)->total; /* 一百个商品和一个 ID 占的字节数 */
 		allOrder = allOrder->next;
 	}
 	return sum;
 }
 
 /**
-*  @brief 计算总利润
+*  \brief 计算总利润
 */
 float calProfit(void)
 {
@@ -285,7 +285,7 @@ float calProfit(void)
 	allOrder = orderDat->next;
 	while (allOrder != NULL)
 	{
-		sum += *(float*)((char*)allOrder->data + 4608); /* 一百个商品和一个 uint 一个 float 占的字节数 */
+		sum += ((Order_t*)allOrder->data)->profit; /* 一百个商品和一个 uint 一个 float 占的字节数 */
 		allOrder = allOrder->next;
 	}
 
@@ -293,28 +293,34 @@ float calProfit(void)
 }
 
 /**
-*  @brief 向当前订单添加商品
+*  \brief 向当前订单添加商品
 */
 void addProductToCurrentOrder(void)
 {
 	displayOnSaleProduct();
 
-	unsigned int id;
-	int quantity;
+	if (currentIndex == MAX_ORDER_COUNT - 2) /* 数组最大容纳 MAX_ORDER_COUNT 个物品信息，最后一个要作为指示，遂减二 */
+	{
+		printf("<!> 当前订单已到最大容纳量，添加商品失败。\a");
+		PAUSE;
+		return;
+	}
+
+	unsigned int id, quantity;
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getNonNegativeNumber("商品 ID");
+	id = getNonNegativeNumber("请输入商品 ID: ");
 	if (0 == findIndexByID_d(productDat, id, &onSaleProduct)) 
 	{
-		printf("不存在的商品 ID.\n");
+		printf("<!> 不存在的商品 ID.\a\n");
 	}
 	else
 	{
-		quantity = getNonNegativeNumber("添加数量");
+		quantity = getNonNegativeNumber("请输入添加数量: ");
 		if (0 == quantity)
 		{
-			printf("非法输入，请重新输入。");
+			printf("<!> 非法输入，请重新输入。\a");
 			PAUSE;
 			return;
 		}
@@ -329,7 +335,7 @@ void addProductToCurrentOrder(void)
 			}
 			else
 			{
-				printf("该商品已售罄。");
+				printf("<!> 该商品已售罄。\a");
 			}
 		}
 		else
@@ -360,7 +366,7 @@ void addProductToCurrentOrder(void)
 }
 
 /**
-*  @brief 删除当前订单的商品
+*  \brief 删除当前订单的商品
 */
 void delProductFromCurrentOrder(void)
 {
@@ -374,7 +380,7 @@ void delProductFromCurrentOrder(void)
 	/* 策略：把要删除的商品信息移到数组尾，然后让 currentIndex-- */
 	/* 权宜之计 ... */
 
-	id = getNonNegativeNumber("待删除的商品 ID");
+	id = getNonNegativeNumber("请输入待删除的商品 ID: ");
 	for (int i = 0; i < currentIndex; ++i)
 	{
 		if (currentOrder.items[i].product.id == id) /* 订单内存在这个物品 */
@@ -397,7 +403,7 @@ void delProductFromCurrentOrder(void)
 
 	if (!flag)
 	{
-		printf("当前订单中没有 ID 为 %d 的商品。\n", id);
+		printf("<!> 当前订单中没有 ID 为 %d 的商品。\a\n", id);
 	}
 
 	PAUSE;
@@ -405,26 +411,25 @@ void delProductFromCurrentOrder(void)
 }
 
 /**
-*  @brief 更改当前订单的商品数量
+*  \brief 更改当前订单的商品数量
 */
 void modifyProductFromCurrentOrder(void)
 {
 	showCurrentOrderInfo();
 
-	int id;
-	int quantity;
+	unsigned int id, quantity;
 	bool flag = false;
 	OnSale_t* onSaleProduct = NULL;
 
-	id = getNonNegativeNumber("需要更改的商品 ID");
+	id = getNonNegativeNumber("请输入需要更改的商品 ID: ");
 	for (int i = 0; i < currentIndex; i++) {
 		if (currentOrder.items[i].product.id == id) 
 		{
 			findProduct_d(productDat, id, &onSaleProduct); /* 找到对应的商品 */
-			quantity = getNonNegativeNumber("需要购买的数量");
+			quantity = getNonNegativeNumber("请输入需要购买的数量: ");
 			if (0 == quantity)
 			{
-				printf("非法输入，请重新输入。");
+				printf("<!> 非法输入，请重新输入。\a");
 				PAUSE;
 				return;
 			}
@@ -451,14 +456,14 @@ void modifyProductFromCurrentOrder(void)
 	}
 	if (flag == false)
 	{
-		printf("当前订单中没有 ID 为 %d 的商品。", id);
+		printf("<!> 当前订单中没有 ID 为 %d 的商品。\a", id);
 	}
 	PAUSE;
 	return;
 }
 
 /**
-*  @brief 打印当前订单信息
+*  \brief 打印当前订单信息
 */
 void showCurrentOrderInfo(void)
 {
@@ -478,7 +483,7 @@ void showCurrentOrderInfo(void)
 }
 
 /**
-*  @brief 显示当前订单的合计金额
+*  \brief 显示当前订单的合计金额
 */
 void showTurnOverInCurrentOrder(void)
 {
@@ -486,13 +491,13 @@ void showTurnOverInCurrentOrder(void)
 }
 
 /**
-*  @brief: 交付订单
+*  \brief: 交付订单
 */
 void submitCurrentOrder(void)
 {
 	if (0 == currentIndex) /* 如果当前订单为空 */
 	{
-		printf("当前订单为空，交付失败。");
+		printf("<!> 当前订单为空，交付失败。\a");
 		PAUSE;
 		return;
 	}
@@ -500,17 +505,10 @@ void submitCurrentOrder(void)
 	Order_t* tempOrder = (Order_t*)malloc(sizeof(Order_t));
 	assert(tempOrder != NULL);
 
-	tempOrder->id = ++configDat.maxId_Order;
+	tempOrder->id = ++configDat.maxId_Order; /* checked */
 
 	for (int i = 0; i < currentIndex; i++) {
 		memcpy(&tempOrder->items[i], &currentOrder.items[i], sizeof(OrderItem_t));
-		/*tempOrder->items[i].quantity = currentOrder.items[i].quantity;
-		tempOrder->items[i].product.id = currentOrder.items[i].product.id;
-		tempOrder->items[i].product.price = currentOrder.items[i].product.price;
-		tempOrder->items[i].product.purchase = currentOrder.items[i].product.purchase;
-		tempOrder->items[i].product.type = currentOrder.items[i].product.type;
-		strcpy(tempOrder->items[i].product.name, currentOrder.items[i].product.name);
-		strcpy(tempOrder->items[i].product.supplier, currentOrder.items[i].product.supplier);*/
 	}
 
 	tempOrder->profit = calProfitInCurrentOrder();
@@ -518,9 +516,10 @@ void submitCurrentOrder(void)
 	tempOrder->time = time(NULL);
 	tempOrder->operatorId = currentUser.id;
 	tempOrder->items[currentIndex].product.id = 0; /* 用来给遍历指示 */
+
 	insert(orderDat, 0, tempOrder); /* 这里改为插到开头，正好以时间倒序显示 */
 	currentIndex = 0;
-	printf("已成功提交。");
+	printf("订单已成功交付。");
 	PAUSE;
 	return;
 }
@@ -529,14 +528,13 @@ void submitCurrentOrder(void)
 static int getChoice()
 {
 	int choice = 0;
+
 	do
 	{
 		showTitle(currentUser);
 		showOrderBusinessMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 4 || choice < 1);
-	flush();
 
 	return choice;
 }
@@ -548,10 +546,8 @@ static int getNormalChoice()
 	{
 		showTitle(currentUser);
 		showCurrentOrderMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 6 || choice < 1);
-	flush();
 
 	return choice;
 }

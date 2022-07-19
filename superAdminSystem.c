@@ -14,7 +14,7 @@ extern User_t currentUser;
 static int getChoice();
 
 /*
-*  @brief 运行超级管理员管理模块
+*  \brief 运行超级管理员管理模块
 */
 void runSuperAdminSystem(void)
 {
@@ -40,14 +40,12 @@ void runSuperAdminSystem(void)
 static int getChoice()
 {
 	int choice = 0;
-	showTitle(currentUser);
 	do
 	{
+		showTitle(currentUser);
 		showSuperAdminMenu();
-		printf(">>> ");
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 3 || choice < 1);
-	flush();
 	
 	return choice;
 }

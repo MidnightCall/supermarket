@@ -15,7 +15,7 @@
 #include "UI.h"
 
 /*
-*  @brief 运行超级管理员管理模块
+*  \brief 运行超级管理员管理模块
 */
 void runSuperAdminSystem(void);
 

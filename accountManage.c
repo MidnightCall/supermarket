@@ -19,7 +19,7 @@ extern User_t currentUser;
 static int getChoice();
 
 /**
- * @brief 运行用户处理模块
+ * \brief 运行用户处理模块
  */
 void runAccountManage()
 {
@@ -49,7 +49,7 @@ void runAccountManage()
 }
 
 /**
- * @brief 查找用户信息
+ * \brief 查找用户信息
  */
 void queryUser(void)
 {
@@ -61,31 +61,33 @@ void queryUser(void)
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
-		tId = getNonNegativeNumber("账号 ID");
+		tId = getNonNegativeNumber("请输入账号 ID: ");
 		if (tId < 10000 || tId > 99999)
 		{
-			printf("你输入的 ID 无效，请重新输入。\b\n");
+			printf("<!> 你输入的 ID 无效，请重新输入。\a\n");
 			continue;
 		}
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的用户。\b");
-			system("pause");
+			printf("<!> 没有符合条件的用户。\n");
+			PAUSE;
 			return;
 		}
 		showSingleUser(*tUser);
 		break;
 	}
-	system("pause");
+
+	PAUSE;
+	return;
 }
 
 /**
- * @brief 更改用户权限
+ * \brief 更改用户权限
  */
 void modifyUserPermission(void)
 {
-	User_t* tUser;
+	User_t* tUser = NULL;
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 
@@ -93,25 +95,25 @@ void modifyUserPermission(void)
 	unsigned int tId = 0, index = 0;
 	while (true)
 	{
-		tId = getNonNegativeNumber("账号 ID");
+		tId = getNonNegativeNumber("请输入账号 ID: ");
 
 		if (tId < 10000 || tId > 99999)
 		{
-			printf("你输入的 ID 无效，请重新输入。\b\n");
+			printf("<!> 你输入的 ID 无效，请重新输入。\a\n");
 			continue;
 		}
 
 		if (tId == 10000)
 		{
-			printf("你无法修改超级管理员 [10000] 的权限。\n");
-			system("pause");
+			printf("<!> 你无法修改超级管理员 [10000] 的权限。\a\n");
+			PAUSE;
 			return;
 		}
 
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的用户。\b");
+			printf("<!> 没有符合条件的用户。\a");
 			PAUSE;
 			return;
 		}
@@ -122,10 +124,10 @@ void modifyUserPermission(void)
 	unsigned int op = 0;
 	while (true)
 	{
-		op = getNonNegativeNumber("你要更改到的目标权限\n[0. 普通用户, 1. 管理员]");
+		op = getNonNegativeNumber("请输入你要更改到的目标权限\n[0. 普通用户, 1. 管理员]: ");
 		if (op < 0 || op > 1)
 		{
-			printf("你输入的权限等级无效，请重新输入。\b\n");
+			printf("<!> 你输入的权限等级无效，请重新输入。\a\n");
 			continue;
 		}
 		User_t* tUsr = (User_t*)getData(userDat, index);
@@ -140,7 +142,7 @@ void modifyUserPermission(void)
 }
 
 /**
- * @brief 删除用户
+ * \brief 删除用户
  */
 void deleteUser(void)
 {
@@ -156,17 +158,17 @@ void deleteUser(void)
 	while (true)
 	{
 		unsigned int tId = 0;
-		tId = getNonNegativeNumber("账户 ID");
+		tId = getNonNegativeNumber("请输入账户 ID: ");
 		if (tId < 10000 || tId > 99999)
 		{
-			printf("你输入的 ID 无效。");
+			printf("<!> 你输入的 ID 无效。\a");
 			PAUSE;
 			return;
 		}
 
 		if (tId == 10000)
 		{
-			printf("你无法删除超级管理员 [10000].\n");
+			printf("<!> 你无法删除超级管理员 [10000].\a\n");
 			PAUSE;
 			return;
 		}
@@ -174,7 +176,7 @@ void deleteUser(void)
 		index = findIndexByID_d(userDat, tId, &tUser);
 		if (0 == index)
 		{
-			printf("没有符合条件的用户。");
+			printf("<!> 没有符合条件的用户。\a");
 			PAUSE;
 			return;
 		}
@@ -184,32 +186,31 @@ void deleteUser(void)
 
 	while (true)
 	{
-		//getchar();
 		printf("确定要删除吗？[y/n]: ");
 		char deleteOp = '\0';
 		scanf("%c", &deleteOp);
 		if (deleteOp != 'y' && deleteOp != 'n' && deleteOp != 'Y' && deleteOp != 'N')
 		{
-			printf("你输入的操作无效，请重新输入。\b\n");
+			printf("<!> 你输入的操作无效，请重新输入。\a\n");
 			continue;
 		}
 		if (deleteOp == 'y' || deleteOp == 'Y')
 		{
 			del(userDat, index);
 			printf("用户删除成功！\n");
-			showAllUsers(userDat);
+			showAllUsers();
 			break;
 		}
 		if (deleteOp == 'n' || deleteOp == 'N')
 			return;
 	}
-	system("pause");
 
+	PAUSE;
 	return;
 }
 
 /**
- * @brief 显示单条用户信息
+ * \brief 显示单条用户信息
  */
 void showSingleUser(User_t e)
 {
@@ -221,7 +222,7 @@ void showSingleUser(User_t e)
 }
 
 /**
- * @brief 显示所有用户信息
+ * \brief 显示所有用户信息
  */
 void showAllUsers(void)
 {
@@ -241,10 +242,8 @@ static int getChoice()
 	{
 		showTitle(currentUser);
 		showAccountBusinessMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 5 || choice < 1);
-	flush();
 
 	return choice;
 }

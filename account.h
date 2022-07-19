@@ -25,17 +25,17 @@ extern User_t currentUser;
 
 
 /**
- * @brief 进入登录和注册的选择菜单
+ * \brief 进入登录和注册的选择菜单
  */
 void runLogIn(void);
 
 /** 
- * @brief 注册账号
+ * \brief 注册账号
  */
 void registration(void);
 
 /** 
- * @brief 登录账号
+ * \brief 登录账号
  */
 void logIn(void);
 

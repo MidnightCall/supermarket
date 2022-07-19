@@ -18,32 +18,32 @@
 #include "helpfulFunction.h"
 
 /**
- * @brief 运行用户处理模块
+ * \brief 运行用户处理模块
  */
 void runAccountManage(void);
 
 /**
- * @brief 查找用户信息
+ * \brief 查找用户信息
  */
 void queryUser(void);
 
 /**
- * @brief 删除用户
+ * \brief 删除用户
  */
 void deleteUser(void);
 
 /**
- * @brief 更改用户权限
+ * \brief 更改用户权限
  */
 void modifyUserPermission(void);
 
 /**
- * @brief 显示单条用户信息
+ * \brief 显示单条用户信息
  */
 void showSingleUser(User_t e);
 
 /**
- * @brief 显示所有用户信息
+ * \brief 显示所有用户信息
  */
 void showAllUsers(void);
 

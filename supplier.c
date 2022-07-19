@@ -18,7 +18,7 @@ extern User_t currentUser;
 static int getChoice(void);
 
 /**
-*  @brief 运行供应商管理模块
+*  \brief 运行供应商管理模块
 */
 void runSupplierSystem(void)
 {
@@ -51,13 +51,13 @@ void runSupplierSystem(void)
 }
 
 /**
-*  @brief 查找供应商信息
+*  \brief 查找供应商信息
 */
 void querySupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
-		printf("目前没有供应商。");
+		printf("<!> 目前没有供应商。\a");
 		PAUSE;
 		return;
 	}
@@ -65,8 +65,8 @@ void querySupplier(void)
 	displaySupplier();
 
 	unsigned int id;
-	Supplier_t* supplier = NULL;;
-	id = getNonNegativeNumber("待查询供货商 ID");
+	Supplier_t* supplier = NULL;
+	id = getNonNegativeNumber("请输入待查询供货商 ID: ");
 
 	if (0 != findIndexByID_d(supplierDat, id, &supplier)) /* 查询该供货商是否存在 */
 	{ /* 打印与这个供货商有关的所有商品 */
@@ -74,7 +74,7 @@ void querySupplier(void)
 		Node_t* tHead = storageDat;
 		if (NULL == storageDat->next)
 		{
-			printf("仓库内还没有商品，无法查询该供货商供应的商品。");
+			printf("<!> 仓库内还没有商品。\a");
 		}
 		else
 		{
@@ -102,7 +102,7 @@ void querySupplier(void)
 	} 
 	else 
 	{
-		printf("不存在编号为 %d 的供货商。", id);
+		printf("<!> 不存在编号为 %d 的供货商。\a", id);
 	}
 
 	PAUSE;
@@ -110,27 +110,35 @@ void querySupplier(void)
 }
 
 /**
-*  @brief 添加供应商信息
+*  \brief 添加供应商信息
 */
 void addSupplier(void)
 {
 	Supplier_t* newSupplier = (Supplier_t*)malloc(sizeof(Supplier_t));
 	assert(newSupplier);
 
-	printf("新供货商 ID 是 %d\n", ++configDat.maxId_Supplier);
-	newSupplier->id = configDat.maxId_Supplier;
-	//getchar();
+	printf("新供货商 ID 是 %d\n", configDat.maxId_Supplier + 1);
+	
 	printf("请输入供货商名称: ");
-	stringGet(newSupplier->name, 24);
-
-	Supplier_t* tSupplier = NULL; 
-	if (findIndexByName_d(supplierDat, newSupplier->name, OFFSET_SUPPLIER, &tSupplier)) /* 判断是否有重复供应商 */
+	stringGet(newSupplier->name, LEN_SUPPLIER_NAME);
+	if (0 == strlen(newSupplier->name)) /* 排除空字符串 */
 	{
-		printf("此供应商已存在，ID 为 %u.\n添加失败。", tSupplier->id);
+		printf("<!> 供应商名长度不能为 0. \a");
+		free(newSupplier);
 		PAUSE;
 		return;
 	}
 
+	Supplier_t* tSupplier = NULL; 
+	if (findIndexByName_d(supplierDat, newSupplier->name, OFFSET_SUPPLIER, &tSupplier)) /* 判断是否有重复供应商 */
+	{
+		printf("<!> 此供应商已存在，ID 为 %u.\n添加失败。\a", tSupplier->id);
+		free(newSupplier); /* checked */
+		PAUSE;
+		return;
+	}
+
+	newSupplier->id = ++configDat.maxId_Supplier; /* checked */
 	insert(supplierDat, END, newSupplier);
 	printf("添加完成。");
 	PAUSE;
@@ -138,13 +146,13 @@ void addSupplier(void)
 }
 
 /**
-*  @brief 删除供应商信息
+*  \brief 删除供应商信息
 */
 void delSupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
-		printf("目前没有供应商。");
+		printf("<!> 目前没有供应商。\a");
 		PAUSE;
 		return;
 	}
@@ -152,13 +160,13 @@ void delSupplier(void)
 	displaySupplier();
 	
 	unsigned int id, pos;
-	id = getNonNegativeNumber("待删除供应商 ID");
+	id = getNonNegativeNumber("请输入待删除供应商 ID: ");
 	if ((pos = findIndexByID(supplierDat, id)) != 0) {
 		del(supplierDat, pos);
 		printf("删除成功。\n");
 	}
 	else {
-		printf("不存在 ID %d 的供应商。", id);
+		printf("<!> 不存在 ID %d 的供应商。\a", id);
 	}
 
 	PAUSE;
@@ -166,13 +174,13 @@ void delSupplier(void)
 }
 
 /**
- * @brief 修改供应商信息
+ * \brief 修改供应商信息
  */
 void modifySupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
-		printf("目前没有供应商。");
+		printf("<!> 目前没有供应商。\a");
 		PAUSE;
 		return;
 	}
@@ -181,16 +189,22 @@ void modifySupplier(void)
 
 	unsigned int id, pos;
 	Supplier_t* tSupplier = NULL;
-	char newName[21];
-	id = getNonNegativeNumber("待修改供应商 ID");
+	char newName[LEN_SUPPLIER_NAME];
+	id = getNonNegativeNumber("请输入待修改供应商 ID: ");
 	if ((pos = findIndexByID_d(supplierDat, id, &tSupplier)) != 0)
 	{
 		printf("请输入供货商新名称: ");
-		stringGet(newName, 21);
+		stringGet(newName, LEN_SUPPLIER_NAME);
+		if (0 == strlen(newName))
+		{
+			printf("<!> 供应商名长度不能为 0. \a");
+			PAUSE;
+			return;
+		}
 
 		if (findIndexByName(supplierDat, newName, OFFSET_SUPPLIER)) /* 查找修改的新名字是否有与现有供应商撞名的 */
 		{
-			printf("该名称已存在。");
+			printf("<!> 该名称已存在。\a");
 			PAUSE;
 			return;
 		}
@@ -203,9 +217,9 @@ void modifySupplier(void)
 			tHead_storage = storageDat->next;
 			while (tHead_storage != NULL)
 			{
-				if (0 == strcmp((char*)tHead_storage->data + 52, tSupplier->name))
+				if (0 == strcmp((char*)tHead_storage->data + OFFSET_PRODUCT_SUPPLIER, tSupplier->name))
 				{
-					strncpy((char*)tHead_storage->data + 52, newName, 21);
+					strncpy((char*)tHead_storage->data + OFFSET_PRODUCT_SUPPLIER, newName, LEN_SUPPLIER_NAME);
 				}
 				tHead_storage = tHead_storage->next;
 			}
@@ -216,9 +230,9 @@ void modifySupplier(void)
 			tHead_onSale = storageDat->next;
 			while (tHead_onSale != NULL)
 			{
-				if (0 == strcmp((char*)tHead_onSale->data + 52, tSupplier->name))
+				if (0 == strcmp((char*)tHead_onSale->data + OFFSET_PRODUCT_SUPPLIER, tSupplier->name))
 				{
-					strncpy((char*)tHead_onSale->data + 52, newName, 21);
+					strncpy((char*)tHead_onSale->data + OFFSET_PRODUCT_SUPPLIER, newName, LEN_SUPPLIER_NAME);
 				}
 				tHead_onSale = tHead_onSale->next;
 			}
@@ -229,7 +243,7 @@ void modifySupplier(void)
 		printf("供货商信息修改成功。\n");
 	}
 	else {
-		printf("不存在 ID %d 的供应商。", id);
+		printf("<!> 不存在 ID %d 的供应商。\a", id);
 	}
 
 	PAUSE;
@@ -237,13 +251,13 @@ void modifySupplier(void)
 }
 
 /**
-*  @brief 显示所有供应商信息
+*  \brief 显示所有供应商信息
 */
 void displaySupplier(void)
 {
 	if (0 == *(int*)supplierDat->data)
 	{
-		printf("目前没有供应商。");
+		printf("<!> 目前没有供应商。\a");
 		return;
 	}
 
@@ -259,15 +273,13 @@ void displaySupplier(void)
 /* 局部函数实现 */
 static int getChoice(void)
 {
-	int choice;
+	int choice = 0;
 	do
 	{
 		showTitle(currentUser);
 		showSupplierBusinessMenu();
-		HINT;
-		scanf("%d", &choice);
+		choice = getMenuChoice();
 	} while (choice > 6 || choice < 1);
-	flush();
 
 	return choice;
 }

@@ -23,34 +23,34 @@ extern Config_t configDat;
 extern User_t currentUser;
 
 /**
-*  @brief 运行库存管理系统
+*  \brief 运行库存管理系统
 */
 void runStorageSystem(void);
 
 /**
-*  @brief 查询库存商品
+*  \brief 查询库存商品
 *
 */
 void queryStorage(void);
 
 /**
- * @brief 修改商品属性
+ * \brief 修改商品属性
  */
 void modifyProductInfo(void);
 
 /**
-*  @brief 商品入库
+*  \brief 商品入库
 *
 */
 void inStorage(void);
 
 /**
-*  @brief 商品出库
+*  \brief 商品出库
 */
 void outStorage(void);
 
 /**
-*  @brief 显示所有库存商品信息
+*  \brief 显示所有库存商品信息
 */
 void displayStorage(void);
 

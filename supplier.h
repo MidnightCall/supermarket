@@ -20,34 +20,34 @@
 extern Node_t* supplierDat,* productDat;
 
 /**
-*  @brief 运行供应商管理模块
+*  \brief 运行供应商管理模块
 */
 void runSupplierSystem(void);
 
 /**
-*  @brief 查找供应商信息
+*  \brief 查找供应商信息
 *
 */
 void querySupplier(void);
 
 /**
-*  @brief 添加供应商信息
+*  \brief 添加供应商信息
 *
 */
 void addSupplier(void);
 
 /**
-*  @brief 删除供应商信息
+*  \brief 删除供应商信息
 */
 void delSupplier(void);
 
 /**
- * @brief 修改供应商信息
+ * \brief 修改供应商信息
  */
 void modifySupplier(void);
 
 /**
-*  @brief 显示所有供应商信息
+*  \brief 显示所有供应商信息
 */
 void displaySupplier(void);
 

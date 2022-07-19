@@ -21,9 +21,12 @@ extern User_t currentUser;
 
 /* 局部函数模型 */
 static int getChoice();
+static void showSingleEmployee(Employee_t e);
+static void showAllEmployees(void);
+
 
 /**
-* @brief 运行职工管理模块
+* \brief 运行职工管理模块
 */
 void runEmployeeManage(void)
 {
@@ -56,26 +59,24 @@ void runEmployeeManage(void)
 }
 
 /**
-* @brief 添加新员工
+* \brief 添加新员工
 */
 void addEmployee(void)
 {
-	//getchar();
 	char buffer[250];
 	memset(buffer, '\0', sizeof(buffer));
 	Employee_t* e = (Employee_t*)malloc(sizeof(Employee_t));
 	assert(e != NULL);
 
-	e->id = ++configDat.maxId_Employee; /* 自动赋予 ID */
+	e->id = ++configDat.maxId_Employee; /* 自动赋予 ID */ /* checked */
 	printf("═════════════════════添加员工═════════════════════\n");
 	while (true)
 	{
 		printf("请输入员工姓名: ");
-		stringGet(buffer, LEN_EMPLOYEE_NAME);
-		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
+		stringGet(buffer, 250);
+		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1 || strlen(buffer) < 4) /* 有一位要用来存放 '\0' 的，这里要减 1 */
 		{
-			printf("你输入的姓名过长，请重新输入。\b\n");
-			flush();
+			printf("<!> 你输入的姓名无效，请重新输入。\a\n");
 			continue;
 		}
 		memset(e->name, '\0', sizeof(e->name));
@@ -86,10 +87,10 @@ void addEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		tAge = getNonNegativeNumber("员工年龄");
-		if (tAge < 0 || tAge > 70)
+		tAge = getNonNegativeNumber("请输入员工年龄: ");
+		if (tAge < 16 || tAge > 70)
 		{
-			printf("你输入的年龄无效，请重新输入。\n");
+			printf("<!> 你输入的年龄无效，请重新输入。\a\n");
 			continue;
 		}
 		e->age = tAge;
@@ -98,12 +99,11 @@ void addEmployee(void)
 
 	while (true)
 	{
-		printf("请输入员工性别 (0 为女，1 为男): ");
 		unsigned int tSex = 0;
-		scanf("%u", &tSex);
+		tSex = getNonNegativeNumber("请输入员工性别(0 为女，1 为男): ");
 		if (tSex != 0 && tSex != 1)
 		{
-			printf("你输入的性别无效，请重新输入。\n");
+			printf("<!> 你输入的性别无效，请重新输入。\n");
 			continue;
 		}
 		e->sex = tSex;
@@ -113,11 +113,10 @@ void addEmployee(void)
 	while (true)
 	{
 		printf("请输入员工职位: ");
-		getchar(); /* 读掉空格 */
-		scanf_s("%[^\n]", &buffer, LEN_EMPLOYEE_POS);
-		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1)
+		stringGet(buffer, 250);
+		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1 || 0 == strlen(buffer))
 		{
-			printf("你输入的职位过长，请重新输入。\n");
+			printf("<!> 你输入的职位无效，请重新输入。\a\n");
 			continue;
 		}
 		memset(e->position, '\0', sizeof(e->position));
@@ -128,13 +127,12 @@ void addEmployee(void)
 	insert(employeeDat, END, e);
 
 	printf("员工增加成功！\n");
-	flush();
-	system("pause");
+	PAUSE;
 	return;
 }
 
 /**
-* @brief 删除员工
+* \brief 删除员工
 */
 void deleteEmployee(void)
 {
@@ -146,17 +144,14 @@ void deleteEmployee(void)
 	unsigned int op = 0;
 	while (true)
 	{
-		printf("选择查找条件 [0: ID, 1: 姓名]: ");
-		scanf("%u", &op);
+		op = getNonNegativeNumber("输入查找条件[0: ID, 1: 姓名]: ");
 		if (op != 0 && op != 1)
 		{
-			printf("你输入的操作无效，请重新输入。\b\n");
-			flush();
+			printf("<!> 你输入的操作无效，请重新输入。\a\n");
 			continue;
 		}
 		break;
 	}
-	getchar();
 
 	unsigned int index = 0;
 	switch (op)
@@ -165,16 +160,17 @@ void deleteEmployee(void)
 		while (true)
 		{
 			unsigned int tId = 0;
-			tId = getNonNegativeNumber("员工 ID");
+			tId = getNonNegativeNumber("请输入员工 ID: ");
 			if (tId < 1000 || tId > 9999)
 			{
-				printf("你输入的 ID 无效，请重新输入。\n");
+				printf("<!> 你输入的 ID 无效，请重新输入。\a\n");
 				continue;
 			}
 			index = findIndexByID_d(employeeDat, tId, &tEmployee);
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。按 Enter 键继续。\b");
+				printf("<!> 没有符合条件的员工。\a");
+				PAUSE;
 				return;
 			}
 			showSingleEmployee(*tEmployee);
@@ -185,16 +181,17 @@ void deleteEmployee(void)
 		while (true)
 		{
 			printf("请输入员工姓名: ");
-			stringGet(buffer, LEN_EMPLOYEE_NAME);
-			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1)
+			stringGet(buffer, 250);
+			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1 || 0 == strlen(buffer))
 			{
-				printf("你输入的姓名无效，请重新输入。\b\n");
+				printf("<!> 你输入的姓名无效，请重新输入。\a\n");
 				continue;
 			}
 			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee);
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。按 Enter 键继续。\b");
+				printf("<!> 没有符合条件的员工。\a");
+				PAUSE;
 				return;
 			}
 			showSingleEmployee(*tEmployee);
@@ -212,7 +209,7 @@ void deleteEmployee(void)
 		scanf("%c", &deleteOp);
 		if (deleteOp != 'y' && deleteOp != 'n' && deleteOp != 'Y' && deleteOp != 'N')
 		{
-			printf("你输入的操作无效，请重新输入。\b\n");
+			printf("<!> 你输入的操作无效，请重新输入。\a\n");
 			continue;
 		}
 		if (deleteOp == 'y' || deleteOp == 'Y')
@@ -225,12 +222,12 @@ void deleteEmployee(void)
 			return;
 	}
 
-	system("pause");
+	PAUSE;
 	return;
 }
 
 /**
-* @brief 查找员工
+* \brief 查找员工
 */
 void findEmployee(void)
 {
@@ -242,12 +239,10 @@ void findEmployee(void)
 	unsigned int op = 0;
 	while (true)
 	{
-		printf("选择操作条件 [0: ID, 1: 姓名]: ");
-		scanf("%u", &op);
+		op = getNonNegativeNumber("选择操作条件 [0: ID, 1: 姓名]: ");
 		if (op != 0 && op != 1)
 		{
-			printf("你输入的操作无效，请重新输入。\b\n");
-			flush();
+			printf("<!> 你输入的操作无效，请重新输入。\a\n");
 			continue;
 		}
 		break;
@@ -260,18 +255,17 @@ void findEmployee(void)
 		while (true)
 		{
 			unsigned int tId = 0;
-			printf("请输入员工 ID: ");
-			tId = getNonNegativeNumber("员工 ID");
+			tId = getNonNegativeNumber("请输入员工 ID: ");
 			if (tId < 1000 || tId > 9999)
 			{
-				printf("你输入的 ID 无效，请重新输入。\b\n");
+				printf("<!> 你输入的 ID 无效，请重新输入。\a\n");
 				continue;
 			}
 			index = findIndexByID_d(employeeDat, tId, &tEmployee);
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。\b");
-				system("pause");
+				printf("<!> 没有符合条件的员工。\a");
+				PAUSE;
 				return;
 			}
 			showSingleEmployee(*tEmployee);
@@ -281,18 +275,19 @@ void findEmployee(void)
 	case 1:
 		while (true)
 		{
-			getchar();
 			printf("请输入员工姓名: ");
-			scanf("%[^\n]", &buffer);
-			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1)
+			stringGet(buffer, 250);
+			if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1 || 0 == strlen(buffer))
 			{
-				printf("你输入的姓名无效，请重新输入。\b\n");
+				printf("<!> 你输入的姓名无效，请重新输入。\a\n");
 				continue;
 			}
+
 			index = findIndexByName_d(employeeDat, buffer, OFFSET_EMPLOYEE, &tEmployee);
 			if (0 == index)
 			{
-				printf("没有符合条件的员工。\b");
+				printf("<!> 没有符合条件的员工。\a");
+				PAUSE;
 				return;
 			}
 			showSingleEmployee(*tEmployee);
@@ -303,12 +298,12 @@ void findEmployee(void)
 		break;
 	}
 
-	system("pause");
+	PAUSE;
 	return;
 }
 
 /**
-* @brief 修改员工信息
+* \brief 修改员工信息
 */
 void modifyEmployee(void)
 {
@@ -321,34 +316,32 @@ void modifyEmployee(void)
 	while (true)
 	{
 		unsigned int tId = 0;
-		tId = getNonNegativeNumber("员工 ID");
+		tId = getNonNegativeNumber("请输入员工 ID: ");
 		if (tId < 1000 || tId > 9999)
 		{
-			printf("你输入的 ID 无效.");
+			printf("<!> 你输入的 ID 无效。\a");
 			PAUSE;
 			return;
 		}
 		index = findIndexByID_d(employeeDat, tId, &tEmployee);
 		if (0 == index)
 		{
-			printf("没有符合条件的员工。\b");
-			system("pause");
+			printf("<!> 没有符合条件的员工。\a");
+			PAUSE;
 			return;
 		}
 		showSingleEmployee(*tEmployee);
 		break;
 	}
 
-	//flush();
 	printf("════════════════════输入新信息════════════════════\n");
 	while (true)
 	{
 		printf("请输入员工姓名: ");
-		scanf("%[^\n]", &buffer);
-		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1) /* 有一位要用来存放 '\0' 的，这里要减 1 */
+		stringGet(buffer, 250);
+		if (strlen(buffer) > LEN_EMPLOYEE_NAME - 1 || 0 == strlen(buffer))
 		{
-			printf("你输入的姓名过长，请重新输入。\b\n");
-			flush();
+			printf("<!> 你输入的姓名无效，请重新输入。\a\n");
 			continue;
 		}
 		memset(tEmployee->name, '\0', sizeof(tEmployee->name));
@@ -359,11 +352,10 @@ void modifyEmployee(void)
 	while (true)
 	{
 		unsigned int tAge = 0;
-		getchar();
-		tAge = getNonNegativeNumber("员工年龄");
-		if (tAge < 0 || tAge > 70)
+		tAge = getNonNegativeNumber("请输入员工年龄: ");
+		if (tAge < 16 || tAge > 70)
 		{
-			printf("你输入的年龄无效，请重新输入。\b\n");
+			printf("<!> 你输入的年龄无效，请重新输入。\a\n");
 			continue;
 		}
 		tEmployee->age = tAge;
@@ -372,12 +364,11 @@ void modifyEmployee(void)
 
 	while (true)
 	{
-		printf("请输入员工性别 (0 为女，1 为男): ");
 		unsigned int tSex = 0;
-		scanf("%u", &tSex);
+		tSex = getNonNegativeNumber("请输入员工性别 (0 为女，1 为男): ");
 		if (tSex != 0 && tSex != 1)
 		{
-			printf("你输入的性别无效，请重新输入。\b\n");
+			printf("<!> 你输入的性别无效，请重新输入。\a\n");
 			continue;
 		}
 		tEmployee->sex = tSex;
@@ -387,27 +378,27 @@ void modifyEmployee(void)
 	while (true)
 	{
 		printf("请输入员工职位: ");
-		getchar(); /* 读掉空格 */
-		scanf_s("%[^\n]", &buffer, LEN_EMPLOYEE_POS);
-		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1)
+		stringGet(buffer, 250);
+
+		if (strlen(buffer) > LEN_EMPLOYEE_POS - 1 || 0 == strlen(buffer))
 		{
-			printf("你输入的职位过长，请重新输入。\b\n");
+			printf("<!> 你输入的职位无效，请重新输入。\a\n");
 			continue;
 		}
 		memset(tEmployee->position, '\0', sizeof(tEmployee->position));
 		strncpy(tEmployee->position, buffer, strlen(buffer));
 		break;
 	}
-	printf("员工信息修改成功！\n");
+	printf("员工信息修改成功！");
 
 	PAUSE;
 	return;
 }
 
 /**
-* @brief 显示单条员工信息
+* \brief 显示单条员工信息
 */
-void showSingleEmployee(Employee_t e)
+static void showSingleEmployee(Employee_t e)
 {
 	printf("┌──────┬─────────┬──员工信息────┬────────────────┐\n");
 	printf("│ %5s│ %8s│ %6s│ %5s│ %15s│\n", "ID", "姓名", "性别", "年龄", "职位");
@@ -417,13 +408,13 @@ void showSingleEmployee(Employee_t e)
 }
 
 /**
-* @brief 显示所有员工信息
+* \brief 显示所有员工信息
 */
-void showAllEmployees(void)
+static void showAllEmployees(void)
 {
 	if (0 == *(int*)employeeDat->data)
 	{
-		printf("没有员工信息。");
+		printf("<!> 没有员工信息。\a");
 		return;
 	}
 
@@ -438,14 +429,13 @@ void showAllEmployees(void)
 static int getChoice()
 {
 	int choice = 0;
-	showTitle(currentUser);
 	do
 	{
+		showTitle(currentUser);
 		showEmployeeBusinessMenu();
-		printf(">>> ");
-		scanf("%d", &choice);
+		choice = getMenuChoice();
+
 	} while (choice > 6 || choice < 1);
-	flush();
 
 	return choice;
 }

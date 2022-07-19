@@ -9,47 +9,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 #include "linkList.h"
 #include "typeCollection.h"
 
 /* 本程序链表的实现：含头节点 (存储节点数)，插入为尾插法 */
 
  /**
- * @brief 新建一个链表
+ * \brief 新建一个链表
  *
- * @return 新链表的表头指针
+ * \return 新链表的表头指针
  */
 Node_t* newList(void)
 {
 	Node_t* head = NULL;
 	unsigned int* count = (unsigned int*)malloc(sizeof(unsigned int)); /* 头节点用于存储节点数的变量，这里给其分配内存 */
-	if (NULL == count)
-	{
-		printf("链表初始化失败。\b\n");
-		exit(0);
-	}
+	assert(count != NULL);
+
 	*count = 0;
 
 	head = (Node_t*)malloc(sizeof(Node_t));
-	if (head != NULL)
-	{
-		head->data = count;
-		head->next = NULL;
-	}
-	else
-	{
-		printf("链表初始化失败。\b\n");
-		exit(0);
-	}
+	assert(head != NULL);
+
+	head->data = count;
+	head->next = NULL;
+
 	return head;
 }
 
 /**
-* @brief 将数据插入到指定链表中
+* \brief 将数据插入到指定链表中
 *
-* @param head 要插入到的链表的头指针
-* @param pos 插入到链表中的位置 (以 1 为起始)
-* @param val 指向插入内容的指针
+* \param head 要插入到的链表的头指针
+* \param pos 插入到链表中的位置 (以 1 为起始)
+* \param val 指向插入内容的指针
 */
 void insert(Node_t* head, int pos, void* data)
 {
@@ -60,32 +53,28 @@ void insert(Node_t* head, int pos, void* data)
 		tHead = tHead->next;
 		++i;
 	}
+
 	node = (Node_t*)malloc(sizeof(Node_t));
-	if (node != NULL)
+	assert(node != NULL);
+
+	node->data = data;
+	node->next = NULL;
+	if (tHead->next != NULL)
 	{
-		node->data = data;
-		node->next = NULL;
-		if (tHead->next != NULL)
-		{
-			node->next = tHead->next;
-		}
-		tHead->next = node;
-		++(*count);
+		node->next = tHead->next;
 	}
-	else
-	{
-		printf("节点初始化失败。\n");
-		exit(0);
-	}
+	tHead->next = node;
+	++(*count);
+
 	return;
 }
 
 /**
-* @brief 链表删除操作
+* \brief 链表删除操作
 *
-* @param head 要插入到的链表的头指针
-* @param pos 需要删除的内容位置 (以 1 为起始)
-* @param val 指向插入内容的指针
+* \param head 要插入到的链表的头指针
+* \param pos 需要删除的内容位置 (以 1 为起始)
+* \param val 指向插入内容的指针
 */
 void del(Node_t* head, int pos)
 {
@@ -93,7 +82,7 @@ void del(Node_t* head, int pos)
 	int* count = head->data, i = 0;
 	if (pos > *count || pos < 1)
 	{
-		printf("错误：无效的索引。\n");
+		printf("<!> 错误：无效的索引。\a\n");
 		return;
 	}
 
@@ -119,12 +108,12 @@ void del(Node_t* head, int pos)
 }
 
 /**
-* @brief 获取链表中位置在 index 处的数据
+* \brief 获取链表中位置在 index 处的数据
 *
-* @param head 内容所在的的链表头指针
-* @param index 内容在链表中的位置 (索引)
+* \param head 内容所在的的链表头指针
+* \param index 内容在链表中的位置 (索引)
 *
-* @return 目标数据的地址。若链表为空，则返回 NULL.
+* \return 目标数据的地址。若链表为空，则返回 NULL.
 */
 void* getData(Node_t* head, int index)
 {
@@ -143,13 +132,13 @@ void* getData(Node_t* head, int index)
 }
 
 /**
-* @brief 打印链表内数据
+* \brief 打印链表内数据
 *
-* @param head 要遍历的链表头指针
-* @param type 指定内容输出格式
-* @param count 是否显示节点计数 (应使用 false, 仅作调试用途)
+* \param head 要遍历的链表头指针
+* \param type 指定内容输出格式
+* \param count 是否显示节点计数 (应使用 false, 仅作调试用途)
 * 
-* @see customLookup.h
+* \see customLookup.h
 */
 void printList(Node_t* head, void (*type)(void*), bool count)
 {
@@ -168,9 +157,9 @@ void printList(Node_t* head, void (*type)(void*), bool count)
 }
 
 /**
-* @brief 链表释放操作
+* \brief 链表释放操作
 *
-* @param head 要释放的链表的头指针
+* \param head 要释放的链表的头指针
 */
 void freeList(Node_t* head)
 {
