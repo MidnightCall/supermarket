@@ -14,11 +14,9 @@
 extern const char* FILE_USER;
 extern const char* FILE_EMPLOYEE;
 extern const char* FILE_PRODUCT;
-extern const char* FILE_ONSALE;
 extern const char* FILE_STORAGE;
 extern const char* FILE_SUPPLIER;
 extern const char* FILE_ORDER;
-
 
 /**
 * \brief 从文件中加载数据
@@ -40,14 +38,14 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 void writeFile(const char* filename, Node_t* head, size_t size);
 
 /**
- * \brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ * \brief 初始化各个含 ID 的结构体类型的最大 ID 值
  */
-void loadConfig(void);
+void initConfig(void);
 
-/**
- * \brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
- */
-void saveConfig(void);
+///**
+// * \brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+// */
+//void saveConfig(void);
 
 /**
  * \brief 显示配置文件中记录的信息。仅供调试使用。

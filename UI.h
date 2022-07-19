@@ -76,22 +76,16 @@ void showStorageBusinessMenu(void);
 void showOnSaleBusinessMenu(void);
 
 /**
- * \brief 展示结束页面
- *
- */
-void showExitMessage(void);
-
-/**
  * \brief 展示账户管理界面
  *
  */
 void showAccountBusinessMenu(void);
 
 /**
- * \brief 展示商品管理界面
+ * \brief 展示结束页面
  *
  */
-void showProductMenu(void);
+void showExitMessage(void);
 
 /**
  * \brief 显示用户信息表头

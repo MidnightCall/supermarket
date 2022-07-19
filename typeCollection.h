@@ -13,8 +13,8 @@
 #define LEN_EMPLOYEE_NAME 9  /* 职工名字最大长度 */
 #define LEN_EMPLOYEE_POS 15  /* 职工职位最大长度 */
 #define LEN_PRODUCT_NAME 48  /* 商品名称最大长度 */
-#define LEN_SUPPLIER_NAME 21 /* 供应商名最大长度 */
-#define MAX_ORDER_COUNT 50   /* 最大订单数 */
+#define LEN_SUPPLIER_NAME 24 /* 供应商名最大长度 */
+#define MAX_ORDER_COUNT 50   /* 订单最大商品数目 */
 
 #define END 2147483647       /* 链表尾部指示符 */
 
@@ -122,12 +122,12 @@ typedef struct tagOrderItem_t
 /* 订单信息节点 */ /* size: 4632 */
 typedef struct tagOrder_t
 {
-    unsigned int id;         /* 订单编号 */
-    OrderItem_t items[50];   /* 订单 */
-    float total;             /* 订单总额 */
-    float profit;            /* 订单利润 */
-    time_t time;             /* 交付时间 */
-    unsigned int operatorId; /* 操作员 ID */
+    unsigned int id;                      /* 订单编号 */
+    OrderItem_t items[MAX_ORDER_COUNT];   /* 订单 */
+    float total;                          /* 订单总额 */
+    float profit;                         /* 订单利润 */
+    time_t time;                          /* 交付时间 */
+    unsigned int operatorId;              /* 操作员 ID */
 } Order_t;
 
 #endif

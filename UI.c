@@ -244,25 +244,6 @@ void showAccountBusinessMenu(void)
 }
 
 /**
- * \brief 展示商品管理界面
- *
- */
-void showProductMenu(void)
-{
-    printf("├────────────────────────────────────────────────┤\n");
-    printf("│                                                │\n");
-    printf("│                                                │\n");
-    printf("│              1. 显示所有商品信息               │\n");
-    printf("│              2. 查找商品信息                   │\n");
-    printf("│              3. 添加新的商品信息               │\n");
-    printf("│              4. 删除商品信息                   │\n");
-    printf("│              5. 退出                           │\n");
-    printf("│                                                │\n");
-    printf("│                                                │\n");
-    printf("└────────────────────────────────────────────────┘\n");
-}
-
-/**
  * \brief 显示用户信息表头 (您好, 尊敬的 XXX)
  *
  * \param user 要显示对应信息的用户

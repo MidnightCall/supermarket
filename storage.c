@@ -219,7 +219,7 @@ void inStorage(void)
 {
 	displayStorage();
 	unsigned int id = 0;
-	unsigned int inStorageNumber; /* 入库数量 */
+	unsigned int inStorageNumber = 0; /* 入库数量 */
 	unsigned int type = 0; /* 商品种类 */
 	Storage_t* storage = NULL;
 	Supplier_t* tsupplier = NULL;
@@ -240,6 +240,14 @@ void inStorage(void)
 	{ 
 		printf("仓库内已存在该商品。");
 		inStorageNumber = getNonNegativeNumber("请输入入库数量: ");
+		if (0 == inStorageNumber)
+		{
+			printf("<!> 输入的数量无效。\a");
+			free(newStorage);
+			PAUSE;
+			return;
+		}
+
 		storage->allowance += inStorageNumber;
 		printf("入库完毕。");
 	} 
@@ -276,17 +284,23 @@ void inStorage(void)
 			insert(supplierDat, END, newSupplier);
 		}
 
-		if (findProductByName_d(storageDat, newStorage->product.name, &storage)) /* 判断仓库内是否有名字相同，供应商也相同的商品记录 */
+		if (findProductByName_d(storageDat, newStorage->product.name, &storage) 
+			&& (0 == strcmp(storage->product.supplier, newStorage->product.supplier))) /* 判断仓库内是否有名字相同且供应商相同的商品 */
 		{
-			if (0 == strcmp(storage->product.supplier, newStorage->product.supplier))
+			printf("仓库内已存在该商品。");
+			inStorageNumber = getNonNegativeNumber("请输入入库数量: ");
+			if (0 == inStorageNumber)
 			{
-				printf("仓库内已存在该商品。");
-				inStorageNumber = getNonNegativeNumber("请输入入库数量: ");
-				storage->allowance += inStorageNumber;
-				printf("入库完毕。");
+				printf("<!> 输入的数量无效。\a");
+				free(newStorage);
+				PAUSE;
+				return;
 			}
+
+			storage->allowance += inStorageNumber;
+			printf("入库完毕。");
 		}
-		else
+		else /* 名字不同或供应商不同则为新商品 */
 		{
 			newStorage->product.id = configDat.maxId_Product + 1; /* 自动生成 ID */
 
@@ -324,8 +338,17 @@ void inStorage(void)
 				}
 				break;
 			}
+
 			newStorage->product.type = type;
 			newStorage->allowance = getNonNegativeNumber("请输入入库数量: ");
+			if (0 == inStorageNumber)
+			{
+				printf("<!> 输入的数量无效。\a");
+				free(newStorage);
+				PAUSE;
+				return;
+			}
+
 			++configDat.maxId_Product; /* !!! 添加成功前最后一刻再让最大 ID 自增，否则在中间就自增的话，有可能因为在中间退出函数而造成 ID 白白自增。*/
 			insert(storageDat, END, newStorage);
 			printf("添加完成。");

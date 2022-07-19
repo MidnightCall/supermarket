@@ -18,11 +18,9 @@
 const char* FILE_USER     = "data/user.dat";
 const char* FILE_EMPLOYEE = "data/employee.dat";
 const char* FILE_PRODUCT  = "data/product.dat";
-const char* FILE_ONSALE   = "data/onsale.dat";
 const char* FILE_STORAGE  = "data/storage.dat";
 const char* FILE_SUPPLIER = "data/supplier.dat";
 const char* FILE_ORDER    = "data/order.dat";
-const char* FILE_CONFIG   = "data/config.dat";
 
 extern Config_t configDat;
 
@@ -51,7 +49,7 @@ void loadFile(const char* filename, Node_t* head, size_t size, unsigned int* cur
 
 	while (length != ftell(fp))
 	{
-		void* node = (void*)malloc(size); /* 创建新节点用于存储数据 */
+		void* node = malloc(size); /* 创建新节点用于存储数据 */
 		assert(node != NULL);
 
 		fread(node, size, 1, fp);
@@ -102,17 +100,17 @@ void writeFile(const char* filename, Node_t* head, size_t size)
 }
 
 /**
- * \brief 加载配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+ * \brief 初始化各个含 ID 的结构体类型的最大 ID 值
  */
-void loadConfig()
+void initConfig()
 {
-	FILE* fp = fopen(FILE_CONFIG, "ab+"); /* 如果文件不存在则自动创建 */
-	if (NULL == fp)
-	{
-		printf("文件 %s 打开失败。\n", FILE_CONFIG);
-		exit(0);
-	}
-	fread(&configDat, sizeof(Config_t), 1, fp);
+	//FILE* fp = fopen(FILE_CONFIG, "ab+"); /* 如果文件不存在则自动创建 */
+	//if (NULL == fp)
+	//{
+	//	printf("文件 %s 打开失败。\n", FILE_CONFIG);
+	//	exit(0);
+	//}
+	////fread(&configDat, sizeof(Config_t), 1, fp); /* 读在之前就做好了 */
 
 	/* 如果没有信息就先预设 */
 	if (configDat.maxId_User < 10000)
@@ -126,25 +124,24 @@ void loadConfig()
 	if (configDat.maxId_Order < 1000000)
 		configDat.maxId_Order = 999999;
 
-	fclose(fp);
 	return;
 }
 
-/**
- * \brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
- */
-void saveConfig()
-{
-	FILE* fp = fopen(FILE_CONFIG, "wb");
-	if (NULL == fp)
-	{
-		printf("文件 %s 打开失败。\n", FILE_CONFIG);
-		exit(0);
-	}
-	fwrite(&configDat, sizeof(Config_t), 1, fp);
-	fclose(fp);
-	return;
-}
+///**
+// * \brief 保存配置文件中记录的各个含 ID 的结构体类型的最大 ID 值
+// */
+//void saveConfig()
+//{
+//	FILE* fp = fopen(FILE_CONFIG, "wb");
+//	if (NULL == fp)
+//	{
+//		printf("文件 %s 打开失败。\n", FILE_CONFIG);
+//		exit(0);
+//	}
+//	fwrite(&configDat, sizeof(Config_t), 1, fp);
+//	fclose(fp);
+//	return;
+//}
 
 /**
  * \brief 显示配置文件中记录的信息。仅供调试使用。

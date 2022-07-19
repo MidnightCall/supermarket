@@ -157,26 +157,4 @@ int findProductByName(Node_t* head, char* name);
 * \return 节点在链表中的位置。若不存在，则返回 0.
 */
 int findProductByName_d(Node_t* head, char* name, void** dest);
-
-/**
-* \brief 获取商品所在节点的位置
-*
-* \param head 要查找的链表头
-* \param id 查找条件 (商品类型)
-* \param dest 回传查找到的商品所在库存或货架节点的实际地址
-*
-* \return 节点在链表中的位置。若不存在，则返回 0.
-*/
-int findProductByType(Node_t* head, ProductTypeEnum type, void** dest);
-
-/**
-* \brief 获取商品所在节点的位置
-*
-* \param head 要查找的链表头
-* \param id 查找条件 (供应商名)
-* \param dest 回传查找到的商品所在库存或货架节点的实际地址
-*
-* \return 节点在链表中的位置。若不存在，则返回 0.
-*/
-int findProductBySupplier(Node_t* head, const char* supplier, void** dest);
 #endif

@@ -66,11 +66,11 @@ void initData(void)
 
 	loadFile(FILE_USER, userDat, sizeof(User_t), &configDat.maxId_User);
 	loadFile(FILE_EMPLOYEE, employeeDat, sizeof(Employee_t), &configDat.maxId_Employee);
-	loadFile(FILE_PRODUCT, productDat, sizeof(OnSale_t), &configDat.maxId_Product);
-	loadFile(FILE_STORAGE, storageDat, sizeof(Storage_t), NULL);
+	loadFile(FILE_PRODUCT, productDat, sizeof(OnSale_t), NULL);
+	loadFile(FILE_STORAGE, storageDat, sizeof(Storage_t), &configDat.maxId_Product);
 	loadFile(FILE_SUPPLIER, supplierDat, sizeof(Supplier_t), &configDat.maxId_Supplier);
 	loadFile(FILE_ORDER, orderDat, sizeof(Order_t), &configDat.maxId_Order);
-	loadConfig();
+	initConfig();
 	return;
 }
 
@@ -85,7 +85,6 @@ void saveData(void)
 	writeFile(FILE_STORAGE, storageDat, sizeof(Storage_t));
 	writeFile(FILE_SUPPLIER, supplierDat, sizeof(Supplier_t));
 	writeFile(FILE_ORDER, orderDat, sizeof(Order_t));
-	saveConfig();
 
 	freeList(userDat);
 	freeList(employeeDat);
