@@ -74,7 +74,6 @@ void insert(Node_t* head, int pos, void* data)
 *
 * \param head 要插入到的链表的头指针
 * \param pos 需要删除的内容位置 (以 1 为起始)
-* \param val 指向插入内容的指针
 */
 void del(Node_t* head, int pos)
 {
@@ -135,12 +134,12 @@ void* getData(Node_t* head, int index)
 * \brief 打印链表内数据
 *
 * \param head 要遍历的链表头指针
-* \param type 指定内容输出格式
+* \param format 指定内容输出格式
 * \param count 是否显示节点计数 (应使用 false, 仅作调试用途)
 * 
 * \see customLookup.h
 */
-void printList(Node_t* head, void (*type)(void*), bool count)
+void printList(Node_t* head, void (*format)(void*), bool count)
 {
 	Node_t* tHead = head;
 	if (count) /* 仅作调试用途 */
@@ -151,7 +150,7 @@ void printList(Node_t* head, void (*type)(void*), bool count)
 	tHead = tHead->next;
 	while (tHead != NULL)
 	{
-		(*type)(tHead->data);
+		(*format)(tHead->data);
 		tHead = tHead->next;
 	}
 }

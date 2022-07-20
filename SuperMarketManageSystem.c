@@ -10,6 +10,8 @@
 #include "linkList.h"
 #include "files.h"
 #include "normalUser.h"
+#include <io.h>
+#include <direct.h>
 
 Node_t* userDat, * employeeDat, * productDat, * storageDat, * supplierDat, * orderDat;
 Config_t configDat;
@@ -63,6 +65,11 @@ void initData(void)
 	storageDat = newList();
 	supplierDat = newList();
 	orderDat = newList();
+
+	if (-1 == _access("data", 0)) /* 文件夹不存在就先新建文件夹 */
+	{
+		_mkdir("data");
+	}
 
 	loadFile(FILE_USER, userDat, sizeof(User_t), &configDat.maxId_User);
 	loadFile(FILE_EMPLOYEE, employeeDat, sizeof(Employee_t), &configDat.maxId_Employee);

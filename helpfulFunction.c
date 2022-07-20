@@ -105,12 +105,13 @@ int getNonNegativeNumber(char* hint)
 
 	printf("%s", hint);
 	stringGet(temp, 10);
-	while (hasNonNumerical(temp, false)) // UNDONE (加一个判不判零的开关？)
+	while (hasNonNumerical(temp, false) || 0 == strlen(temp))
 	{
 		printf("<!> 非法输入，请重新输入\a\n");
 		printf("%s", hint);
 		stringGet(temp, 10);
 	}
+	
 	return atoi(temp);
 }
 

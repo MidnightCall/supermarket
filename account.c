@@ -100,27 +100,12 @@ void registration(void)
 void logIn(void)
 {
 	int id;
-	char rawId[10]; /* ID 原始字符串 */
 	char password[LEN_PWD];
 
 	printf("═════════════════════用户登录═════════════════════\n");
 	while (true)
 	{
-		printf("请输入账号: ");
-		stringGet(rawId, 10);
-		if (strlen(rawId) > 5)
-		{
-			printf("<!> 你输入的 ID 过长，请重新输入。\a\n");
-			continue;
-		}
-
-		if (hasNonNumerical(rawId, false))
-		{
-			printf("<!> 你输入的 ID 格式有误，请重新输入。\a\n");
-			continue;
-		}
-
-		id = atoi(rawId);
+		id = getNonNegativeNumber("请输入账号: ");
 
 		User_t* account = NULL;
 		if (findIndexByID_d(userDat, id, &account) != 0) {
