@@ -23,6 +23,7 @@ User_t currentUser = {99999, "DEBUG", -1};
 void systemStart()
 {
 	initData();
+	system("color 70");
 	system("title 超市管理系统 v2.0");
 	logInStart();
 	saveData();
